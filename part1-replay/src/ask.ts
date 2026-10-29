@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import { answer, answerWithoutRag } from "./agent.js";
 import { buildDb } from "./build.js";
 import { addCanonical } from "./canonical.js";
@@ -8,6 +9,8 @@ import { docSearch } from "./search.js";
 // npm run ask -- "質問" --no-rag   資料を渡さずに答える（第2章で比べる）
 // 記録にある質問は、キー無しで本書と同じ答えを返す。
 // OPENAI_API_KEY があれば、記録に無い質問にも答える
+// .env があれば読む（キー無しで試すときは無くてよい）
+if (fs.existsSync(".env")) process.loadEnvFile(".env");
 const question = process.argv[2];
 if (!question) {
   console.log('使い方: npm run ask -- "質問" [--no-rag]');

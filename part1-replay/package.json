@@ -6,7 +6,7 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "ask": "tsx --env-file-if-exists=.env src/ask.ts",
+    "ask": "tsx src/ask.ts",
     "show-doc": "tsx src/show-doc.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
