@@ -1,0 +1,14 @@
+[1] 0.720 予約 API 仕様
+[2] 0.632 予約 API 仕様
+[3] 0.558 kanade-admin README
+[4] 0.497 kanade-admin README
+[5] 0.363 情報セキュリティ方針（2026年9月改定）
+[6] 0.359 kanade-yoyaku README
+
+予約 API の仕様は、Confluence の「予約 API 仕様」にあります。[1]  
+ただし、同じ名前で社内の管理画面用 API もあるため、この資料では顧客向け公開 API の仕様として扱っています。[1]  
+管理画面用 API の説明は、kanade-admin の README にあります。[3]
+
+出典  
+[1] 予約 API 仕様（confluence・2026-09-10） https://kanadeloop.atlassian.net/wiki/spaces/KANADE/pages/688129/API  
+[3] kanade-admin README（github・日付なし） https://github.com/kanadeloop/kanade-admin/blob/main/README.md
