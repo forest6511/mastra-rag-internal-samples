@@ -1,0 +1,7 @@
+# テスト用: GitHub を開発から外し、管理職だけにした対応表
+default: [all]
+containers:
+  slack:incident: [dev]
+  github:kanade-yoyaku: [mgmt]
+  github:kanade-admin: [mgmt]
+  notion:人事: [hr]

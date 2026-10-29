@@ -1,0 +1,24 @@
+{
+ "ok": true,
+ "response_metadata": {},
+ "messages": [
+  {
+   "ts": "1793292986.539239",
+   "text": "<@U0CD2H7GUVC>さんがチャンネルに参加しました",
+   "subtype": "channel_join"
+  },
+  {
+   "ts": "1793292963.813259",
+   "text": "<@U0CDYS9H280>さんがチャンネルに参加しました",
+   "subtype": "channel_join"
+  },
+  {
+   "ts": "1790294400.000000",
+   "text": "結論。カナ予の監査ログエクスポート機能をロードマップに追加。顧客要望対応。",
+   "username": "山本 浩二",
+   "subtype": "bot_message",
+   "thread_ts": "1790294400.000000",
+   "reply_count": 1
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+利用者: yamamoto（all, sales）
+[1] 0.342 社内FAQ（よくある質問）
+[2] 0.265 #random 2026-08-28 11:42 のスレッド
+[3] 0.259 #dev 2026-10-08 10:00 のスレッド
+[4] 0.241 #dev 2026-08-05 10:12 のスレッド
+[5] 0.232 KAN-11 決済GW切替
+[6] 0.221 kanade-infra README
+
+要確認です。退職理由は資料内に記載がありません。問い合わせ先は、小林 亮（機能・ロードマップ）です。[3][4][5]
+
+出典
+- [3] #dev 2026-10-08 10:00 のスレッド（slack・2026-10-08） https://kanadeloop.slack.com/archives/C0CD805EPM4/p1791421200000000
+- [4] #dev 2026-08-05 10:12 のスレッド（slack・2026-08-05） https://kanadeloop.slack.com/archives/C0CD805EPM4/p1785892320000000
+- [5] KAN-11 決済GW切替（jira・2026-08-05） https://kanadeloop.atlassian.net/browse/KAN-11
