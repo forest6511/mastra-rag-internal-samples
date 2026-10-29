@@ -1,0 +1,13 @@
+[1] 0.615 デプロイ手順（本番環境）
+[2] 0.369 社内FAQ（よくある質問）
+[3] 0.302 決済まわり設計メモ
+[4] 0.292 カナデループ 社内wiki Home
+[5] 0.254 予約 API 仕様
+[6] 0.251 社内FAQ（よくある質問）
+
+デプロイ手順（本番環境）は、前営業日までに #dev で本番切替の日時を告知し、承認者（小林）の了承を Jira の課題に残したうえで、踏み台サーバーに SSH でログインし、`cd /opt/kanade-yoyaku` に移動して、`./deploy.sh production` を実行します。[1]  
+実行後はヘルスチェックの URL（`/healthz`）が 200 を返すことを確認し、完了を #dev に投稿します。[1]  
+失敗した場合は `./rollback.sh production` を実行して直前の版に戻し、#dev に報告します。[1]
+
+出典  
+[1] デプロイ手順（本番環境） https://kanadeloop.atlassian.net/wiki/spaces/KANADE/pages/622613
