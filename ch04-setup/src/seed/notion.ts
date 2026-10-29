@@ -48,7 +48,8 @@ export async function seedNotion(
   // #region seed-notion-pages
   for (const d of ofKind(docs, "notion-page")) {
     if (log[d.plan.id]) continue;
-    // 親ページ（「製品」など）は1回だけ作り、記録から使い回す
+    // 中間のページ（「人事」「営業資料」など）は1回だけ作り、
+    // 記録から使い回す
     const key = `notion-parent:${d.plan.parent}`;
     if (!log[key]) {
       const parentTitle = String(d.plan.parent);

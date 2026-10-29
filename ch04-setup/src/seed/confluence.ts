@@ -27,6 +27,9 @@ export async function seedConfluence(
     `${site}/wiki/api/v2/spaces?keys=KANADE`,
     { headers },
   );
+  if (spaces.results.length === 0) {
+    throw new Error("スペース KANADE がありません。先に画面で作ります");
+  }
   const spaceId = spaces.results[0].id;
   // #endregion
   // #region seed-confluence-pages

@@ -10,6 +10,7 @@ import { buildJiraCsv } from "./seed/jira-csv.js";
 import { atlassianHeaders } from "./seed/confluence.js";
 import { buildSlackExport } from "./seed/slack-export.js";
 import { seedNotion } from "./seed/notion.js";
+import { joinSlackChannels } from "./seed/slack-join.js";
 import { need } from "./env.js";
 import { request } from "./http.js";
 
@@ -59,6 +60,7 @@ const steps: Record<string, () => unknown> = {
   github: () => seedGitHub(loadCorpus(), loadWorld(), readLoaded()),
   "jira-csv": () => writeJiraCsv(),
   "slack-zip": () => writeSlackZip(),
+  "slack-join": () => joinSlackChannels(loadCorpus()),
 };
 const step = steps[process.argv[2] ?? ""];
 if (!step) {
