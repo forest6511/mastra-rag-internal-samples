@@ -15,6 +15,13 @@ describe("seed の資料", () => {
     }
   });
 
+  it("本文に世界設定の記号（E2 など）が無い", () => {
+    for (const d of docs) {
+      const { plan, ...body } = d;
+      expect(JSON.stringify(body), plan.id).not.toMatch(/\b[EN]\d\b/);
+    }
+  });
+
   it("資料にメールアドレスやトークンの形の文字列が無い", () => {
     const text = JSON.stringify(docs);
     expect(text).not.toMatch(/[\w.+-]+@[\w-]+\.[a-z]{2,}/);
