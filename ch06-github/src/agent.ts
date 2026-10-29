@@ -40,7 +40,8 @@ export const context = (hits: Hit[]) =>
   hits
     .map((h, i) => {
       const meta = `${h.source}・${h.eventDate ?? "日付なし"}`;
-      return `[${i + 1}] ${h.title}（${meta}）\nURL: ${h.url}\n${h.content}`;
+      const head = `[${i + 1}] ${h.title}（${meta}）`;
+      return `${head}\nURL: ${h.url}\n${h.content}`;
     })
     .join("\n\n---\n\n");
 // #endregion
