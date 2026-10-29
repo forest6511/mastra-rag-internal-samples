@@ -5,6 +5,7 @@
   {
    "id": "4087551e-201a-8102-86ee-da8758e7c6c6",
    "type": "child_page",
+   "has_children": true,
    "child_page": {
     "title": "人事"
    }
@@ -12,6 +13,7 @@
   {
    "id": "4087551e-201a-810f-92f0-d59e928cd094",
    "type": "child_page",
+   "has_children": true,
    "child_page": {
     "title": "営業資料"
    }
@@ -19,6 +21,7 @@
   {
    "id": "4087551e-201a-8148-874c-cd6441593cc2",
    "type": "child_page",
+   "has_children": true,
    "child_page": {
     "title": "振り返り"
    }

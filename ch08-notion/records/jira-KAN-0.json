@@ -1190,24 +1190,6 @@
          }
         ]
        }
-      },
-      {
-       "created": "2026-10-29T21:49:07.352+0900",
-       "body": {
-        "type": "doc",
-        "version": 1,
-        "content": [
-         {
-          "type": "paragraph",
-          "content": [
-           {
-            "type": "text",
-            "text": "（同期の試験）監視の追加は来週着手予定"
-           }
-          ]
-         }
-        ]
-       }
       }
      ]
     },

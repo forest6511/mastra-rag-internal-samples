@@ -5,6 +5,7 @@ import { getJson, offline } from "../record.js";
 interface Block {
   id: string;
   type: string;
+  has_children?: boolean;
   child_page?: { title: string };
   [type: string]: unknown;
 }
@@ -45,6 +46,7 @@ const keepBlocks = (j: BlockList): BlockList => ({
   results: j.results.map((b) => ({
     id: b.id,
     type: b.type,
+    has_children: b.has_children,
     ...(b.child_page
       ? { child_page: { title: b.child_page.title } }
       : { [b.type]: { rich_text: richTextOf(b) } }),
@@ -79,10 +81,18 @@ export async function notionDocs(rootId: string): Promise<Doc[]> {
   const docs: Doc[] = [];
   const walk = async (pageId: string, title: string) => {
     const lines: string[] = [];
-    for (const b of await blocks(pageId)) {
-      if (b.child_page) await walk(b.id, b.child_page.title);
-      else lines.push(lineOf(b));
-    }
+    // ブロックの子（表の行・トグルの中・入れ子の箇条書き）も読む。
+    // 子ページは別の資料にするので、中には入らない
+    const read = async (id: string) => {
+      for (const b of await blocks(id)) {
+        if (b.child_page) await walk(b.id, b.child_page.title);
+        else {
+          lines.push(lineOf(b));
+          if (b.has_children) await read(b.id);
+        }
+      }
+    };
+    await read(pageId);
     const body = lines.filter(Boolean).join("\n");
     if (pageId !== rootId && body) {
       docs.push({

@@ -3,7 +3,7 @@ import { vector } from "@electric-sql/pglite-pgvector";
 import { readFileSync } from "node:fs";
 import { beforeAll, describe, expect, it } from "vitest";
 import { answer } from "../src/agent.js";
-import { markCanonical } from "../src/canonical.js";
+import { addCanonical, markCanonical } from "../src/canonical.js";
 import { embed } from "../src/embed.js";
 import { migrate, saveDoc } from "../src/ingest.js";
 import { docSearch } from "../src/search.js";
@@ -19,7 +19,7 @@ process.env.OFFLINE = "1";
 const db = new PGlite({ extensions: { vector } });
 const ask = async (q: string) => {
   const [v] = await embed([q]);
-  return answer(q, await docSearch(db, v));
+  return answer(q, await addCanonical(db, q, await docSearch(db, v)));
 };
 
 beforeAll(async () => {

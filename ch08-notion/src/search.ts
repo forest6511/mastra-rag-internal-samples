@@ -65,19 +65,6 @@ export async function docSearch(
     if (!docs.has(h.docId) && docs.size >= k) continue;
     docs.set(h.docId, [...(docs.get(h.docId) ?? []), h]);
   }
-  // #endregion
-  // #region doc-search-canonical
-  // 第8章: 多めに取った pool 件の中に正本があれば、上位 k 件に
-  // 入っていなくても必ず材料に入れる（いちばん下の資料と入れ替える）
-  for (const h of res.rows.filter((r) => r.canonical)) {
-    if (docs.has(h.docId)) continue;
-    const last = [...docs.keys()].pop();
-    if (last) docs.delete(last);
-    docs.set(
-      h.docId,
-      res.rows.filter((r) => r.docId === h.docId),
-    );
-  }
   return [...docs.values()].map((hits) => ({
     ...hits[0], // 最も近いチャンクの類似度と資料の情報を使う
     content: hits

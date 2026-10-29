@@ -5,6 +5,7 @@
   {
    "id": "4087551e-201a-81eb-8bca-e4951f59e2cd",
    "type": "child_page",
+   "has_children": true,
    "child_page": {
     "title": "8/20 予約確定メール遅延の振り返り"
    }

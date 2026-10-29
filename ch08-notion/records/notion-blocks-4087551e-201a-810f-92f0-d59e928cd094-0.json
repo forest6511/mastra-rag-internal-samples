@@ -5,6 +5,7 @@
   {
    "id": "4087551e-201a-8118-9614-c61a35870640",
    "type": "child_page",
+   "has_children": true,
    "child_page": {
     "title": "カナ予 機能一覧（セキュリティ編）"
    }
