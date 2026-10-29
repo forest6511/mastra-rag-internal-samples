@@ -18,6 +18,8 @@ const done = new Set(
     .map((l) => JSON.parse(l))
     .map((r: { qid: string; rep: number }) => `${r.qid}|${r.rep}`),
 );
+// #endregion
+// #region run-loop
 for (const q of questions()) {
   for (let rep = 1; rep <= reps; rep++) {
     if (done.has(`${q.id}|${rep}`)) continue;

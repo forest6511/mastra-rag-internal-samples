@@ -33,7 +33,8 @@ export const Score = z.object({
   wrong: z.array(z.string()), // 誤った記述
   behavior_ok: z.boolean(), // 期待した振る舞いをしたか
   citation_ok: z.boolean(), // 出典が要点の根拠になっているか
-  usable: z.number().int().min(0).max(2), // 0 そのまま 1 少し直す 2 書き直す
+  // 0 そのまま使える / 1 少し直せば使える / 2 書き直しが要る
+  usable: z.number().int().min(0).max(2),
   reason: z.string(),
 });
 export type Score = z.infer<typeof Score>;
@@ -65,6 +66,8 @@ export async function judge(
     `答え:\n${answer}`,
     `答えが根拠にした資料: ${titles.join(" / ") || "（なし）"}`,
   ].join("\n");
+  // #endregion
+  // #region judge-call
   const key = crypto
     .createHash("sha256")
     .update(

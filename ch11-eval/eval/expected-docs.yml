@@ -1,6 +1,7 @@
 # 答えるべき質問ごとに、答えに要る資料（正解の資料）の ID。
 # 検索の指標（正解の資料が上位6件に入った割合）に使う。
 # questions.yml の sources（出来事と置き場所）を、資料の ID に置き換えた
+# #region example
 Q01:
   - slack:C0CE4A0NJ80:1789434120.000000 # #incident の障害スレッド
   - jira:KAN-13
@@ -12,6 +13,7 @@ Q02:
   - notion:4087551e-201a-81eb-8bca-e4951f59e2cd
   - jira:KAN-14
   - jira:KAN-13
+# #endregion
 Q03:
   - github:kanade-yoyaku:14
   - slack:C0CE4A0NJ80:1789434120.000000

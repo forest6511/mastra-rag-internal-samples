@@ -61,16 +61,17 @@ CREATE TABLE IF NOT EXISTS sync_state (
 
 // #region rls
 // RLS（Row Level Security）: 行ごとの読み取りの制限。
-// 役割 rag_reader で読むときは、行の acl と利用者のグループ
+// ロール rag_reader で読むときは、行の acl と利用者のグループ
 // （app.groups）が1つでも重なる行だけが返る。
-// 表を作った役割（管理者）には、この制限はかからない
+// 表を作ったロール（管理者）には、この制限はかからない
 export const RLS = `
 DO $$ BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'rag_reader')
   THEN CREATE ROLE rag_reader NOLOGIN; END IF;
 END $$;
--- 表の所有者が rag_reader に切り替えられるようにする（スーパーユーザで
--- ない所有者、たとえば Aurora の管理ユーザーで要る。第16章）
+-- 表の所有者が rag_reader に切り替えられるようにする
+-- （スーパーユーザーでない所有者で要る。Aurora の管理ユーザーなど。
+-- 第16章）
 GRANT rag_reader TO CURRENT_USER;
 -- 利用者のグループ（app.groups のカンマ区切りを配列にする）
 CREATE OR REPLACE FUNCTION groups() RETURNS text[]
@@ -91,7 +92,7 @@ GRANT SELECT ON documents, chunks TO rag_reader;
 
 // #region as-user
 // 検索と本文の取得は、必ずこの関数を通す。1つのトランザクションの
-// 中だけ、役割を rag_reader に、app.groups を利用者のグループにする。
+// 中だけ、ロールを rag_reader に、app.groups を利用者のグループにする。
 // SET LOCAL と set_config(..., true) は、トランザクションが終わると
 // 元に戻る。接続プールで次の利用者に、前の利用者の設定が残らない
 type Client = Queryable & { release?: (err?: Error) => void };
