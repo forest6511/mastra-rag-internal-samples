@@ -1,0 +1,48 @@
+{
+ "ok": true,
+ "response_metadata": {
+  "next_cursor": ""
+ },
+ "channels": [
+  {
+   "id": "C0CCY8JPJQ3",
+   "name": "all-カナデループ",
+   "is_member": true
+  },
+  {
+   "id": "C0CD3MUJ6G3",
+   "name": "sales",
+   "is_member": true
+  },
+  {
+   "id": "C0CD4A10TKL",
+   "name": "slack-へようこそ",
+   "is_member": false
+  },
+  {
+   "id": "C0CD4KQ8J5B",
+   "name": "announce",
+   "is_member": true
+  },
+  {
+   "id": "C0CD805EPM4",
+   "name": "dev",
+   "is_member": true
+  },
+  {
+   "id": "C0CD86DBNNQ",
+   "name": "ソーシャル",
+   "is_member": false
+  },
+  {
+   "id": "C0CDDKLA91A",
+   "name": "random",
+   "is_member": true
+  },
+  {
+   "id": "C0CE4A0NJ80",
+   "name": "incident",
+   "is_member": true
+  }
+ ]
+}

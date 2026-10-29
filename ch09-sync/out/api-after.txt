@@ -1,0 +1,17 @@
+[1] 0.560 kanade-admin README
+[2] 0.399 #dev 2026-10-08 10:00 のスレッド
+[3] 0.398 カナ予 機能一覧（セキュリティ編）
+[4] 0.389 決済まわり設計メモ
+[5] 0.380 #incident 2026-09-15 10:02 のスレッド
+[6] 0.375 社内FAQ（よくある質問）
+
+「予約 API」の仕様やエンドポイント一覧は、提示資料の中では確認できません。仕様の所在は**要確認**です。[1][6]
+
+問い合わせ先は、機能・ロードマップに関する確認として**小林 亮（開発リーダー）**です。[2]
+
+エンドポイント一覧そのものは資料にないため、ここでは案内できません。[1][6]
+
+**出典**
+- [1] kanade-admin README（github・日付なし） https://github.com/kanadeloop/kanade-admin/blob/main/README.md
+- [2] #dev 2026-10-08 10:00 のスレッド（slack・2026-10-08） https://kanadeloop.slack.com/archives/C0CD805EPM4/p1791421200000000
+- [6] 社内FAQ（よくある質問）（confluence・2026-10-05） https://kanadeloop.atlassian.net/wiki/spaces/KANADE/pages/589866/FAQ

@@ -1,0 +1,16 @@
+[1] 0.686 予約 API 仕様
+[2] 0.560 kanade-admin README
+[3] 0.399 #dev 2026-10-08 10:00 のスレッド
+[4] 0.398 カナ予 機能一覧（セキュリティ編）
+[5] 0.389 決済まわり設計メモ
+[6] 0.380 #incident 2026-09-15 10:02 のスレッド
+
+予約 API の仕様は、公開 API 側については Confluence の「予約 API 仕様」にあります。[1]  
+一方、社内の管理画面用 API については GitHub の「kanade-admin README」にあります。[2]
+
+エンドポイントの一覧は、渡された資料の中には記載がありません。要確認です。[1][2]  
+確認先は、小林 亮（開発リーダー）です。[要確認][2]
+
+出典  
+[1] 予約 API 仕様 — https://kanadeloop.atlassian.net/wiki/spaces/KANADE/pages/688129/API  
+[2] kanade-admin README — https://github.com/kanadeloop/kanade-admin/blob/main/README.md

@@ -1,0 +1,5 @@
+notion: 取得に失敗。索引はそのまま: Error: notion-blocks-4087551e-201a-80d7-a71a-ea04d9805912-0: HTTP 401 {"object":"error","status":401,"code":"unauthorized","message":"API token is invalid.","additional_data":{"reason":"token_invalid"},"request_id":"…"}
+┌─────────┐
+│ (index) │
+├─────────┤
+└─────────┘

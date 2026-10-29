@@ -1,0 +1,282 @@
+{
+ "has_more": false,
+ "next_cursor": null,
+ "results": [
+  {
+   "id": "4087551e-201a-8185-8fc3-cd54ea219bff",
+   "type": "paragraph",
+   "has_children": false,
+   "paragraph": {
+    "rich_text": [
+     {
+      "plain_text": "作成日: 2026-10-02 ／ 作成者: 中村 真理"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-817a-8a0b-ed9d9d8cef69",
+   "type": "heading_2",
+   "has_children": false,
+   "heading_2": {
+    "rich_text": [
+     {
+      "plain_text": "概要"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81e3-be8b-f92873434034",
+   "type": "paragraph",
+   "has_children": false,
+   "paragraph": {
+    "rich_text": [
+     {
+      "plain_text": "カナ予のセキュリティについて、商談で聞かれたら何を伝えればよいでしょうか？まずは、下記の内容をそのまま自信を持ってご案内ください。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-8108-a570-d0af7c777b12",
+   "type": "paragraph",
+   "has_children": false,
+   "paragraph": {
+    "rich_text": [
+     {
+      "plain_text": "飲食店・美容室のお客様からは、「予約情報はどこに保存されていますか？」「バックアップはありますか？」「権限は分けられますか？」といった質問が多いです。カナ予では、保存場所、暗号化、バックアップ、ログ、権限管理の基本項目を整理してご説明できます。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81b7-8050-e63154a51555",
+   "type": "heading_2",
+   "has_children": false,
+   "heading_2": {
+    "rich_text": [
+     {
+      "plain_text": "データの保存場所"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-8103-a2eb-cbca595dc86d",
+   "type": "bulleted_list_item",
+   "has_children": false,
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "データの保存場所は東京リージョンです。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-815d-8669-eae84f894cfb",
+   "type": "bulleted_list_item",
+   "has_children": false,
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "お客様に「国内ですか？」と聞かれた場合は、東京リージョンで保存していると回答してください。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81dc-8f53-eb89444397d6",
+   "type": "heading_2",
+   "has_children": false,
+   "heading_2": {
+    "rich_text": [
+     {
+      "plain_text": "保存データの暗号化"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-8169-99ed-d4c2de162c9d",
+   "type": "bulleted_list_item",
+   "has_children": false,
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "保存データの暗号化は AES-256 です。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-811f-9ade-e0a88ff418e6",
+   "type": "bulleted_list_item",
+   "has_children": false,
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "「予約情報や顧客情報は暗号化されていますか？」と聞かれたら、保存データは AES-256 で暗号化されています、と説明できます。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81d3-88af-e182f906de2e",
+   "type": "heading_2",
+   "has_children": false,
+   "heading_2": {
+    "rich_text": [
+     {
+      "plain_text": "バックアップ"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-817d-baaa-da3d31a59264",
+   "type": "bulleted_list_item",
+   "has_children": false,
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "バックアップは毎日取得しています。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81a0-9044-c95bbe927f83",
+   "type": "bulleted_list_item",
+   "has_children": false,
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "保持期間は7日分です。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-817c-8245-ce05099d94a5",
+   "type": "bulleted_list_item",
+   "has_children": false,
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "「万一のときに戻せますか？」という質問には、毎日バックアップを取得し、7日分保持しています、と伝えてください。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-818c-b77e-e53264ad9783",
+   "type": "heading_2",
+   "has_children": false,
+   "heading_2": {
+    "rich_text": [
+     {
+      "plain_text": "ログ保管"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81b3-9df0-e0fee9e9791d",
+   "type": "bulleted_list_item",
+   "has_children": false,
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "ログ保管は1年です。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81d3-9080-c1de17708f44",
+   "type": "bulleted_list_item",
+   "has_children": false,
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "「操作やアクセスの記録は残りますか？」と聞かれた場合は、ログは1年保管しています、と回答できます。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81af-aff1-efa298f4879f",
+   "type": "heading_2",
+   "has_children": false,
+   "heading_2": {
+    "rich_text": [
+     {
+      "plain_text": "権限管理"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-8157-897c-e7a74f7a569f",
+   "type": "bulleted_list_item",
+   "has_children": false,
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "権限管理は、店舗ごとの管理者と担当者の2段階です。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-8186-90ff-d560f463c9a3",
+   "type": "bulleted_list_item",
+   "has_children": false,
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "「スタッフごとに権限を分けられますか？」という質問には、店舗ごとに管理者と担当者の2段階で管理できます、と説明してください。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81cf-b238-d5fff7553e12",
+   "type": "heading_2",
+   "has_children": false,
+   "heading_2": {
+    "rich_text": [
+     {
+      "plain_text": "営業での伝え方"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81ec-958e-e977c4ae72d2",
+   "type": "paragraph",
+   "has_children": false,
+   "paragraph": {
+    "rich_text": [
+     {
+      "plain_text": "お客様が不安に感じやすいのは、「どこに保存されるのか？」「暗号化されているのか？」「バックアップはあるのか？」「ログは残るのか？」「権限は分けられるのか？」の5点です。カナ予では、それぞれについて明確に回答できます。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81c0-96cb-efca91d16760",
+   "type": "paragraph",
+   "has_children": false,
+   "paragraph": {
+    "rich_text": [
+     {
+      "plain_text": "商談中に細かい確認が出た場合は、まずこのページの内容で回答して大丈夫です。追加で確認が必要な場合は、ヘルプ箱に質問を集約するとスムーズです。"
+     }
+    ]
+   }
+  }
+ ]
+}
