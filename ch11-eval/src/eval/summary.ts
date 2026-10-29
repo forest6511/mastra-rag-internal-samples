@@ -76,19 +76,24 @@ export function summarize(
 
 // #region main
 // npm run summary -- <ラベル>   答えるべき10問と、答えてはいけない8問に
-// 分けて、段（mode）ごとに表にする
+// 分けて、段（mode）ごとに1行ずつ出す
 if (process.argv[1]?.endsWith("summary.ts")) {
   const label = process.argv[2] ?? "run";
   const rows = readRows(`eval/runs/${label}.jsonl`);
   const withRecall = label !== "final-v4";
   for (const mode of [...new Set(rows.map((r) => r.mode))]) {
-    const of = (ans: boolean) => (r: Row) =>
-      r.mode === mode && (r.expected === "answer") === ans;
-    console.log(mode);
-    console.table({
-      答えるべき10問: summarize(rows, of(true), withRecall),
-      答えてはいけない8問: summarize(rows, of(false), withRecall),
-    });
+    for (const ans of [true, false]) {
+      const pick = (r: Row) =>
+        r.mode === mode && (r.expected === "answer") === ans;
+      const s = summarize(rows, pick, withRecall);
+      console.log(
+        `${mode} ${ans ? "答えるべき10問" : "答えてはいけない8問"}` +
+          ` (n=${s.n})\n  必須要点 ${s.coverage}（±${s.spread}）` +
+          ` / 誤った記述 ${s.wrong} / 振る舞い ${s.behavior}\n` +
+          `  そのまま使える ${s.usable} / 正解の資料 ${s.recall}` +
+          ` / ${s.seconds} 秒`,
+      );
+    }
   }
 }
 // #endregion
