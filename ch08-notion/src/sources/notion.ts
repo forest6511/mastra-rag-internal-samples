@@ -93,6 +93,8 @@ export async function notionDocs(rootId: string): Promise<Doc[]> {
       }
     };
     await read(pageId);
+    // #endregion
+    // #region notion-docs-save
     const body = lines.filter(Boolean).join("\n");
     if (pageId !== rootId && body) {
       docs.push({
