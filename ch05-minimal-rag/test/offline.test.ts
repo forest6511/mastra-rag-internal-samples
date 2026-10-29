@@ -7,6 +7,7 @@ import { migrate, saveDoc } from "../src/ingest.js";
 import { vectorSearch } from "../src/search.js";
 import { confluenceDocs } from "../src/sources/confluence.js";
 
+// #region setup
 // 記録した応答（records/）だけで、取り込みから答えまでを通す。
 // アカウントも API キーも要らない
 process.env.OFFLINE = "1";
@@ -18,6 +19,9 @@ beforeAll(async () => {
   for (const d of await confluenceDocs("KANADE")) await saveDoc(db, d);
 });
 
+// #endregion
+
+// #region tests
 describe("記録した応答で、最小の RAG を通す", () => {
   it("いちばん近いチャンクは、古いデプロイ手順書", async () => {
     const [v] = await embed([question]);
@@ -34,3 +38,4 @@ describe("記録した応答で、最小の RAG を通す", () => {
     expect(text).not.toContain("GitHub Actions");
   });
 });
+// #endregion
