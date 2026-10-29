@@ -30,6 +30,7 @@ export async function addCanonical(
   hits: Hit[],
 ): Promise<Hit[]> {
   const out = [...hits];
+  let last = out.length - 1; // 入れ替える位置。正本どうしは押し出さない
   for (const c of canonicals()) {
     if (!c.keywords.some((k) => question.includes(k))) continue;
     if (out.some((h) => h.title === c.title)) continue;
@@ -40,7 +41,7 @@ export async function addCanonical(
          FROM documents d WHERE d.title = $1`,
       [c.title],
     );
-    if (res.rows[0]) out.splice(out.length - 1, 1, res.rows[0]);
+    if (res.rows[0] && last >= 0) out.splice(last--, 1, res.rows[0]);
   }
   return out;
 }

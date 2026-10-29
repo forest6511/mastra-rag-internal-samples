@@ -55,12 +55,16 @@ const keepBlocks = (j: BlockList): BlockList => ({
 // #endregion
 
 // #region text
-// 段落・見出し・箇条書きは rich_text の配列に文字が入っている
-function richTextOf(b: Block): { plain_text: string }[] {
-  const body = b[b.type] as { rich_text?: { plain_text: string }[] };
-  return (body?.rich_text ?? []).map(({ plain_text }) => ({
-    plain_text,
+// 段落・見出し・箇条書きは rich_text の配列に文字が入っている。
+// 表の行（table_row）は、セルごとの rich_text の配列（cells）に入る
+type Rich = { plain_text: string }[];
+function richTextOf(b: Block): Rich {
+  const body = b[b.type] as { rich_text?: Rich; cells?: Rich[] };
+  const cells = (body?.cells ?? []).map((cell) => ({
+    plain_text: cell.map((t) => t.plain_text).join("") + " ",
   }));
+  const texts = [...(body?.rich_text ?? []), ...cells];
+  return texts.map(({ plain_text }) => ({ plain_text }));
 }
 
 function lineOf(b: Block): string {
@@ -82,6 +86,7 @@ export async function notionDocs(rootId: string): Promise<Doc[]> {
   const walk = async (pageId: string, title: string) => {
     const lines: string[] = [];
     // ブロックの子（表の行・トグルの中・入れ子の箇条書き）も読む。
+    // 表のブロックの子が行（table_row）で、セルの文字は cells にある。
     // 子ページは別の資料にするので、中には入らない
     const read = async (id: string) => {
       for (const b of await blocks(id)) {
