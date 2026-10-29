@@ -38,11 +38,10 @@ export const answerAgent = new Agent({
 // どのサービスの、いつの資料かも添える（新旧を比べられるように）
 export const context = (hits: Hit[]) =>
   hits
-    .map(
-      (h, i) =>
-        `[${i + 1}] ${h.title}（${h.source}・${h.eventDate ?? "日付なし"}）` +
-        `\nURL: ${h.url}\n${h.content}`,
-    )
+    .map((h, i) => {
+      const meta = `${h.source}・${h.eventDate ?? "日付なし"}`;
+      return `[${i + 1}] ${h.title}（${meta}）\nURL: ${h.url}\n${h.content}`;
+    })
     .join("\n\n---\n\n");
 // #endregion
 

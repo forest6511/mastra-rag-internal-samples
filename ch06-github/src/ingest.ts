@@ -31,6 +31,8 @@ export async function saveDoc(db: Queryable, d: Doc): Promise<number> {
     [d.id],
   );
   if (old.rows[0]?.body_hash === hash) return 0;
+  // #endregion
+  // #region save-doc-insert
   const pieces = chunk(`${d.title}\n${d.body}`);
   const vectors = await embed(pieces);
   await db.query(

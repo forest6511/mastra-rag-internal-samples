@@ -39,7 +39,7 @@ describe("GitHub を足した RAG", () => {
     expect(res.rows[0].d).toBe("2026-09-01");
   });
 
-  it("答えは新しい README に触れるが、主文は古い手順のまま", async () => {
+  it("新しい README に触れるが、主文は古い手順", async () => {
     const q = "デプロイ手順は？";
     const [v] = await embed([q]);
     const text = await answer(q, await vectorSearch(db, v));
