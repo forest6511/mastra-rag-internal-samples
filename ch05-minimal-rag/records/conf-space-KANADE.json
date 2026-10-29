@@ -1,0 +1,24 @@
+{
+ "results": [
+  {
+   "spaceOwnerId": "000000:0000",
+   "homepageId": "491694",
+   "authorId": "000000:0000",
+   "createdAt": "2026-10-29T11:31:18.662Z",
+   "icon": null,
+   "name": "カナデループ 社内wiki",
+   "key": "KANADE",
+   "id": "491522",
+   "type": "global",
+   "description": null,
+   "status": "current",
+   "_links": {
+    "webui": "/spaces/KANADE"
+   },
+   "currentActiveAlias": "KANADE"
+  }
+ ],
+ "_links": {
+  "base": "https://kanadeloop.atlassian.net/wiki"
+ }
+}
