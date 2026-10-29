@@ -1,0 +1,35 @@
+{
+  "name": "kanade-rag-ch06-github",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "ingest": "tsx --env-file=.env src/ingest-cli.ts",
+    "ask": "tsx --env-file-if-exists=.env src/ask.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@mastra/core": "1.80.0",
+    "openai": "7.45.1",
+    "pg": "8.23.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.10",
+    "@electric-sql/pglite-pgvector": "0.0.11",
+    "@eslint/js": "10.0.1",
+    "@types/node": "22.18.0",
+    "@types/pg": "8.15.5",
+    "eslint": "10.13.0",
+    "prettier": "3.9.10",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.2",
+    "vitest": "5.0.5"
+  }
+}

@@ -19,11 +19,14 @@ export const RECORDED_SITE = "https://kanadeloop.atlassian.net";
 
 // #region get-json
 // API の応答を records/ に記録する。OFFLINE=1 のときは API を呼ばず、
-// 記録から返す（アカウントもキーも無しで、同じ結果になる）
+// 記録から返す（アカウントもキーも無しで、同じ結果になる）。
+// keep を渡すと、使う項目だけを残してから記録する（投稿者の
+// アカウント名など、使わない個人の情報を記録に残さない）
 export async function getJson<T>(
   name: string,
   url: string,
   init: RequestInit = {},
+  keep: (json: T) => T = (json) => json,
 ): Promise<T> {
   const file = path.join(
     "records",
@@ -36,9 +39,9 @@ export async function getJson<T>(
   if (!res.ok) {
     throw new Error(`${name}: HTTP ${res.status} ${await res.text()}`);
   }
-  const json = await res.json();
+  const json = keep((await res.json()) as T);
   fs.mkdirSync("records", { recursive: true });
   fs.writeFileSync(file, mask(JSON.stringify(json, null, 1)));
-  return json as T;
+  return json;
 }
 // #endregion
