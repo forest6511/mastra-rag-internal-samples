@@ -104,7 +104,7 @@ async function issues(org: string, repo: string): Promise<Doc[]> {
         body,
         await comments(repo, i),
       ].join("\n"),
-      eventDate: eventDateOf(body) ?? i.created_at.slice(0, 10),
+      eventDate: eventDateOf(body),
     });
   }
   return docs;

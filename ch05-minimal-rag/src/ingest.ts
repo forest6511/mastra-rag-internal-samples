@@ -5,7 +5,7 @@ import type { Doc } from "./doc.js";
 import { embed } from "./embed.js";
 
 // #region migrate
-// 表を作る。PGlite は複数の文を exec で流す
+// テーブルを作る。PGlite は複数の文を exec で流す
 // （pg の Pool は query で流せる）
 export async function migrate(db: Queryable & { exec?: unknown }) {
   if (typeof db.exec === "function") {

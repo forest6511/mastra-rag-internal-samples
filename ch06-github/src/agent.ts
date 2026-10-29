@@ -38,7 +38,8 @@ export const INSTRUCTIONS_CH05 = [
 // #endregion
 
 // #region agent
-// 生成のモデルは版つきの名前で固定する（版が変わると答えも変わるため）
+// 生成のモデルは日付つきのスナップショットの名前で固定する
+// （モデルが更新されると答えも変わるため）
 export const MODEL = "openai/gpt-5.4-mini-2026-03-17";
 
 const agentFor = (instructions: string) =>
