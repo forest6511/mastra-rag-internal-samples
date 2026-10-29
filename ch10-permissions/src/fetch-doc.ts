@@ -15,10 +15,14 @@ export async function fetchDoc(c: Queryable, id: string) {
 // #endregion
 
 // npm run fetch -- "notion:…" --as nakamura
-const [id, , user] = process.argv.slice(2);
 if (process.argv[1]?.endsWith("fetch-doc.ts")) {
-  const doc = await asUser(groupsOf(user ?? ""), (c) =>
-    fetchDoc(c, id),
+  const args = process.argv.slice(2);
+  const user = args[args.indexOf("--as") + 1] ?? "";
+  const id = args.find(
+    (a, i) => a !== "--as" && args[i - 1] !== "--as",
+  );
+  const doc = await asUser(groupsOf(user), (c) =>
+    fetchDoc(c, id ?? ""),
   );
   console.log(doc ? `${doc.title}\n\n${doc.body}` : "見つかりません");
   await pool.end();

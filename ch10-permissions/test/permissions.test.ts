@@ -51,6 +51,28 @@ describe("見てよい資料だけを返す", () => {
     expect(dev.some((t) => t.startsWith("#incident"))).toBe(true);
   });
 
+  // #endregion
+  // #region tests-count
+  it("グループごとに、見える資料の数が違う", async () => {
+    const count = (g: string[]) =>
+      asUser(
+        g,
+        async (c) =>
+          (
+            await c.query<{ n: number }>(
+              "SELECT count(*)::int AS n FROM documents",
+            )
+          ).rows[0].n,
+        db,
+      );
+    expect(await count(SALES)).toBe(20);
+    expect(await count(DEV)).toBe(25);
+    expect(await count(["all", "hr"])).toBe(21);
+    expect(await count([])).toBe(0); // グループの無い利用者
+  });
+
+  // #endregion
+  // #region tests-hr
   it("人事の資料は、ID を指定しても営業には返さない", async () => {
     const id = out("hr-id.txt").trim();
     const fetch = (g: string[]) =>

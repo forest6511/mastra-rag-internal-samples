@@ -9,11 +9,10 @@ import { docSearch } from "./search.js";
 // npm run ask -- "質問" --as nakamura
 // 利用者（--as）のグループで見える資料だけを、答えの材料にする
 const args = process.argv.slice(2);
-const question = args.find((a) => !a.startsWith("--") && !isUser(a));
 const user = args[args.indexOf("--as") + 1];
-function isUser(a: string) {
-  return args[args.indexOf(a) - 1] === "--as";
-}
+const question = args.find(
+  (a, i) => a !== "--as" && args[i - 1] !== "--as",
+);
 if (!question || !args.includes("--as")) {
   console.log('使い方: npm run ask -- "質問" --as <利用者>');
   process.exit(1);

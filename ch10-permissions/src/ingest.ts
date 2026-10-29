@@ -54,7 +54,7 @@ export async function saveDoc(db: Queryable, d: Doc): Promise<number> {
     [
       ...[d.id, d.source, d.url, d.title, d.body],
       ...[d.eventDate ?? null, d.canonical ?? false],
-      d.acl ?? ["all"],
+      d.acl ?? [],
     ],
   );
   await db.query("DELETE FROM chunks WHERE doc_id = $1", [d.id]);
@@ -62,7 +62,7 @@ export async function saveDoc(db: Queryable, d: Doc): Promise<number> {
     await db.query(
       `INSERT INTO chunks (doc_id, ord, content, embedding, acl)
        VALUES ($1, $2, $3, $4::vector, $5)`,
-      [d.id, i, content, JSON.stringify(vectors[i]), d.acl ?? ["all"]],
+      [d.id, i, content, JSON.stringify(vectors[i]), d.acl ?? []],
     );
   }
   await db.query("UPDATE documents SET body_hash = $2 WHERE id = $1", [
@@ -77,15 +77,21 @@ export async function saveDoc(db: Queryable, d: Doc): Promise<number> {
 // 権限だけを書き換える。本文が同じでも、対応表が変われば権限は変わる。
 // 本文のハッシュだけで更新を決めると、権限の取り消しが反映されない
 // （試作で実際に起きた）。戻り値は、書き換えたかどうか
+// チャンクを先に、資料の行を最後に書く。途中で止まっても、資料の行が
+// 古いままなので、次の回でもう一度書き換える
 export async function saveAcl(db: Queryable, d: Doc): Promise<boolean> {
-  const acl = d.acl ?? ["all"];
-  const res = await db.query<{ id: string }>(
-    `UPDATE documents SET acl = $2
-     WHERE id = $1 AND acl IS DISTINCT FROM $2 RETURNING id`,
-    [d.id, acl],
+  const acl = d.acl ?? [];
+  const old = await db.query<{ acl: string[] }>(
+    "SELECT acl FROM documents WHERE id = $1",
+    [d.id],
   );
-  if (res.rows.length === 0) return false;
+  const now = old.rows[0]?.acl;
+  if (!now || now.join(",") === acl.join(",")) return false;
   await db.query("UPDATE chunks SET acl = $2 WHERE doc_id = $1", [
+    d.id,
+    acl,
+  ]);
+  await db.query("UPDATE documents SET acl = $2 WHERE id = $1", [
     d.id,
     acl,
   ]);

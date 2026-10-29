@@ -83,15 +83,17 @@ function lineOf(b: Block): string {
 // 一覧は親からたどって作る
 export async function notionDocs(rootId: string): Promise<Doc[]> {
   const docs: Doc[] = [];
-  // parent は親ページの題名（権限の置き場所に使う。第10章）
-  const walk = async (pageId: string, title: string, parent = "") => {
+  // path は親ページの題名を上から並べた道筋（権限の置き場所。第10章）
+  const walk = async (pageId: string, title: string, path = "") => {
+    const here =
+      pageId === rootId ? "" : path ? `${path}/${title}` : title;
     const lines: string[] = [];
     // ブロックの子（表の行・トグルの中・入れ子の箇条書き）も読む。
     // 表のブロックの子が行（table_row）で、セルの文字は cells にある。
     // 子ページは別の資料にするので、中には入らない
     const read = async (id: string) => {
       for (const b of await blocks(id)) {
-        if (b.child_page) await walk(b.id, b.child_page.title, title);
+        if (b.child_page) await walk(b.id, b.child_page.title, here);
         else {
           lines.push(lineOf(b));
           if (b.has_children) await read(b.id);
@@ -110,7 +112,7 @@ export async function notionDocs(rootId: string): Promise<Doc[]> {
         title,
         body,
         eventDate: eventDateOf(body),
-        container: `notion:${parent}`,
+        container: `notion:${path}`,
       });
     }
   };

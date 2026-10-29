@@ -40,10 +40,12 @@ CREATE TABLE IF NOT EXISTS chunks (
 CREATE INDEX IF NOT EXISTS chunks_embedding
   ON chunks USING hnsw (embedding vector_cosine_ops);
 -- 第10章: 資料とチャンクに、見てよいグループを持たせる
+-- 既定は空（誰にも見せない）。権限を付け損ねた資料は、開く側でなく
+-- 閉じる側に倒す
 ALTER TABLE documents
-  ADD COLUMN IF NOT EXISTS acl text[] NOT NULL DEFAULT '{all}';
+  ADD COLUMN IF NOT EXISTS acl text[] NOT NULL DEFAULT '{}';
 ALTER TABLE chunks
-  ADD COLUMN IF NOT EXISTS acl text[] NOT NULL DEFAULT '{all}';
+  ADD COLUMN IF NOT EXISTS acl text[] NOT NULL DEFAULT '{}';
 -- #endregion
 -- #region schema-sync
 -- 第9章: サービスごとの同期の状態
@@ -67,6 +69,9 @@ DO $$ BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'rag_reader')
   THEN CREATE ROLE rag_reader NOLOGIN; END IF;
 END $$;
+-- 表の所有者が rag_reader に切り替えられるようにする（スーパーユーザで
+-- ない所有者、たとえば Aurora の管理ユーザーで要る。第16章）
+GRANT rag_reader TO CURRENT_USER;
 -- 利用者のグループ（app.groups のカンマ区切りを配列にする）
 CREATE OR REPLACE FUNCTION groups() RETURNS text[]
   LANGUAGE sql STABLE AS $f$
@@ -89,7 +94,7 @@ GRANT SELECT ON documents, chunks TO rag_reader;
 // 中だけ、役割を rag_reader に、app.groups を利用者のグループにする。
 // SET LOCAL と set_config(..., true) は、トランザクションが終わると
 // 元に戻る。接続プールで次の利用者に、前の利用者の設定が残らない
-type Client = Queryable & { release?: () => void };
+type Client = Queryable & { release?: (err?: Error) => void };
 type Db = Queryable | { connect(): Promise<Client> };
 
 export async function asUser<T>(
@@ -98,20 +103,27 @@ export async function asUser<T>(
   db: Db = pool,
 ): Promise<T> {
   const c: Client = "connect" in db ? await db.connect() : db;
+  let result: T;
+  // #endregion
+  // #region as-user-body
   try {
     await c.query("BEGIN");
     await c.query("SET LOCAL ROLE rag_reader");
+    // HNSW の索引で近い順に取った後で RLS が絞るので、見える資料が
+    // 少ない利用者ほど件数が減る。足りなければ索引を引き続ける
+    await c.query("SET LOCAL hnsw.iterative_scan = relaxed_order");
     await c.query("SELECT set_config('app.groups', $1, true)", [
       groups.join(","),
     ]);
-    const result = await fn(c);
+    result = await fn(c);
     await c.query("COMMIT");
-    return result;
   } catch (e) {
-    await c.query("ROLLBACK");
+    await c.query("ROLLBACK").catch(() => undefined);
+    // 失敗した接続は、プールに戻さずに捨てる
+    c.release?.(e instanceof Error ? e : undefined);
     throw e;
-  } finally {
-    c.release?.();
   }
+  c.release?.();
+  return result;
 }
 // #endregion
