@@ -12,7 +12,8 @@ export interface Doc {
 // #endregion
 
 // #region event-date
-// 本書の環境では、資料の日付を本文の頭の「作成日: 2026-09-01」から取る。
+// 本書の環境では、資料の日付を本文の頭の
+// 「作成日: 2026-09-01」から取る。
 // カナデループの資料は API で過去の日付を入れられず、API の作成日が
 // 資料を入れた日になるため。自社の資料では API の更新日を使う（第18章）
 export const eventDateOf = (body: string) =>
