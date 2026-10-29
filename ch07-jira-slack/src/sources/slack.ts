@@ -64,8 +64,10 @@ export const jstOf = (ts: string) =>
 
 // #region permalink
 // 投稿の URL。p の後ろに ts の小数点を除いた数字を付ける
-const permalink = (workspace: string, ch: string, ts: string) =>
-  `https://${workspace}.slack.com/archives/${ch}/p${ts.replace(".", "")}`;
+const permalink = (workspace: string, ch: string, ts: string) => {
+  const site = `https://${workspace}.slack.com`;
+  return `${site}/archives/${ch}/p${ts.replace(".", "")}`;
+};
 // #endregion
 
 // #region threads
@@ -95,7 +97,8 @@ async function threads(): Promise<{ ch: Channel; msgs: Message[] }[]> {
     // #endregion
     // #region threads-replies
     for (const m of h.messages) {
-      if (m.subtype && m.subtype !== "bot_message") continue; // 参加通知など
+      // 参加の通知などは飛ばす（取り込んだ投稿は bot_message になる）
+      if (m.subtype && m.subtype !== "bot_message") continue;
       const msgs = m.reply_count
         ? (
             await slackGet<{ messages: Message[] }>(

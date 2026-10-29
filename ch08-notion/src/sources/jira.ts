@@ -114,7 +114,8 @@ function toDoc(site: string, i: Issue): Doc {
 // #endregion
 
 // #region jst
-// Jira の日時（"2026-09-15T10:30:00.000+0900"）を「2026-09-15 10:30」にする
+// Jira の日時（"2026-09-15T10:30:00.000+0900"）を
+// 日本時間の「2026-09-15 10:30」にする
 const jst = (s: string) =>
   new Date(new Date(s).getTime() + 9 * 3600e3)
     .toISOString()
