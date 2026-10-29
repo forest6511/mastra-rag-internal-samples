@@ -40,7 +40,12 @@ async function slackGet<T>(
 // #endregion
 
 // #region keep
-const keepMessages = (j: { messages: Message[] }) => ({
+interface History {
+  messages: Message[];
+  response_metadata?: { next_cursor?: string };
+}
+const keepMessages = (j: History): History => ({
+  response_metadata: { next_cursor: j.response_metadata?.next_cursor },
   messages: j.messages.map((m) => ({
     ts: m.ts,
     text: m.text,
@@ -86,25 +91,34 @@ async function threads(): Promise<{ ch: Channel; msgs: Message[] }[]> {
       })),
     }),
   );
+  // #endregion
+  // #region threads-history
   const out: { ch: Channel; msgs: Message[] }[] = [];
   for (const ch of list.channels.filter((c) => c.is_member)) {
-    const h = await slackGet<{ messages: Message[] }>(
-      `slack-history-${ch.id}`,
-      "conversations.history",
-      { channel: ch.id, limit: "1000" },
-      keepMessages,
-    );
+    // 履歴は1回に最大200件。続きは next_cursor で取る
+    const history: Message[] = [];
+    let cursor = "";
+    for (let n = 0; n === 0 || cursor; n++) {
+      const h = await slackGet<History>(
+        `slack-history-${ch.id}-${n}`,
+        "conversations.history",
+        { channel: ch.id, limit: "200", ...(cursor ? { cursor } : {}) },
+        keepMessages,
+      );
+      history.push(...h.messages);
+      cursor = h.response_metadata?.next_cursor ?? "";
+    }
     // #endregion
     // #region threads-replies
-    for (const m of h.messages) {
+    for (const m of history) {
       // 参加の通知などは飛ばす（取り込んだ投稿は bot_message になる）
       if (m.subtype && m.subtype !== "bot_message") continue;
       const msgs = m.reply_count
         ? (
-            await slackGet<{ messages: Message[] }>(
+            await slackGet<History>(
               `slack-replies-${ch.id}-${m.ts}`,
               "conversations.replies",
-              { channel: ch.id, ts: m.ts },
+              { channel: ch.id, ts: m.ts, limit: "200" },
               keepMessages,
             )
           ).messages

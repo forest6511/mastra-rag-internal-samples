@@ -20,6 +20,15 @@ const docs = [
     ? await slackPostDocs(workspace)
     : await slackThreadDocs(workspace)),
 ];
+// 今回の取り込みに無い Slack の資料を消す（投稿単位とスレッド単位を
+// 切り替えたとき、前の分け方の資料が DB に残らないように）
+const slackIds = docs
+  .filter((d) => d.source === "slack")
+  .map((d) => d.id);
+await pool.query(
+  "DELETE FROM documents WHERE source = 'slack' AND NOT (id = ANY($1))",
+  [slackIds],
+);
 for (const d of docs) {
   const n = await saveDoc(pool, d);
   console.log(`${d.title}: ${n} チャンク`);
