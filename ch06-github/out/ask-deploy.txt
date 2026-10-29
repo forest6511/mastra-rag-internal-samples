@@ -1,0 +1,25 @@
+[1] 0.615 デプロイ手順（本番環境）
+[2] 0.369 社内FAQ（よくある質問）
+[3] 0.362 kanade-infra README
+[4] 0.342 kanade-yoyaku PR #15 決済GW再試行まわりの整理と引き継ぎ用の改善
+[5] 0.308 kanade-yoyaku PR #15 決済GW再試行まわりの整理と引き継ぎ用の改善
+[6] 0.306 kanade-yoyaku PR #15 決済GW再試行まわりの整理と引き継ぎ用の改善
+
+デプロイ手順は、資料の内容だけでいうと「本番環境への切替」は次の流れです。[1]
+
+1. 前営業日までに `#dev` で本番切替の日時を告知する。[1]  
+2. 承認者（小林）の了承を Jira の課題に残す。[1]  
+3. 踏み台サーバーに SSH でログインする。[1]  
+4. `cd /opt/kanade-yoyaku` に移動する。[1]  
+5. `./deploy.sh production` を実行する（約10分）。[1]  
+6. ヘルスチェックの URL（`/healthz`）が 200 を返すことを確かめる。[1]  
+7. `#dev` に完了を投稿する。[1]
+
+失敗した場合は、`./rollback.sh production` を実行して直前の版に戻し、`#dev` に報告します。[1]
+
+ただし、より新しい資料では「2026-09-01 の本番切替から、デプロイは GitHub Actions で行う」「踏み台サーバーの `deploy.sh` は廃止した」とあり、Confluence の手順は廃止前の手順だとされています。[3]  
+そのため、現行のデプロイ方法としては GitHub Actions の手順が優先され、古い Confluence 手順とは食い違いがあります。[3]
+
+出典  
+[1] デプロイ手順（本番環境） / https://kanadeloop.atlassian.net/wiki/spaces/KANADE/pages/622613  
+[3] kanade-infra README / https://github.com/kanadeloop/kanade-infra/blob/main/README.md

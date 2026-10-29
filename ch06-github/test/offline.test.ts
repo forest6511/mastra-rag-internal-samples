@@ -1,0 +1,52 @@
+import { PGlite } from "@electric-sql/pglite";
+import { vector } from "@electric-sql/pglite-pgvector";
+import { beforeAll, describe, expect, it } from "vitest";
+import { answer } from "../src/agent.js";
+import { embed } from "../src/embed.js";
+import { migrate, saveDoc } from "../src/ingest.js";
+import { vectorSearch } from "../src/search.js";
+import { confluenceDocs } from "../src/sources/confluence.js";
+import { githubDocs } from "../src/sources/github.js";
+
+// #region setup
+// 記録した応答だけで、Confluence と GitHub の2つを取り込む
+process.env.OFFLINE = "1";
+const db = new PGlite({ extensions: { vector } });
+const docs = async () => [
+  ...(await confluenceDocs("KANADE")),
+  ...(await githubDocs("kanadeloop")),
+];
+
+beforeAll(async () => {
+  await migrate(db);
+  for (const d of await docs()) await saveDoc(db, d);
+});
+// #endregion
+
+// #region tests
+describe("GitHub を足した RAG", () => {
+  it("同じ資料を2回入れても、2回目は何もしない", async () => {
+    let n = 0;
+    for (const d of await docs()) n += await saveDoc(db, d);
+    expect(n).toBe(0);
+  });
+
+  it("資料の日付は本文の作成日から取る", async () => {
+    const res = await db.query<{ d: string }>(
+      `SELECT to_char(event_date, 'YYYY-MM-DD') AS d FROM documents
+        WHERE id = 'github:kanade-infra:README'`,
+    );
+    expect(res.rows[0].d).toBe("2026-09-01");
+  });
+
+  it("答えは新しい README に触れるが、主文は古い手順のまま", async () => {
+    const q = "デプロイ手順は？";
+    const [v] = await embed([q]);
+    const text = await answer(q, await vectorSearch(db, v));
+    expect(text).toContain("GitHub Actions");
+    expect(text.indexOf("deploy.sh")).toBeLessThan(
+      text.indexOf("GitHub Actions"),
+    );
+  });
+});
+// #endregion
