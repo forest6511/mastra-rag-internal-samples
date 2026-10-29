@@ -1,0 +1,16 @@
+{
+ "plan": {
+  "id": "jira-gw-epic",
+  "kind": "jira-issue",
+  "type": "エピック",
+  "author": "kobayashi",
+  "date": "2026-08-05",
+  "event": "E1",
+  "status": "完了",
+  "resolved": "2026-09-01",
+  "notes": "要約は短い。説明はほぼ空"
+ },
+ "summary": "決済GW切替",
+ "description": "- ペイリンク → クレペイ\n- 本番切替: 2026-09-01\n- 理由: 手数料\n- timeout: 30000ms（既定）",
+ "comments": []
+}

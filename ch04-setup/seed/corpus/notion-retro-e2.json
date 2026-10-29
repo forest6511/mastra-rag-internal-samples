@@ -1,0 +1,79 @@
+{
+ "plan": {
+  "id": "notion-retro-e2",
+  "kind": "notion-page",
+  "parent": "振り返り",
+  "title": "8/20 予約確定メール遅延の振り返り",
+  "author": "sato",
+  "date": "2026-08-20",
+  "event": "E2",
+  "notes": "時系列で淡々と。再発防止の課題番号を書く"
+ },
+ "title": "8/20 予約確定メール遅延の振り返り",
+ "blocks": [
+  {
+   "type": "heading_2",
+   "text": "概要"
+  },
+  {
+   "type": "paragraph",
+   "text": "2026-08-20、カナ予で予約確定メールの送信遅延を確認した。"
+  },
+  {
+   "type": "paragraph",
+   "text": "原因は決済GWの応答待ちが詰まったこと。影響は約40件。"
+  },
+  {
+   "type": "heading_2",
+   "text": "時系列"
+  },
+  {
+   "type": "bulleted_list_item",
+   "text": "予約確定メールの遅延を確認。"
+  },
+  {
+   "type": "bulleted_list_item",
+   "text": "決済GWの応答待ちが詰まっていることを確認。"
+  },
+  {
+   "type": "bulleted_list_item",
+   "text": "影響件数を確認。約40件。"
+  },
+  {
+   "type": "bulleted_list_item",
+   "text": "再発防止として、決済GWの応答時間を監視する課題を起票。"
+  },
+  {
+   "type": "heading_2",
+   "text": "原因"
+  },
+  {
+   "type": "paragraph",
+   "text": "決済GW応答待ちの詰まりにより、予約確定後のメール送信処理が遅延した。"
+  },
+  {
+   "type": "heading_2",
+   "text": "影響"
+  },
+  {
+   "type": "bulleted_list_item",
+   "text": "対象：カナ予の予約確定メール"
+  },
+  {
+   "type": "bulleted_list_item",
+   "text": "件数：約40件"
+  },
+  {
+   "type": "heading_2",
+   "text": "再発防止"
+  },
+  {
+   "type": "bulleted_list_item",
+   "text": "課題番号：PG-8/20"
+  },
+  {
+   "type": "bulleted_list_item",
+   "text": "内容：決済GWの応答時間の監視を追加する。"
+  }
+ ]
+}

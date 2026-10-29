@@ -46,3 +46,4 @@ cdk.out/
 records/raw/
 results/*.jsonl
 .book-src/
+**/seed/out/

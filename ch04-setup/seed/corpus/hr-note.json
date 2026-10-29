@@ -1,0 +1,54 @@
+{
+ "plan": {
+  "id": "hr-note",
+  "kind": "notion-page",
+  "parent": "人事",
+  "title": "退職者面談メモ（田中）",
+  "author": "yoshida",
+  "date": "2026-10-09",
+  "event": "E7",
+  "acl": [
+   "hr"
+  ],
+  "notes": "人事のみ。退職の事情（家庭の事情で地元に戻る）。営業・開発には出てはいけない"
+ },
+ "title": "退職者面談メモ（田中）",
+ "blocks": [
+  {
+   "type": "heading_2",
+   "text": "概要"
+  },
+  {
+   "type": "paragraph",
+   "text": "対象者は田中 誠さん。2026-10-10 退職予定。理由は家庭の事情で地元に戻るため。"
+  },
+  {
+   "type": "paragraph",
+   "text": "共有範囲は人事のみ。営業・開発には共有しない。"
+  },
+  {
+   "type": "heading_2",
+   "text": "引継ぎ"
+  },
+  {
+   "type": "bulleted_list_item",
+   "text": "カナ予の決済まわりは小林 亮さんが引き継ぐ。"
+  },
+  {
+   "type": "bulleted_list_item",
+   "text": "決済GWまわりの確認先は小林さんに一本化する。"
+  },
+  {
+   "type": "heading_2",
+   "text": "人事メモ"
+  },
+  {
+   "type": "bulleted_list_item",
+   "text": "退職理由は個人事情として扱う。"
+  },
+  {
+   "type": "bulleted_list_item",
+   "text": "社内説明では、必要範囲に限定して退職予定のみ扱う。"
+  }
+ ]
+}

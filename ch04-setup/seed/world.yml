@@ -1,0 +1,112 @@
+# 世界設定: 株式会社カナデループ
+# 資料の原本。資料は出来事から作る。人名・日付・番号はここから引く。
+# 実在の会社・人物・製品と無関係の架空の設定。値は本物らしく見えても作り物（金額・件数は例示）。
+# 日付は Slack Free の表示期限（90日）に収まるよう 2026-08 以降に置く（今日 2026-10-29）
+
+company:
+  name: 株式会社カナデループ
+  english: Kanadeloop Inc.
+  employees: 50
+  product: カナデ予約（飲食店・美容室向けの予約 SaaS）
+  jargon:   # 社内用語・略語（資料に入れる汚さ）
+    カナ予: カナデ予約
+    決済GW: 決済ゲートウェイ（外部の決済代行との接続部分）
+    本番切替: 本番環境への反映作業
+    PG: 決済代行会社（Payment Gateway の略。社内では決済GW と混同して使われる）
+    ヘルプ箱: サポートの問い合わせ窓口（Zendesk 相当の架空ツール）
+
+departments:
+  dev: { name: 開発部, slack: "#dev", jira: KAN }
+  sre: { name: 基盤チーム（開発部内） }
+  cs: { name: カスタマーサクセス部 }
+  sales: { name: 営業部 }
+  sec: { name: 情報システム・セキュリティ担当 }
+  mgmt: { name: 経営企画 }
+
+people:   # 口調は資料の文体を人ごとにばらつかせるため
+  - { id: tanaka,    name: 田中 誠,     dept: dev,   role: 決済担当エンジニア,     tone: 丁寧・長文, left: 2026-10-10 }
+  - { id: kobayashi, name: 小林 亮,     dept: dev,   role: 開発リーダー（決済まわり）, tone: 短文・箇条書き }
+  - { id: sato,      name: 佐藤 美咲,   dept: sre,   role: SRE,                    tone: 時系列で淡々と }
+  - { id: takahashi, name: 高橋 健,     dept: dev,   role: バックエンドエンジニア, tone: くだけた口調・絵文字 }
+  - { id: ito,       name: 伊藤 さくら, dept: cs,    role: カスタマーサクセス,     tone: 顧客目線・敬語 }
+  - { id: yamamoto,  name: 山本 浩二,   dept: sales, role: 営業マネージャー,       tone: 結論だけ }
+  - { id: nakamura,  name: 中村 真理,   dept: sales, role: 営業,                   tone: 質問が多い }
+  - { id: kato,      name: 加藤 修,     dept: sec,   role: 情シス兼セキュリティ担当, tone: 規程の言い回し }
+  - { id: yoshida,   name: 吉田 明美,   dept: mgmt,  role: 経営企画,               tone: 数字で話す }
+  - { id: watanabe,  name: 渡辺 拓也,   dept: dev,   role: フロントエンドエンジニア, tone: 誤字が多い・略語多用 }
+
+systems:
+  payment_gw:
+    old: ペイリンク（旧決済GW・2024 から利用）
+    new: クレペイ（新決済GW・2026-08 切替を決定）
+    timeout_default_ms: 30000
+    timeout_misconfigured_ms: 3000
+  region: 東京リージョン（データの保存場所）
+
+timeline:   # 出来事。資料は各 sources の場所に作る（trap は資料に入れた罠）
+  - id: E0
+    date: 2025-04-01
+    title: セキュリティ方針 v1 の制定
+    facts: [ログ保管は1年, 通信は TLS1.2 以上, 保存データの暗号化は AES-128, 障害時の顧客連絡は「速やかに」]
+    sources: [confluence: セキュリティ方針（v1）]
+    trap: v2 があるのに v1 のページが消されずに残っている
+  - id: E1
+    date: 2026-08-05
+    title: 決済GW をペイリンクからクレペイに切り替えると決定
+    facts: [切替予定 2026-09-01, 理由は手数料, タイムアウトは既定の 30000ms を使う]
+    sources: [slack: "#dev の議論（小林・田中・高橋）", jira: 切替のエピック]
+    trap: Confluence の決済設計書は旧GW（ペイリンク）のまま更新されていない
+  - id: E2
+    date: 2026-08-20
+    title: 予約確定メールの遅延（過去の似た障害）
+    facts: [原因は決済GW 応答待ちの詰まり, 影響は約40件, 再発防止として「決済GW の応答時間の監視を追加する」課題を起票]
+    sources: [notion: E2 の振り返り, jira: 監視追加の課題（未着手のまま）]
+    trap: 再発防止の課題が未着手のまま E4 が起きる（「前回の再発防止策は実施されたか」の照合用）
+  - id: E3
+    date: 2026-09-01
+    title: セキュリティ方針 v2 に改定・クレペイへの本番切替
+    facts: [ログ保管を3年に延長, 保存データの暗号化を AES-256 に, 重大障害の顧客連絡は1時間以内にメール, データの保存場所は東京リージョン]
+    sources: [confluence: セキュリティ方針（v2）, slack: "#announce の告知"]
+  - id: E4
+    date: 2026-09-15
+    title: 決済エラーの障害
+    facts:
+      - "10:02 監視アラートで検知（佐藤）"
+      - "原因: クレペイ接続のタイムアウトが 3000ms に誤って設定されていた（9/1 の本番切替時の設定ミス）"
+      - "影響: 美容室 132 店舗・予約 418 件で決済が失敗"
+      - "10:40 暫定対応: 決済GW を旧GW（ペイリンク）に戻す"
+      - "9/18 恒久対応: タイムアウトを 30000ms に直す PR #14 をマージ・クレペイに戻す"
+      - "再発防止: 設定値の自動テストを追加する課題・決済GW 応答時間の監視（E2 で起票済みの課題を今度こそ実施）"
+      - "顧客連絡: 11:30 に影響店舗へメール（v2 の「1時間以内」に間に合わなかった）"
+    sources: [slack: "#incident の障害スレッド", jira: インシデント課題とコメント, github: "PR #14 とレビュー"]
+    note: 振り返りはまだ誰も書いていない（UC2 は「振り返り会の前日」）
+  - id: E5
+    date: 2026-09-25
+    title: 監査ログのエクスポート機能をロードマップに追加
+    facts: [リリース予定 2026-12, 担当 高橋]
+    sources: [jira: ロードマップのエピック, slack: "#sales で山本が顧客要望を共有"]
+  - id: E6
+    date: 2026-10-02
+    title: 営業向けのセキュリティ説明資料を Notion にまとめる
+    facts: [Notion「機能一覧」に暗号化・バックアップ・権限管理を記載, バックアップは毎日・7日分保持]
+    sources: [notion: 機能一覧]
+    trap: Notion の機能一覧はログ保管を「1年」と書いている（v1 の転記ミス。正しくは v2 の3年）
+  - id: E7
+    date: 2026-10-10
+    title: 田中が退職し、決済まわりを小林が引き継ぐ
+    facts: [未マージの PR が1件, 進行中の課題が2件]
+    sources: [slack: "#dev の引き継ぎの相談", jira: 担当の変更, github: 未マージ PR]
+  - id: N1
+    date: 2026-08-28
+    title: 雑談・関係ない投稿（ノイズ）
+    sources: [slack: "#random のランチ・オフィスの空調・勉強会の告知"]
+  - id: N2
+    date: 2026-09-10
+    title: 同じ名前の別物（ノイズ）
+    facts: [「予約 API」には顧客向け公開 API と社内の管理画面用 API の2つがある]
+    sources: [confluence: 公開 API 仕様, github: 管理画面 API の README]
+
+acl:   # 権限の対応表（seed/acl.yml に展開する）
+  hr_only: 人事評価・退職の事情は hr のみ（資料は1件だけ置き、誰にも出ないことを試す）
+  dev_only: "#incident・GitHub は dev のみ"
+  all: Confluence のセキュリティ方針・Notion の機能一覧・#announce は全員
