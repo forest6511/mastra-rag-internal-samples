@@ -5,7 +5,9 @@ import { channelIds, slackApi } from "../slack.js";
 // 取り込みで作られたチャンネルに、アプリ（ボット）を
 // 参加させる。
 // ボットは参加していないチャンネルを読めない（not_in_channel）
-export async function joinSlackChannels(docs: SeedDoc[]): Promise<void> {
+export async function joinSlackChannels(
+  docs: SeedDoc[],
+): Promise<void> {
   const ids = await channelIds();
   const names = new Set(
     ofKind(docs, "slack-thread").map((d) => String(d.plan.channel)),

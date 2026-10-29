@@ -123,7 +123,7 @@ function github() {
       env: { ...process.env, GH_TOKEN: need("GH_RAG_TOKEN") },
     },
   );
-  report("GitHub の repo", repos, out.trim().split("\n"));
+  report("GitHub のリポジトリ", repos, out.trim().split("\n"));
 }
 // #endregion
 

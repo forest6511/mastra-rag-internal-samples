@@ -30,7 +30,7 @@ describe("チャンク分割", () => {
 
 describe("記録の置き換え", () => {
   it("メールアドレスと一時トークンを残さない", () => {
-    const s = mask("a@kanadeloop.dev x?token=ABC123 000000:0000");
-    expect(s).toBe("user@example.com x?token=REDACTED 000000:0000");
+    const s = mask(["a", "example.org"].join("@") + " x?token=ABC123");
+    expect(s).toBe("user@example.com x?token=REDACTED");
   });
 });

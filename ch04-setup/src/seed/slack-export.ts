@@ -28,7 +28,7 @@ export function toTs(at: string, i: number): string {
 
 // #region build-slack-export
 // Slack のエクスポート形式（ZIP の中身）を、パス → JSON の対応で作る。
-// チャンネルごとのフォルダに、日本時間の日付ごとのファイルを置く
+// チャンネルごとのディレクトリに、日本時間の日付ごとのファイルを置く
 export function buildSlackExport(
   docs: SeedDoc[],
   world: World,
