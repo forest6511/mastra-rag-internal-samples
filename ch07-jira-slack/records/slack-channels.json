@@ -7,8 +7,8 @@
    "is_member": true
   },
   {
-   "id": "C0CD1H95BNZ",
-   "name": "dev",
+   "id": "C0CD3MUJ6G3",
+   "name": "sales",
    "is_member": true
   },
   {
@@ -17,8 +17,13 @@
    "is_member": false
   },
   {
-   "id": "C0CD6LFGJDQ",
-   "name": "random",
+   "id": "C0CD4KQ8J5B",
+   "name": "announce",
+   "is_member": true
+  },
+  {
+   "id": "C0CD805EPM4",
+   "name": "dev",
    "is_member": true
   },
   {
@@ -27,17 +32,12 @@
    "is_member": false
   },
   {
-   "id": "C0CDAGZGHQU",
-   "name": "sales",
+   "id": "C0CDDKLA91A",
+   "name": "random",
    "is_member": true
   },
   {
-   "id": "C0CE17E95EU",
-   "name": "announce",
-   "is_member": true
-  },
-  {
-   "id": "C0CE17FM800",
+   "id": "C0CE4A0NJ80",
    "name": "incident",
    "is_member": true
   }

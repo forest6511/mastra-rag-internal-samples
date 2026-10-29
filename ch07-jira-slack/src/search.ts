@@ -33,3 +33,41 @@ export async function vectorSearch(
   return res.rows;
 }
 // #endregion
+
+// #region doc-search
+// 同じ資料のチャンクが上位を埋めないように、資料ごとにまとめる。
+// 近いチャンクを多めに（pool 件）取り、資料ごとに最初に現れた順で
+// k 件の資料を選ぶ。1つの資料から当たったチャンクは、資料の中の
+// 順番（ord）に並べて1つの材料にする
+export async function docSearch(
+  db: Queryable,
+  vector: number[],
+  k = 6,
+  pool = 40,
+): Promise<Hit[]> {
+  const res = await db.query<Hit & { ord: number }>(
+    `SELECT c.doc_id AS "docId", d.title, d.url, d.source,
+            to_char(d.event_date, 'YYYY-MM-DD') AS "eventDate",
+            c.content, c.ord,
+            1 - (c.embedding <=> $1::vector) AS score
+       FROM chunks c JOIN documents d ON d.id = c.doc_id
+      ORDER BY c.embedding <=> $1::vector
+      LIMIT $2`,
+    [JSON.stringify(vector), pool],
+  );
+  // #endregion
+  // #region doc-search-group
+  const docs = new Map<string, (Hit & { ord: number })[]>();
+  for (const h of res.rows) {
+    if (!docs.has(h.docId) && docs.size >= k) continue;
+    docs.set(h.docId, [...(docs.get(h.docId) ?? []), h]);
+  }
+  return [...docs.values()].map((hits) => ({
+    ...hits[0], // 最も近いチャンクの類似度と資料の情報を使う
+    content: hits
+      .sort((a, b) => a.ord - b.ord)
+      .map((h) => h.content)
+      .join("\n"),
+  }));
+}
+// #endregion
