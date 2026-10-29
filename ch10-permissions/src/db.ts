@@ -44,12 +44,15 @@ ALTER TABLE documents
   ADD COLUMN IF NOT EXISTS acl text[] NOT NULL DEFAULT '{all}';
 ALTER TABLE chunks
   ADD COLUMN IF NOT EXISTS acl text[] NOT NULL DEFAULT '{all}';
--- 第9章: サービスごとの同期の状態（最後に回った時刻と件数）
+-- #endregion
+-- #region schema-sync
+-- 第9章: サービスごとの同期の状態
 CREATE TABLE IF NOT EXISTS sync_state (
   source     text PRIMARY KEY,
-  synced_at  timestamptz NOT NULL,
-  fetched    int NOT NULL,
-  error      text           -- 失敗したときの内容（成功なら null）
+  synced_at  timestamptz,    -- 最後に成功した回の、取得を始めた時刻
+  fetched    int,            -- 最後に成功した回で取れた件数
+  failed_at  timestamptz,    -- 最後に失敗した時刻
+  error      text            -- 最後の失敗・注意の内容（成功なら null）
 );
 `;
 // #endregion
@@ -64,14 +67,19 @@ DO $$ BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'rag_reader')
   THEN CREATE ROLE rag_reader NOLOGIN; END IF;
 END $$;
+-- 利用者のグループ（app.groups のカンマ区切りを配列にする）
+CREATE OR REPLACE FUNCTION groups() RETURNS text[]
+  LANGUAGE sql STABLE AS $f$
+    SELECT string_to_array(current_setting('app.groups', true), ',')
+  $f$;
 ALTER TABLE documents ENABLE ROW LEVEL SECURITY;
 ALTER TABLE chunks ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS documents_acl ON documents;
 CREATE POLICY documents_acl ON documents FOR SELECT TO rag_reader
-  USING (acl && string_to_array(current_setting('app.groups', true), ','));
+  USING (acl && groups());
 DROP POLICY IF EXISTS chunks_acl ON chunks;
 CREATE POLICY chunks_acl ON chunks FOR SELECT TO rag_reader
-  USING (acl && string_to_array(current_setting('app.groups', true), ','));
+  USING (acl && groups());
 GRANT SELECT ON documents, chunks TO rag_reader;
 `;
 // #endregion

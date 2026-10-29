@@ -39,12 +39,15 @@ CREATE TABLE IF NOT EXISTS chunks (
 );
 CREATE INDEX IF NOT EXISTS chunks_embedding
   ON chunks USING hnsw (embedding vector_cosine_ops);
--- 第9章: サービスごとの同期の状態（最後に回った時刻と件数）
+-- #endregion
+-- #region schema-sync
+-- 第9章: サービスごとの同期の状態
 CREATE TABLE IF NOT EXISTS sync_state (
   source     text PRIMARY KEY,
-  synced_at  timestamptz NOT NULL,
-  fetched    int NOT NULL,
-  error      text           -- 失敗したときの内容（成功なら null）
+  synced_at  timestamptz,    -- 最後に成功した回の、取得を始めた時刻
+  fetched    int,            -- 最後に成功した回で取れた件数
+  failed_at  timestamptz,    -- 最後に失敗した時刻
+  error      text            -- 最後の失敗・注意の内容（成功なら null）
 );
 `;
 // #endregion

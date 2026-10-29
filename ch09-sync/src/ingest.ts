@@ -20,7 +20,9 @@ export async function migrate(db: Queryable & { exec?: unknown }) {
 // #region save-doc
 // 資料1件を保存する。題名と本文のハッシュが前回と同じなら何もしない
 // （埋め込みを作り直さない）。変わっていたらチャンクを入れ直す。
-// 戻り値は入れたチャンクの数（変わっていなければ 0）
+// 戻り値は入れたチャンクの数（変わっていなければ 0）。
+// 第9章: ハッシュはチャンクを入れ終えてから最後に書く。途中で止まっても、
+// 次の回でハッシュが合わず、入れ直される
 export async function saveDoc(db: Queryable, d: Doc): Promise<number> {
   const hash = crypto
     .createHash("sha256")
@@ -44,12 +46,12 @@ export async function saveDoc(db: Queryable, d: Doc): Promise<number> {
   await db.query(
     `INSERT INTO documents
        (id, source, url, title, body, event_date, body_hash, canonical)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+     VALUES ($1, $2, $3, $4, $5, $6, '', $7)
      ON CONFLICT (id) DO UPDATE SET url = $3, title = $4, body = $5,
-       event_date = $6, body_hash = $7, canonical = $8`,
+       event_date = $6, body_hash = '', canonical = $7`,
     [
       ...[d.id, d.source, d.url, d.title, d.body],
-      ...[d.eventDate ?? null, hash, d.canonical ?? false],
+      ...[d.eventDate ?? null, d.canonical ?? false],
     ],
   );
   await db.query("DELETE FROM chunks WHERE doc_id = $1", [d.id]);
@@ -60,6 +62,10 @@ export async function saveDoc(db: Queryable, d: Doc): Promise<number> {
       [d.id, i, content, JSON.stringify(vectors[i])],
     );
   }
+  await db.query("UPDATE documents SET body_hash = $2 WHERE id = $1", [
+    d.id,
+    hash,
+  ]);
   return pieces.length;
 }
 // #endregion

@@ -23,6 +23,7 @@ export async function syncSource(
   db: Queryable,
   source: string,
   docs: Doc[],
+  startedAt = new Date(), // 取得を始めた時刻（差分の起点に使う）
 ): Promise<SyncStats> {
   const before = await db.query<{ id: string }>(
     "SELECT id FROM documents WHERE source = $1",
@@ -55,12 +56,16 @@ export async function syncSource(
     );
     stats.deleted = res.rows.length;
   }
+  // 消さなかったときは、注意を error に残す（表を見て気づけるように）
+  const note = stats.kept
+    ? "元が0件のため、索引の資料を消していない"
+    : null;
   await db.query(
     `INSERT INTO sync_state (source, synced_at, fetched, error)
-     VALUES ($1, now(), $2, null)
+     VALUES ($1, $2, $3, $4)
      ON CONFLICT (source) DO UPDATE
-       SET synced_at = now(), fetched = $2, error = null`,
-    [source, docs.length],
+       SET synced_at = $2, fetched = $3, error = $4`,
+    [source, startedAt, docs.length, note],
   );
   return stats;
 }
@@ -68,16 +73,17 @@ export async function syncSource(
 
 // #region record-failure
 // 取得に失敗したサービスは、索引に触らず、失敗を記録だけする
-// （前回の資料を残す。消さない）
+// （前回の資料を残す。消さない）。synced_at は進めない。
+// 進めると、差分で取るときに失敗した回の更新を取りこぼす
 export async function recordFailure(
   db: Queryable,
   source: string,
   error: unknown,
 ): Promise<void> {
   await db.query(
-    `INSERT INTO sync_state (source, synced_at, fetched, error)
-     VALUES ($1, now(), 0, $2)
-     ON CONFLICT (source) DO UPDATE SET synced_at = now(), error = $2`,
+    `INSERT INTO sync_state (source, failed_at, error)
+     VALUES ($1, now(), $2)
+     ON CONFLICT (source) DO UPDATE SET failed_at = now(), error = $2`,
     [source, String(error).slice(0, 500)],
   );
 }

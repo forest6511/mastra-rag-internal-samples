@@ -1,5 +1,6 @@
 # 権限の対応表。資料の置き場所ごとに、見てよいグループを決める。
-# グループ: all（全社員）/ dev（開発）/ sales（営業）/ mgmt（管理職）/ hr（人事）
+# グループ: all（全社員）/ dev（開発）/ sales（営業）/
+#   mgmt（管理職）/ hr（人事）
 # 本書の環境では、Confluence・Jira・Notion の権限を API で取れない
 # （無料のプランと API の制約）ので、この表で持つ
 default: [all]

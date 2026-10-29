@@ -61,19 +61,19 @@ const keep = (j: { issues: Issue[]; nextPageToken?: string }) => ({
 // #region changed-jql
 // 差分で取るときの JQL。前回の同期の時刻から5分戻して重ねて取る
 // （時計のずれや、同期の最中に更新された課題を取りこぼさないため）。
+// 日時は「何分前から」で書く（"-90m"）。日付と時刻で書くと、
+// API トークンのアカウントのタイムゾーンで解釈されるため。
 // 消えた課題は返らないので、削除は全件の突き合わせで見る
-export function changedJql(project: string, since?: Date): string {
+export function changedJql(
+  project: string,
+  since?: Date,
+  now = new Date(),
+): string {
   if (!since) return `project = ${project} ORDER BY created ASC`;
-  const from = new Date(since.getTime() - 5 * 60 * 1000);
-  // JQL の日時は "yyyy/MM/dd HH:mm"（ユーザーのタイムゾーン）
-  const pad = (n: number) => String(n).padStart(2, "0");
-  const d = new Date(from.getTime() + 9 * 60 * 60 * 1000); // JST
-  const at =
-    `${d.getUTCFullYear()}/${pad(d.getUTCMonth() + 1)}/` +
-    `${pad(d.getUTCDate())} ${pad(d.getUTCHours())}:` +
-    pad(d.getUTCMinutes());
+  const minutes =
+    Math.ceil((now.getTime() - since.getTime()) / 60_000) + 5;
   return (
-    `project = ${project} AND updated >= "${at}" ` +
+    `project = ${project} AND updated >= "-${minutes}m" ` +
     "ORDER BY updated ASC"
   );
 }

@@ -70,6 +70,17 @@ describe("全件で突き合わせる同期", () => {
     expect(await ids()).toHaveLength(7);
   });
 
+  it("途中で止まった資料は、次の回で入れ直す", async () => {
+    const docs = await pages("records");
+    // チャンクを入れる前に止まった状態（ハッシュが空・チャンク無し）
+    await db.query(
+      `INSERT INTO documents (id, source, url, title, body, body_hash)
+       VALUES ($1, 'confluence', '', '', '', '')`,
+      [docs[0].id],
+    );
+    const s = await syncSource(db, "confluence", docs);
+    expect(s).toMatchObject({ added: 6, updated: 1 });
+  });
   // #endregion
   // #region tests-answer
   // 記録した答え: 消す前は予約 API 仕様を挙げ、消した後は挙げない
@@ -84,10 +95,11 @@ describe("全件で突き合わせる同期", () => {
 // #endregion
 
 describe("差分で取るときの JQL", () => {
-  it("前回の時刻から5分戻した、日本時間の日時で絞る", () => {
-    const since = new Date("2026-10-30T00:10:00Z"); // 9:10 JST
-    expect(changedJql("KAN", since)).toBe(
-      'project = KAN AND updated >= "2026/10/30 09:05" ORDER BY updated ASC',
+  it("前回の時刻から5分戻した「何分前から」で絞る", () => {
+    const since = new Date("2026-10-30T00:10:00Z");
+    const now = new Date("2026-10-30T01:00:00Z"); // 前回から50分
+    expect(changedJql("KAN", since, now)).toBe(
+      'project = KAN AND updated >= "-55m" ORDER BY updated ASC',
     );
     expect(changedJql("KAN")).toBe(
       "project = KAN ORDER BY created ASC",
