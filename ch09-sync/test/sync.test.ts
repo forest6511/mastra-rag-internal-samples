@@ -34,7 +34,7 @@ afterEach(() => {
 
 // #region tests
 describe("全件で突き合わせる同期", () => {
-  it("2回同期しても重複せず、2回目は埋め込みを作り直さない", async () => {
+  it("2回回しても重複せず、2回目は作り直さない", async () => {
     const docs = await pages("records");
     const first = await syncSource(db, "confluence", docs);
     const second = await syncSource(db, "confluence", docs);
@@ -43,7 +43,7 @@ describe("全件で突き合わせる同期", () => {
     expect(await ids()).toHaveLength(7);
   });
 
-  it("元で消したページは、次の同期で索引から消える", async () => {
+  it("元で消したページは、索引から消える", async () => {
     await syncSource(db, "confluence", await pages("records"));
     const after = await pages("records-after");
     const s = await syncSource(db, "confluence", after);
@@ -51,14 +51,16 @@ describe("全件で突き合わせる同期", () => {
     expect(await ids()).not.toContain("confluence:688129");
   });
 
-  it("元が0件のときは、索引の資料を消さない（安全装置）", async () => {
+  // #endregion
+  // #region tests-guard
+  it("元が0件のときは、索引の資料を消さない", async () => {
     await syncSource(db, "confluence", await pages("records"));
     const s = await syncSource(db, "confluence", []);
     expect(s).toMatchObject({ kept: true, deleted: 0 });
     expect(await ids()).toHaveLength(7);
   });
 
-  it("取得に失敗したサービスは、失敗だけを記録する", async () => {
+  it("取得の失敗は、記録だけする", async () => {
     await syncSource(db, "confluence", await pages("records"));
     await recordFailure(db, "confluence", new Error("HTTP 401"));
     const st = await db.query<{ error: string }>(
@@ -68,7 +70,10 @@ describe("全件で突き合わせる同期", () => {
     expect(await ids()).toHaveLength(7);
   });
 
-  it("記録した答え: 消す前は予約 API 仕様を挙げ、消した後は挙げない", () => {
+  // #endregion
+  // #region tests-answer
+  // 記録した答え: 消す前は予約 API 仕様を挙げ、消した後は挙げない
+  it("消したページは答えの材料に入らない", () => {
     const before = readFileSync("out/api-before.txt", "utf8");
     const after = readFileSync("out/api-after.txt", "utf8");
     expect(before).toContain("予約 API 仕様");

@@ -31,6 +31,10 @@ for (const [source, fetch] of Object.entries(FETCHERS)) {
     ok: missing.length + extra.length + stale.length === 0,
   });
 }
+// #endregion
+
+// #region report
+// 3つとも0のサービスだけ ok。1つでも違えば終了コード 1
 console.table(rows);
 await pool.end();
 process.exitCode = rows.every((r) => r.ok) ? 0 : 1;

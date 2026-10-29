@@ -72,7 +72,10 @@ export function changedJql(project: string, since?: Date): string {
     `${d.getUTCFullYear()}/${pad(d.getUTCMonth() + 1)}/` +
     `${pad(d.getUTCDate())} ${pad(d.getUTCHours())}:` +
     pad(d.getUTCMinutes());
-  return `project = ${project} AND updated >= "${at}" ORDER BY updated ASC`;
+  return (
+    `project = ${project} AND updated >= "${at}" ` +
+    "ORDER BY updated ASC"
+  );
 }
 // #endregion
 
