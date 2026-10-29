@@ -41,6 +41,8 @@ export function buildSlackExport(
   }));
   const uid = (pid: string) =>
     users.find((u) => u.name === pid)?.id ?? users[0].id;
+  // #endregion
+  // #region build-slack-threads
   const channels = new Map<string, Message[]>();
   for (const d of ofKind(docs, "slack-thread")) {
     const msgs: Message[] = (d.messages as SeedMessage[]).map(

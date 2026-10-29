@@ -1,0 +1,14 @@
+{
+ "plan": {
+  "id": "conf-deploy-v1",
+  "kind": "confluence-page",
+  "space": "KANADE",
+  "title": "デプロイ手順（本番環境）",
+  "author": "sato",
+  "date": "2025-06-10",
+  "event": "E8",
+  "notes": "手作業の手順。2026-09 の GitHub Actions への移行後も更新されていない"
+ },
+ "title": "デプロイ手順（本番環境）",
+ "body_html": "<h2>目的</h2><p>カナ予の本番環境へのデプロイ手順をまとめます。本番切替は必ずこの手順で行ってください。</p><h2>事前準備</h2><ol><li>前営業日までに #dev で本番切替の日時を告知する</li><li>承認者（小林）の了承を Jira の課題に残す</li></ol><h2>手順</h2><ol><li>踏み台サーバーに SSH でログインする</li><li><code>cd /opt/kanade-yoyaku</code> に移動する</li><li><code>./deploy.sh production</code> を実行する（約10分）</li><li>ヘルスチェックの URL（/healthz）が 200 を返すことを確かめる</li><li>#dev に完了を投稿する</li></ol><h2>失敗したとき</h2><p><code>./rollback.sh production</code> を実行し、直前の版に戻します。戻したら #dev に報告してください。</p><p>担当: 佐藤（SRE）</p>"
+}

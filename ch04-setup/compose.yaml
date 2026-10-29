@@ -1,4 +1,5 @@
-# PostgreSQL 17 に pgvector 0.8.2 と pg_bigm を入れた DB（Aurora PostgreSQL 17.11 と同じ版）
+# PostgreSQL 17 に pgvector 0.8.2 と pg_bigm を入れた DB
+# （Aurora PostgreSQL 17.11 と同じ版）
 services:
   db:
     build: ./docker

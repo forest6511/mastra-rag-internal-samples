@@ -1,0 +1,12 @@
+{
+ "plan": {
+  "id": "gh-readme-infra",
+  "kind": "github-readme",
+  "repo": "kanade-infra",
+  "author": "kobayashi",
+  "date": "2026-09-01",
+  "event": "E9",
+  "notes": "新しいデプロイの方法。Confluence の手順書は古いまま"
+ },
+ "body": "# kanade-infra\n\n作成日: 2026-09-01  \n担当: 小林 亮\n\nカナ予のデプロイの設定を置く repo です。\n\n## デプロイ\n\n2026-09-01 の本番切替から、デプロイは GitHub Actions で行います。踏み台サーバーの `deploy.sh` は廃止しました。\n\n- ステージング: `main` にマージすると自動でデプロイされる\n- 本番: `v` で始まるタグ（例 `v2026.09.15`）を打つと、ワークフロー `deploy-production` が承認待ちになる。小林が承認するとデプロイされる\n- 確認: デプロイ後に `/healthz` が 200 を返すことをワークフローが確かめる\n\n## 戻すとき\n\n一つ前のタグを選んで `deploy-production` を再実行する。\n\n## 古い手順について\n\nConfluence の「デプロイ手順（本番環境）」は廃止前の手順です。\n"
+}

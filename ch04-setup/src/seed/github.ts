@@ -15,6 +15,8 @@ const AUTHOR = [
   ...["-f", "committer[email]=dev@example.com"],
 ];
 
+// #endregion
+// #region put-file
 function putFile(
   repo: string,
   file: string,
@@ -78,6 +80,8 @@ export function seedGitHub(
       // 前回の途中で作ったブランチが残っている
     }
     putFile(repo, `changes/${d.plan.id}.md`, `${d.title}\n`, branch);
+    // #endregion
+    // #region seed-github-pr-create
     const body = `${header(world, d)}\n\n${d.body}`;
     const url = gh([
       ...["pr", "create", "-R", repo, "-B", "main", "-H", branch],

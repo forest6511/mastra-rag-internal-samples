@@ -28,6 +28,8 @@ export async function seedConfluence(
     { headers },
   );
   const spaceId = spaces.results[0].id;
+  // #endregion
+  // #region seed-confluence-pages
   for (const d of ofKind(docs, "confluence-page")) {
     if (log[d.plan.id]) continue; // 入れ済み
     const html = `<p>${header(world, d)}</p>${d.body_html}`;

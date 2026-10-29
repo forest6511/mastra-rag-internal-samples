@@ -13,10 +13,10 @@ const cell = (s: unknown) => `"${String(s ?? "").replace(/"/g, '""')}"`;
 // #endregion
 
 // #region build-jira-csv
-// Jira の CSV インポートの形にする。API では作成日を過去にできないため、
-// Created と Resolved の列で日付を入れる。コメントは
-// 「日時;投稿者のアカウントID;本文」の形（投稿者は自分のアカウントにし、
-// 本文の頭に社員名を書く）
+// Jira の CSV インポートの形にする。API では作成日を
+// 過去にできないため、Created と Resolved の列で日付を入れる。
+// コメントは「日時;投稿者のアカウントID;本文」の形。
+// 投稿者は自分のアカウントにし、本文の頭に社員名を書く
 export function buildJiraCsv(
   docs: SeedDoc[],
   world: World,

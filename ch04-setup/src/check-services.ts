@@ -3,7 +3,8 @@ import { need } from "./env.js";
 import { request } from "./http.js";
 import { atlassianHeaders } from "./seed/confluence.js";
 
-// 5つのサービスに資料が入ったかを、それぞれの API で数える（書き込みはしない）
+// 5つのサービスに資料が入ったかを、それぞれの API で数える
+// （書き込みはしない）
 
 // #region confluence-jira
 async function confluencePages(): Promise<number> {
@@ -59,7 +60,7 @@ async function notionPages(
 }
 // #endregion
 
-// #region slack-github
+// #region slack
 async function slackMessages(): Promise<number> {
   const get = <T>(method: string, params: Record<string, string>) =>
     request<T>(
@@ -84,6 +85,8 @@ async function slackMessages(): Promise<number> {
   return n;
 }
 
+// #endregion
+// #region github
 function githubRepos(): number {
   const out = execFileSync(
     "gh",

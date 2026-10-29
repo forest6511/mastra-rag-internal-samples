@@ -30,7 +30,8 @@ async function writeJiraCsv(docs = loadCorpus(), world = loadWorld()) {
 // #endregion
 
 // #region slack-zip-file
-// エクスポート形式を一時フォルダに書き、ZIP にまとめる（zip コマンドを使う）
+// エクスポート形式を一時フォルダに書き、ZIP にまとめる
+// （zip コマンドを使う）
 function writeSlackZip(docs = loadCorpus(), world = loadWorld()) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "slack-"));
   for (const [file, json] of buildSlackExport(docs, world)) {

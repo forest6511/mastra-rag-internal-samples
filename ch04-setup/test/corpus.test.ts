@@ -5,8 +5,8 @@ const world = loadWorld();
 const docs = loadCorpus();
 
 describe("seed の資料", () => {
-  it("23件あり、どれも世界設定の出来事と人物に結び付く", () => {
-    expect(docs).toHaveLength(23);
+  it("25件あり、どれも世界設定の出来事と人物に結び付く", () => {
+    expect(docs).toHaveLength(25);
     const events = new Set(world.timeline.map((e) => e.id));
     const people = new Set(world.people.map((p) => p.id));
     for (const d of docs) {

@@ -96,6 +96,17 @@ timeline:   # 出来事。資料は各 sources の場所に作る（trap は資�
     title: 田中が退職し、決済まわりを小林が引き継ぐ
     facts: [未マージの PR が1件, 進行中の課題が2件]
     sources: [slack: "#dev の引き継ぎの相談", jira: 担当の変更, github: 未マージ PR]
+  - id: E8
+    date: 2025-06-10
+    title: デプロイ手順書（手作業）を Confluence に作成
+    facts: [本番へのデプロイは踏み台サーバーで deploy.sh を手で実行, 実施は佐藤・承認は小林]
+    sources: [confluence: デプロイ手順]
+    trap: 2026-09-01 の本番切替で GitHub Actions からのデプロイに変わったが、手順書は更新されていない
+  - id: E9
+    date: 2026-09-01
+    title: デプロイを GitHub Actions に移行（クレペイへの本番切替と同時）
+    facts: [main へのマージでステージングに自動デプロイ, 本番は v で始まるタグを打ち小林が承認するとデプロイ, 戻すときは一つ前のタグでワークフローを再実行, deploy.sh は廃止]
+    sources: [github: kanade-infra の README]
   - id: N1
     date: 2026-08-28
     title: 雑談・関係ない投稿（ノイズ）

@@ -1,5 +1,6 @@
 // #region request
-// HTTP の失敗を、URL と応答の先頭つきの例外にする（原因を追いやすくする）
+// HTTP の失敗を、URL と応答の先頭つきの例外にする
+// （どの API で何が返ったかを追いやすくする）
 export async function request<T>(
   url: string,
   init: RequestInit,
