@@ -4,11 +4,13 @@ import { getJson, offline, RECORDED_SITE } from "../record.js";
 
 // #region html-text
 // Confluence の本文（storage 形式の HTML）から文字だけを取り出す。
-// 段落・見出し・箇条書き・表の行の終わりを改行にして、構造を残す
+// 段落と見出しの終わりは空行、箇条書きと表の行の終わりは改行にして、
+// 文章の区切りを残す（チャンクは空行で分ける）
 export const htmlText = (html: string) =>
   html
     .replace(/<br\s*\/?>/g, "\n")
-    .replace(/<\/(p|h\d|li|tr)>/g, "\n")
+    .replace(/<\/(p|h\d|table|ol|ul)>/g, "\n\n")
+    .replace(/<\/(li|tr)>/g, "\n")
     .replace(/<\/t[dh]>/g, " ")
     .replace(/<[^>]+>/g, "")
     .replace(/&nbsp;/g, " ")
@@ -41,7 +43,7 @@ export async function confluenceDocs(spaceKey: string): Promise<Doc[]> {
   const docs: Doc[] = [];
   let next: string | undefined =
     `/wiki/api/v2/spaces/${sp.results[0].id}/pages` +
-    "?body-format=storage&limit=100";
+    "?body-format=storage&status=current&limit=100";
   for (let n = 0; next; n++) {
     const res: PageList = await getJson(
       `conf-pages-${spaceKey}-${n}`,

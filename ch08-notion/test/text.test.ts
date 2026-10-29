@@ -8,7 +8,7 @@ describe("Confluence の本文", () => {
     const html =
       "<h2>手順</h2><ol><li>SSH で入る</li><li>deploy.sh</li></ol>" +
       "<table><tr><th>項目</th><td>値</td></tr></table>";
-    expect(htmlText(html)).toBe("手順\nSSH で入る\ndeploy.sh\n項目 値");
+    expect(htmlText(html)).toBe("手順\n\nSSH で入る\ndeploy.sh\n\n項目 値");
   });
 });
 

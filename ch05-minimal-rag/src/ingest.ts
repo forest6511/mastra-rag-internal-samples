@@ -17,11 +17,11 @@ export async function migrate(db: Queryable & { exec?: unknown }) {
 // #endregion
 
 // #region save-doc
-// 資料1件を保存する。題名を先頭に付けた本文をチャンクに分け、
-// チャンクごとの埋め込みと一緒に入れる。同じ資料を2回入れたら、
-// 古いチャンクを消して入れ直す
+// 資料1件を保存する。本文をチャンクに分け、どのチャンクの先頭にも
+// 題名を付けてから埋め込みを作る（題名の語でも探せるように）。
+// 同じ資料を2回入れたら、古いチャンクを消して入れ直す
 export async function saveDoc(db: Queryable, d: Doc): Promise<number> {
-  const pieces = chunk(`${d.title}\n${d.body}`);
+  const pieces = chunk(d.body).map((p) => `${d.title}\n${p}`);
   const vectors = await embed(pieces);
   await db.query(
     `INSERT INTO documents (id, source, url, title, body)

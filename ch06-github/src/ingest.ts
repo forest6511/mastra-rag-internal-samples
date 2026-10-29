@@ -33,7 +33,8 @@ export async function saveDoc(db: Queryable, d: Doc): Promise<number> {
   if (old.rows[0]?.body_hash === hash) return 0;
   // #endregion
   // #region save-doc-insert
-  const pieces = chunk(`${d.title}\n${d.body}`);
+  // どのチャンクの先頭にも題名を付ける（題名の語でも探せるように）
+  const pieces = chunk(d.body).map((p) => `${d.title}\n${p}`);
   const vectors = await embed(pieces);
   await db.query(
     `INSERT INTO documents

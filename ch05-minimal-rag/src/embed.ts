@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
 import OpenAI from "openai";
-import { offline } from "./record.js";
+import { offline, recording } from "./record.js";
 
 // #region model
 // 埋め込みのモデル。1つの文を 1536 個の数の並びにする
@@ -45,11 +45,12 @@ export async function embed(texts: string[]): Promise<number[][]> {
       model: EMBED_MODEL,
       input: batch,
     });
-    fs.mkdirSync("records", { recursive: true });
     res.data.forEach((d, j) => {
       cache.set(keyOf(batch[j]), d.embedding);
-      const line = { k: keyOf(batch[j]), v: d.embedding };
-      fs.appendFileSync(CACHE, JSON.stringify(line) + "\n");
+      if (recording()) {
+        const line = { k: keyOf(batch[j]), v: d.embedding };
+        fs.appendFileSync(CACHE, JSON.stringify(line) + "\n");
+      }
     });
   }
   return texts.map((t) => cache.get(keyOf(t)) as number[]);

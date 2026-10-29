@@ -1,9 +1,10 @@
 // #region chunk
 // 資料をおよそ size 字のチャンクに分ける。段落（空行）と、
-// 箇条書き・番号付きの行の頭で区切り、区切りをまたいでは切らない。
-// 1つの段落が size を超えるときは、その段落だけで1チャンクにする
+// 箇条書き（・ - *）・番号付き（1. 1、 1））の行の頭で区切り、
+// 区切りをまたいでは切らない。1つの段落が size を超えるときは、
+// その段落だけで1チャンクにする
 export function chunk(text: string, size = 500): string[] {
-  const paras = text.split(/\n{2,}|\n(?=[#・\-*\d]+[.、 ）)]?\s)/);
+  const paras = text.split(/\n{2,}|\n(?=[#・*-]|\d+[.、)）])/);
   const out: string[] = [];
   let cur = "";
   for (const p of paras) {

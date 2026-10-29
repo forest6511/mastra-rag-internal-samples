@@ -1,7 +1,7 @@
 import { PGlite } from "@electric-sql/pglite";
 import { vector } from "@electric-sql/pglite-pgvector";
 import { beforeAll, describe, expect, it } from "vitest";
-import { answer } from "../src/agent.js";
+import { answer, INSTRUCTIONS_CH05 } from "../src/agent.js";
 import { embed } from "../src/embed.js";
 import { migrate, saveDoc } from "../src/ingest.js";
 import { vectorSearch } from "../src/search.js";
@@ -39,14 +39,15 @@ describe("GitHub を足した RAG", () => {
     expect(res.rows[0].d).toBe("2026-09-01");
   });
 
-  it("新しい README に触れるが、主文は古い手順", async () => {
+  it("新しい日付を優先すると、新しい手順の中身まで答える", async () => {
     const q = "デプロイ手順は？";
     const [v] = await embed([q]);
-    const text = await answer(q, await vectorSearch(db, v));
-    expect(text).toContain("GitHub Actions");
-    expect(text.indexOf("deploy.sh")).toBeLessThan(
-      text.indexOf("GitHub Actions"),
-    );
+    const hits = await vectorSearch(db, v);
+    const before = await answer(q, hits, INSTRUCTIONS_CH05);
+    const after = await answer(q, hits);
+    expect(before).toContain("GitHub Actions");
+    expect(before).not.toContain("タグ");
+    expect(after).toContain("タグ");
   });
 });
 // #endregion

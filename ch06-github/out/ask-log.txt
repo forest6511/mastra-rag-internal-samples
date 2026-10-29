@@ -1,12 +1,12 @@
 [1] 0.370 情報セキュリティ方針（2026年9月改定）
 [2] 0.364 セキュリティ方針
-[3] 0.315 kanade-yoyaku PR #15 決済GW再試行まわりの整理と引き継ぎ用の改善
-[4] 0.282 予約 API 仕様
-[5] 0.277 kanade-yoyaku README
-[6] 0.258 kanade-yoyaku PR #15 決済GW再試行まわりの整理と引き継ぎ用の改善
+[3] 0.291 決済まわり設計メモ
+[4] 0.277 kanade-yoyaku README
+[5] 0.271 kanade-yoyaku PR #15 決済GW再試行まわりの整理と引き継ぎ用の改善
+[6] 0.264 社内FAQ（よくある質問）
 
-ログは3年保管するものとされています。 [1][5]
+ログは3年保管します。旧版の2025-04-01方針では1年でしたが、2026-09-01改定の方針で3年に変更されています。[1][2]
 
 出典  
-[1] 情報セキュリティ方針（2026年9月改定） https://kanadeloop.atlassian.net/wiki/spaces/KANADE/pages/622593/2026+9  
-[5] kanade-yoyaku README https://github.com/kanadeloop/kanade-yoyaku/blob/main/README.md
+[1] 情報セキュリティ方針（2026年9月改定）（confluence・2026-09-01） https://kanadeloop.atlassian.net/wiki/spaces/KANADE/pages/622593/2026+9  
+[2] セキュリティ方針（confluence・2025-04-01） https://kanadeloop.atlassian.net/wiki/spaces/KANADE/pages/589846

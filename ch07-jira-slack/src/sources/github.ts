@@ -112,7 +112,8 @@ async function issues(org: string, repo: string): Promise<Doc[]> {
 // #endregion
 
 // #region comments
-// コメントは Issue・PR ごとに別の API。日時を付けて本文の後ろに足す
+// コメントは Issue・PR ごとに別の API。本文の後ろに足す。
+// API の日時は seed を入れた日なので付けない（日時は本文の頭にある）
 async function comments(repo: string, i: Issue): Promise<string> {
   if (i.comments === 0) return "";
   const list = await ghGet<{ created_at: string; body: string }[]>(
@@ -121,9 +122,7 @@ async function comments(repo: string, i: Issue): Promise<string> {
     (list) =>
       list.map(({ created_at, body }) => ({ created_at, body })),
   );
-  const lines = list.map(
-    (c) => `[${c.created_at.slice(0, 16)}] ${c.body}`,
-  );
+  const lines = list.map((c) => c.body);
   return `コメント:\n${lines.join("\n")}`;
 }
 // #endregion

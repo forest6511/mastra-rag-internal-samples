@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
 import { Agent } from "@mastra/core/agent";
-import { offline } from "./record.js";
+import { offline, recording } from "./record.js";
 import type { Hit } from "./search.js";
 
 // #region instructions
@@ -54,10 +54,10 @@ export async function answer(question: string, hits: Hit[]) {
   if (saved !== undefined) return saved;
   if (offline()) throw new Error("OFFLINE: この質問の答えは記録に無い");
   const res = await answerAgent.generate(prompt);
-  fs.appendFileSync(
-    ANSWERS,
-    JSON.stringify({ k: key, text: res.text }) + "\n",
-  );
+  if (recording()) {
+    const line = JSON.stringify({ k: key, text: res.text });
+    fs.appendFileSync(ANSWERS, line + "\n");
+  }
   return res.text;
 }
 // #endregion
