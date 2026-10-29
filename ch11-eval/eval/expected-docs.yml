@@ -1,0 +1,45 @@
+# 答えるべき質問ごとに、答えに要る資料（正解の資料）の ID。
+# 検索の指標（正解の資料が上位6件に入った割合）に使う。
+# questions.yml の sources（出来事と置き場所）を、資料の ID に置き換えた
+Q01:
+  - slack:C0CE4A0NJ80:1789434120.000000 # #incident の障害スレッド
+  - jira:KAN-13
+  - github:kanade-yoyaku:14
+  - notion:4087551e-201a-81eb-8bca-e4951f59e2cd # 8/20 の振り返り
+  - jira:KAN-14
+  - confluence:622593 # セキュリティ方針（9月改定）
+Q02:
+  - notion:4087551e-201a-81eb-8bca-e4951f59e2cd
+  - jira:KAN-14
+  - jira:KAN-13
+Q03:
+  - github:kanade-yoyaku:14
+  - slack:C0CE4A0NJ80:1789434120.000000
+  - slack:C0CD805EPM4:1785892320.000000 # #dev の切替の議論
+Q04:
+  - confluence:622593
+  - confluence:589846 # セキュリティ方針（改定前）
+  - notion:4087551e-201a-8118-9614-c61a35870640 # 機能一覧
+  - jira:KAN-10
+  - slack:C0CD3MUJ6G3:1790294400.000000 # #sales の顧客要望
+Q05:
+  - confluence:622593
+  - notion:4087551e-201a-8118-9614-c61a35870640
+  - confluence:589846
+Q06:
+  - jira:KAN-10
+  - slack:C0CD3MUJ6G3:1790294400.000000
+Q15:
+  - slack:C0CD805EPM4:1785892320.000000
+  - jira:KAN-11
+  - slack:C0CD4KQ8J5B:1788220800.000000 # #announce の告知
+Q16:
+  - slack:C0CD805EPM4:1791421200.000000 # #dev の引き継ぎの相談
+  - github:kanade-yoyaku:15
+Q17:
+  - slack:C0CD4KQ8J5B:1788220800.000000
+  - slack:C0CE4A0NJ80:1789434120.000000
+  - github:kanade-yoyaku:14
+Q18:
+  - slack:C0CD805EPM4:1785892320.000000
+  - github:kanade-yoyaku:14

@@ -1,0 +1,18 @@
+# PostgreSQL 17 に pgvector 0.8.2 と pg_bigm を入れた DB
+# （Aurora PostgreSQL 17.11 と同じバージョン）
+services:
+  db:
+    build: ./docker
+    image: kanade-rag-db:pg17-pgvector0.8.2-pgbigm1.2
+    environment:
+      POSTGRES_USER: rag
+      POSTGRES_PASSWORD: ragpass
+      POSTGRES_DB: rag
+      LANG: C.UTF-8
+      POSTGRES_INITDB_ARGS: "--locale=C.UTF-8 --encoding=UTF8"
+    ports: ["${DB_PORT:-55432}:5432"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+volumes:
+  pgdata:
