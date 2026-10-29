@@ -6,7 +6,8 @@ import { FETCHERS } from "./fetch-all.js";
 // 索引と元のサービスを突き合わせる（書き込みはしない）。
 // missing: 元にあるのに索引に無い / extra: 索引に残っている消えた資料 /
 // stale: 本文が元と違う（更新が反映されていない） /
-// empty: チャンクが1つも無い資料（埋め込みが入っていない）
+// empty: チャンクが1つも無い資料（埋め込みが入っていない）。
+// 4つとも0なら ok
 const hashOf = (title: string, body: string) =>
   crypto.createHash("sha256").update(`${title}\n${body}`).digest("hex");
 

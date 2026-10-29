@@ -61,7 +61,7 @@ const keep = (j: { issues: Issue[]; nextPageToken?: string }) => ({
 // #region changed-jql
 // 差分で取るときの JQL。前回の同期の時刻から5分戻して重ねて取る
 // （時計のずれや、同期の最中に更新された課題を取りこぼさないため）。
-// 日時は「何分前から」で書く（"-90m"）。日付と時刻で書くと、
+// 日時は「何分前から」で書く（"-55m"）。日付と時刻で書くと、
 // API トークンのアカウントのタイムゾーンで解釈されるため。
 // 消えた課題は返らないので、削除は全件の突き合わせで見る
 export function changedJql(
@@ -88,6 +88,7 @@ export async function jiraDocs(
 ): Promise<Doc[]> {
   const site = offline() ? RECORDED_SITE : need("ATL_SITE");
   const docs: Doc[] = [];
+  const jql = changedJql(project, since); // ページ送りの間は同じ JQL
   let token: string | undefined;
   for (let n = 0; n === 0 || token; n++) {
     const res = await getJson(
@@ -97,7 +98,7 @@ export async function jiraDocs(
         method: "POST",
         headers: offline() ? {} : jiraHeaders(),
         body: JSON.stringify({
-          jql: changedJql(project, since),
+          jql,
           maxResults: 100,
           nextPageToken: token,
           fields: FIELDS,
