@@ -1,4 +1,4 @@
-# Aurora PostgreSQL 17.11 と同じ拡張機能の版にそろえる
+# Aurora PostgreSQL 17.11 と同じ拡張機能のバージョンにそろえる
 # pgvector 0.8.2 / pg_bigm 1.2_20250903
 # PGroonga は Aurora に無いので使わない
 FROM pgvector/pgvector:0.8.2-pg17

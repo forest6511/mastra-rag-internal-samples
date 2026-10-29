@@ -103,27 +103,38 @@ async function slack() {
 // #endregion
 
 // #region github
+// README はリポジトリの有無、PR は題名で突き合わせる
 function github() {
-  const repos = ofKind(docs, "github-readme").map((d) =>
-    String(d.plan.repo),
-  );
-  const out = execFileSync(
-    "gh",
-    [
-      "repo",
-      "list",
-      need("GH_ORG"),
-      "--json",
-      "name",
-      "-q",
-      ".[].name",
-    ],
-    {
+  const gh = (args: string[]) =>
+    execFileSync("gh", args, {
       encoding: "utf8",
       env: { ...process.env, GH_TOKEN: need("GH_RAG_TOKEN") },
-    },
+    }).trim();
+  const org = need("GH_ORG");
+  const repos = gh([
+    "repo",
+    "list",
+    org,
+    "--json",
+    "name",
+    "-q",
+    ".[].name",
+  ]);
+  report(
+    "GitHub の README",
+    ofKind(docs, "github-readme").map((d) => String(d.plan.repo)),
+    repos.split("\n"),
   );
-  report("GitHub のリポジトリ", repos, out.trim().split("\n"));
+  const prRepos = new Set(
+    ofKind(docs, "github-pr").map((d) => String(d.plan.repo)),
+  );
+  const found = [...prRepos].flatMap((repo) =>
+    gh([
+      ...["pr", "list", "-R", `${org}/${repo}`, "--state", "all"],
+      ...["--json", "title", "-q", ".[].title"],
+    ]).split("\n"),
+  );
+  report("GitHub の PR", titles("github-pr"), found);
 }
 // #endregion
 
