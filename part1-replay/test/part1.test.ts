@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { beforeAll, describe, expect, it } from "vitest";
-import { answer } from "../src/agent.js";
+import { answer, answerWithoutRag } from "../src/agent.js";
 import { buildDb } from "../src/build.js";
 import { addCanonical } from "../src/canonical.js";
 import { embed } from "../src/embed.js";
@@ -35,4 +35,14 @@ describe("第1部の成果物", () => {
   it("振り返りの下書きに、原因の 3000ms が入る", async () => {
     expect(await ask(q("Q01"))).toContain("3000");
   });
+
+  it.each(["Q01", "Q04"])(
+    "%s を RAG なしで聞くと、社内の事実を知らない答えになる",
+    async (id) => {
+      const text = await answerWithoutRag(q(id));
+      const file = `out/answer-${id}-no-rag.txt`;
+      expect(readFileSync(file, "utf8")).toContain(text);
+      expect(text).not.toContain("3000");
+    },
+  );
 });

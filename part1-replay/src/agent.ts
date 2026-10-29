@@ -123,3 +123,24 @@ function readAnswers(): Map<string, string> {
       .map((r: { k: string; text: string }) => [r.k, r.text]),
   );
 }
+
+// 第2章で比べる「RAG なし」。資料を渡さず、質問だけを生成 AI に渡す
+export const NO_RAG_INSTRUCTIONS =
+  "あなたは株式会社カナデループの社内アシスタントです。" +
+  "分からないことは分からないと答えます。";
+
+export async function answerWithoutRag(question: string) {
+  const key = crypto
+    .createHash("sha256")
+    .update(MODEL + NO_RAG_INSTRUCTIONS + question)
+    .digest("hex");
+  const saved = readAnswers().get(key);
+  if (saved !== undefined) return saved;
+  if (offline()) throw new Error("OFFLINE: この質問の答えは記録に無い");
+  const res = await agentFor(NO_RAG_INSTRUCTIONS).generate(question);
+  if (recording()) {
+    const line = JSON.stringify({ k: key, text: res.text });
+    fs.appendFileSync(ANSWERS, line + "\n");
+  }
+  return res.text;
+}
