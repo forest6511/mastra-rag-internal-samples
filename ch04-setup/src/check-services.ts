@@ -125,6 +125,8 @@ function github() {
     ofKind(docs, "github-readme").map((d) => String(d.plan.repo)),
     repos.split("\n"),
   );
+  // #endregion
+  // #region github-pr
   const prRepos = new Set(
     ofKind(docs, "github-pr").map((d) => String(d.plan.repo)),
   );
