@@ -40,13 +40,20 @@ async function slackGet<T>(
 // #endregion
 
 // #region keep
-interface History {
-  messages: Message[];
+// 一覧の API の応答のうち、記録に残すもの（投稿者の ID などは残さない）
+interface Page {
+  channels?: Channel[];
+  messages?: Message[];
   response_metadata?: { next_cursor?: string };
 }
-const keepMessages = (j: History): History => ({
+const keepPage = (j: Page): Page => ({
   response_metadata: { next_cursor: j.response_metadata?.next_cursor },
-  messages: j.messages.map((m) => ({
+  channels: j.channels?.map(({ id, name, is_member }) => ({
+    id,
+    name,
+    is_member,
+  })),
+  messages: j.messages?.map((m) => ({
     ts: m.ts,
     text: m.text,
     username: m.username,
@@ -55,6 +62,36 @@ const keepMessages = (j: History): History => ({
     reply_count: m.reply_count,
   })),
 });
+// #endregion
+
+// #region slack-all
+// 一覧を返す API は、1回に返す件数に上限がある（本書は200件を指定）。
+// 続きは response_metadata.next_cursor で取り、無くなるまで呼ぶ
+async function slackAll<T>(
+  name: string,
+  method: string,
+  params: Record<string, string>,
+  pick: (j: Page) => T[] | undefined,
+): Promise<T[]> {
+  const out: T[] = [];
+  let cursor = "";
+  for (let n = 0; n === 0 || cursor; n++) {
+    const page = {
+      ...params,
+      limit: "200",
+      ...(cursor ? { cursor } : {}),
+    };
+    const j = await slackGet<Page>(
+      `${name}-${n}`,
+      method,
+      page,
+      keepPage,
+    );
+    out.push(...(pick(j) ?? []));
+    cursor = j.response_metadata?.next_cursor ?? "";
+  }
+  return out;
+}
 // #endregion
 
 // #region jst
@@ -77,51 +114,34 @@ const permalink = (workspace: string, ch: string, ts: string) => {
 
 // #region threads
 // アプリが参加しているチャンネルの、親の投稿と返信を取る。
-// threads: 親1件ごとに、親と返信の配列を返す
+// 親1件ごとに、親と返信の配列を返す
 async function threads(): Promise<{ ch: Channel; msgs: Message[] }[]> {
-  const list = await slackGet<{ channels: Channel[] }>(
+  const channels = await slackAll(
     "slack-channels",
     "conversations.list",
-    { types: "public_channel,private_channel", limit: "200" },
-    (j) => ({
-      channels: j.channels.map(({ id, name, is_member }) => ({
-        id,
-        name,
-        is_member,
-      })),
-    }),
+    { types: "public_channel,private_channel" },
+    (j) => j.channels,
   );
-  // #endregion
-  // #region threads-history
   const out: { ch: Channel; msgs: Message[] }[] = [];
-  for (const ch of list.channels.filter((c) => c.is_member)) {
-    // 履歴は1回に最大200件。続きは next_cursor で取る
-    const history: Message[] = [];
-    let cursor = "";
-    for (let n = 0; n === 0 || cursor; n++) {
-      const h = await slackGet<History>(
-        `slack-history-${ch.id}-${n}`,
-        "conversations.history",
-        { channel: ch.id, limit: "200", ...(cursor ? { cursor } : {}) },
-        keepMessages,
-      );
-      history.push(...h.messages);
-      cursor = h.response_metadata?.next_cursor ?? "";
-    }
+  for (const ch of channels.filter((c) => c.is_member)) {
+    const history = await slackAll(
+      `slack-history-${ch.id}`,
+      "conversations.history",
+      { channel: ch.id },
+      (j) => j.messages,
+    );
     // #endregion
     // #region threads-replies
     for (const m of history) {
       // 参加の通知などは飛ばす（取り込んだ投稿は bot_message になる）
       if (m.subtype && m.subtype !== "bot_message") continue;
       const msgs = m.reply_count
-        ? (
-            await slackGet<History>(
-              `slack-replies-${ch.id}-${m.ts}`,
-              "conversations.replies",
-              { channel: ch.id, ts: m.ts, limit: "200" },
-              keepMessages,
-            )
-          ).messages
+        ? await slackAll(
+            `slack-replies-${ch.id}-${m.ts}`,
+            "conversations.replies",
+            { channel: ch.id, ts: m.ts },
+            (j) => j.messages,
+          )
         : [m];
       out.push({ ch, msgs });
     }

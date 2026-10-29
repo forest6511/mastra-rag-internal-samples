@@ -1,5 +1,8 @@
 {
  "ok": true,
+ "response_metadata": {
+  "next_cursor": ""
+ },
  "channels": [
   {
    "id": "C0CCY8JPJQ3",
