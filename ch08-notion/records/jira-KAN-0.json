@@ -1,0 +1,1305 @@
+{
+ "issues": [
+  {
+   "key": "KAN-11",
+   "fields": {
+    "summary": "決済GW切替",
+    "issuetype": {
+     "name": "エピック"
+    },
+    "created": "2026-08-05T10:00:00.000+0900",
+    "resolutiondate": "2026-09-01T18:00:00.000+0900",
+    "description": {
+     "type": "doc",
+     "version": 1,
+     "content": [
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "type": "text",
+         "text": "作成日: 2026-08-05 ／ 作成者: 小林 亮"
+        }
+       ]
+      },
+      {
+       "type": "bulletList",
+       "content": [
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "ペイリンク → クレペイ"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "本番切替: 2026-09-01"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "理由: 手数料"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "timeout: 30000ms（既定）"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    "comment": {
+     "comments": []
+    },
+    "status": {
+     "name": "完了"
+    }
+   }
+  },
+  {
+   "key": "KAN-14",
+   "fields": {
+    "summary": "予約確定メール遅延：決済GW応答待ち詰まりに伴う監視追加",
+    "issuetype": {
+     "name": "タスク"
+    },
+    "created": "2026-08-21T10:00:00.000+0900",
+    "resolutiondate": null,
+    "description": {
+     "type": "doc",
+     "version": 1,
+     "content": [
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "type": "text",
+         "text": "作成日: 2026-08-21 ／ 作成者: 佐藤 美咲"
+        }
+       ]
+      },
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "type": "text",
+         "text": "2026-08-21、カナ予で予約確定メールの遅延を確認。"
+        }
+       ]
+      },
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "type": "text",
+         "text": "時系列で確認した内容は以下。"
+        }
+       ]
+      },
+      {
+       "type": "bulletList",
+       "content": [
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "予約確定処理で、決済GW の応答待ちが詰まっていた。"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "その影響で、予約確定メールの送信が遅延した。"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "影響は約40件。"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "PG 側の送信処理自体ではなく、決済GW 応答待ちが詰まったことが起点。"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "ヘルプ箱で問い合わせ確認対象。"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "type": "text",
+         "text": "再発防止として、決済GW の応答時間の監視を追加する。"
+        }
+       ]
+      },
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "type": "text",
+         "text": "課題状態:"
+        }
+       ]
+      },
+      {
+       "type": "bulletList",
+       "content": [
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "担当: 未設定"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "ステータス: 未着手"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    "comment": {
+     "comments": [
+      {
+       "created": "2026-08-21T00:00:00.000+0900",
+       "body": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+         {
+          "type": "paragraph",
+          "content": [
+           {
+            "type": "text",
+            "text": "（佐藤 美咲）決済GW 応答待ちの詰まりにより、予約確定メールが遅延。影響は約40件。再発防止として、決済GW の応答時間監視を追加する課題として起票。担当は未設定。ステータスは未着手。"
+           }
+          ]
+         }
+        ]
+       }
+      }
+     ]
+    },
+    "status": {
+     "name": "To Do"
+    }
+   }
+  },
+  {
+   "key": "KAN-13",
+   "fields": {
+    "summary": "決済エラー障害：クレペイ接続タイムアウト設定により美容室予約の決済失敗",
+    "issuetype": {
+     "name": "タスク"
+    },
+    "created": "2026-09-15T10:00:00.000+0900",
+    "resolutiondate": "2026-09-18T18:00:00.000+0900",
+    "description": {
+     "type": "doc",
+     "version": 1,
+     "content": [
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "type": "text",
+         "text": "作成日: 2026-09-15 ／ 作成者: 佐藤 美咲"
+        }
+       ]
+      },
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "type": "text",
+         "text": "2026-09-15 10:02、監視アラートで検知。検知者は佐藤。"
+        }
+       ]
+      },
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "type": "text",
+         "text": "影響範囲は美容室 132 店舗、予約 418 件。カナ予の予約決済で失敗が発生。"
+        }
+       ]
+      },
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "type": "text",
+         "text": "原因は、クレペイ接続のタイムアウトが 3000ms に設定されていたこと。9/1 の本番切替時の設定ミス。期待値は 30000ms。"
+        }
+       ]
+      },
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "type": "text",
+         "text": "10:40、暫定対応として決済GWを旧GWのペイリンクに戻した。"
+        }
+       ]
+      },
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "type": "text",
+         "text": "顧客連絡は 11:30 に影響店舗へメール送信。v2 の「1時間以内」には間に合わず。"
+        }
+       ]
+      },
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "type": "text",
+         "text": "恒久対応は、タイムアウトを 30000ms に直すこと。あわせて、設定値の自動テスト追加、決済GW応答時間の監視を実施する。E2 で起票済みの課題を今度こそ実施する。データ保存場所は東京リージョン。"
+        }
+       ]
+      }
+     ]
+    },
+    "comment": {
+     "comments": [
+      {
+       "created": "2026-09-15T10:02:00.000+0900",
+       "body": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+         {
+          "type": "paragraph",
+          "content": [
+           {
+            "type": "text",
+            "text": "（佐藤 美咲）監視アラートで検知。カナ予の決済でエラーが出ていることを確認。影響範囲の確認を開始。"
+           }
+          ]
+         }
+        ]
+       }
+      },
+      {
+       "created": "2026-09-15T10:40:00.000+0900",
+       "body": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+         {
+          "type": "paragraph",
+          "content": [
+           {
+            "type": "text",
+            "text": "（佐藤 美咲）暫定対応として、決済GWをクレペイから旧GWのペイリンクに戻した。以後、決済失敗の推移を監視。"
+           }
+          ]
+         }
+        ]
+       }
+      },
+      {
+       "created": "2026-09-15T10:40:00.000+0900",
+       "body": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+         {
+          "type": "paragraph",
+          "content": [
+           {
+            "type": "text",
+            "text": "（田中 誠）原因はクレペイ接続のタイムアウト設定です。9/1 の本番切替時に 3000ms で入っており、本来の設定値である 30000ms になっていませんでした。決済GW 側の接続待ちが短く、予約決済の処理がタイムアウトして失敗していたものと見ています。"
+           }
+          ]
+         }
+        ]
+       }
+      },
+      {
+       "created": "2026-09-15T11:30:00.000+0900",
+       "body": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+         {
+          "type": "paragraph",
+          "content": [
+           {
+            "type": "text",
+            "text": "（伊藤 さくら）影響店舗へメールでご連絡しました。対象は美容室 132 店舗、予約 418 件です。v2 の「1時間以内」の基準には間に合っていないため、店舗様には決済失敗の内容と現在の対応状況が伝わるように記載しています。"
+           }
+          ]
+         }
+        ]
+       }
+      },
+      {
+       "created": "2026-09-15T11:30:00.000+0900",
+       "body": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+         {
+          "type": "paragraph",
+          "content": [
+           {
+            "type": "text",
+            "text": "（小林 亮）恒久対応。"
+           }
+          ]
+         },
+         {
+          "type": "bulletList",
+          "content": [
+           {
+            "type": "listItem",
+            "content": [
+             {
+              "type": "paragraph",
+              "content": [
+               {
+                "type": "text",
+                "text": "クレペイ接続タイムアウトを 30000ms に直す"
+               }
+              ]
+             }
+            ]
+           },
+           {
+            "type": "listItem",
+            "content": [
+             {
+              "type": "paragraph",
+              "content": [
+               {
+                "type": "text",
+                "text": "設定値の自動テストを追加"
+               }
+              ]
+             }
+            ]
+           },
+           {
+            "type": "listItem",
+            "content": [
+             {
+              "type": "paragraph",
+              "content": [
+               {
+                "type": "text",
+                "text": "決済GW 応答時間の監視を入れる"
+               }
+              ]
+             }
+            ]
+           },
+           {
+            "type": "listItem",
+            "content": [
+             {
+              "type": "paragraph",
+              "content": [
+               {
+                "type": "text",
+                "text": "E2 で起票済みの課題を実施"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      }
+     ]
+    },
+    "status": {
+     "name": "完了"
+    }
+   }
+  },
+  {
+   "key": "KAN-12",
+   "fields": {
+    "summary": "決済エラー対応：クレペイ接続 timeout 設定",
+    "issuetype": {
+     "name": "タスク"
+    },
+    "created": "2026-09-18T10:00:00.000+0900",
+    "resolutiondate": null,
+    "description": {
+     "type": "doc",
+     "version": 1,
+     "content": [
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "type": "text",
+         "text": "作成日: 2026-09-18 ／ 作成者: 小林 亮"
+        }
+       ]
+      },
+      {
+       "type": "orderedList",
+       "attrs": {
+        "order": 1
+       },
+       "content": [
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph"
+          },
+          {
+           "type": "orderedList",
+           "attrs": {
+            "order": 1
+           },
+           "content": [
+            {
+             "type": "listItem",
+             "content": [
+              {
+               "type": "paragraph",
+               "content": [
+                {
+                 "type": "text",
+                 "text": "概要"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "bulletList",
+       "content": [
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "決済エラー障害。"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "カナ予の美容室向け決済で失敗。"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "監視アラートで検知。"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "検知者: 佐藤。"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "orderedList",
+       "attrs": {
+        "order": 1
+       },
+       "content": [
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph"
+          },
+          {
+           "type": "orderedList",
+           "attrs": {
+            "order": 1
+           },
+           "content": [
+            {
+             "type": "listItem",
+             "content": [
+              {
+               "type": "paragraph",
+               "content": [
+                {
+                 "type": "text",
+                 "text": "影響"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "bulletList",
+       "content": [
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "美容室 132 店舗。"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "予約 418 件。"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "決済が失敗。"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "orderedList",
+       "attrs": {
+        "order": 1
+       },
+       "content": [
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph"
+          },
+          {
+           "type": "orderedList",
+           "attrs": {
+            "order": 1
+           },
+           "content": [
+            {
+             "type": "listItem",
+             "content": [
+              {
+               "type": "paragraph",
+               "content": [
+                {
+                 "type": "text",
+                 "text": "原因"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "bulletList",
+       "content": [
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "クレペイ接続の timeout が 3000ms になっていた。"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "9/1 の本番切替時の設定。"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "本来は 30000ms。"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "orderedList",
+       "attrs": {
+        "order": 1
+       },
+       "content": [
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph"
+          },
+          {
+           "type": "orderedList",
+           "attrs": {
+            "order": 1
+           },
+           "content": [
+            {
+             "type": "listItem",
+             "content": [
+              {
+               "type": "paragraph",
+               "content": [
+                {
+                 "type": "text",
+                 "text": "対応"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "bulletList",
+       "content": [
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "10:40 暫定対応。"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "決済GW を旧GW（ペイリンク）に戻した。"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "9/18 恒久対応。"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "timeout を 30000ms に直す PR #14 をマージ。"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "決済GW をクレペイに戻した。"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "orderedList",
+       "attrs": {
+        "order": 1
+       },
+       "content": [
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph"
+          },
+          {
+           "type": "orderedList",
+           "attrs": {
+            "order": 1
+           },
+           "content": [
+            {
+             "type": "listItem",
+             "content": [
+              {
+               "type": "paragraph",
+               "content": [
+                {
+                 "type": "text",
+                 "text": "顧客連絡"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "bulletList",
+       "content": [
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "11:30 に影響店舗へメール。"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "v2 の「1時間以内」には未達。"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "orderedList",
+       "attrs": {
+        "order": 1
+       },
+       "content": [
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph"
+          },
+          {
+           "type": "orderedList",
+           "attrs": {
+            "order": 1
+           },
+           "content": [
+            {
+             "type": "listItem",
+             "content": [
+              {
+               "type": "paragraph",
+               "content": [
+                {
+                 "type": "text",
+                 "text": "再発防止"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "bulletList",
+       "content": [
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "設定値の自動テストを追加する課題を対応する。"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "決済GW 応答時間の監視を対応する。"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "E2 で起票済みの課題を今度こそ実施する。"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    "comment": {
+     "comments": [
+      {
+       "created": "2026-09-18T10:02:00.000+0900",
+       "body": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+         {
+          "type": "paragraph",
+          "content": [
+           {
+            "type": "text",
+            "text": "（佐藤 美咲）10:02 監視アラートで検知。決済エラー。影響確認を開始。"
+           }
+          ]
+         }
+        ]
+       }
+      },
+      {
+       "created": "2026-09-18T10:40:00.000+0900",
+       "body": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+         {
+          "type": "paragraph",
+          "content": [
+           {
+            "type": "text",
+            "text": "（小林 亮）- 暫定対応済み。"
+           }
+          ]
+         },
+         {
+          "type": "bulletList",
+          "content": [
+           {
+            "type": "listItem",
+            "content": [
+             {
+              "type": "paragraph",
+              "content": [
+               {
+                "type": "text",
+                "text": "決済GW を旧GW（ペイリンク）に戻した。"
+               }
+              ]
+             }
+            ]
+           },
+           {
+            "type": "listItem",
+            "content": [
+             {
+              "type": "paragraph",
+              "content": [
+               {
+                "type": "text",
+                "text": "クレペイ接続 timeout は 3000ms。"
+               }
+              ]
+             }
+            ]
+           },
+           {
+            "type": "listItem",
+            "content": [
+             {
+              "type": "paragraph",
+              "content": [
+               {
+                "type": "text",
+                "text": "本来値 30000ms に直す。"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      },
+      {
+       "created": "2026-09-18T11:30:00.000+0900",
+       "body": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+         {
+          "type": "paragraph",
+          "content": [
+           {
+            "type": "text",
+            "text": "（伊藤 さくら）影響店舗へメールしました。美容室 132 店舗・予約 418 件で決済失敗が発生しています。v2 の「1時間以内」には間に合っていません。"
+           }
+          ]
+         }
+        ]
+       }
+      },
+      {
+       "created": "2026-10-29T21:49:07.352+0900",
+       "body": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+         {
+          "type": "paragraph",
+          "content": [
+           {
+            "type": "text",
+            "text": "（同期の試験）監視の追加は来週着手予定"
+           }
+          ]
+         }
+        ]
+       }
+      }
+     ]
+    },
+    "status": {
+     "name": "進行中"
+    }
+   }
+  },
+  {
+   "key": "KAN-10",
+   "fields": {
+    "summary": "[ロードマップ] 監査ログのエクスポート機能追加",
+    "issuetype": {
+     "name": "エピック"
+    },
+    "created": "2026-09-25T10:00:00.000+0900",
+    "resolutiondate": null,
+    "description": {
+     "type": "doc",
+     "version": 1,
+     "content": [
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "type": "text",
+         "text": "作成日: 2026-09-25 ／ 作成者: 高橋 健"
+        }
+       ]
+      },
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "type": "text",
+         "text": "カナ予の監査ログのエクスポート機能をロードマップに追加しました。"
+        }
+       ]
+      },
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "type": "text",
+         "text": "リリース予定: 2026-12"
+        },
+        {
+         "type": "hardBreak"
+        },
+        {
+         "type": "text",
+         "text": "担当: 高橋"
+        }
+       ]
+      },
+      {
+       "type": "paragraph",
+       "content": [
+        {
+         "type": "text",
+         "text": "ヘルプ箱などでこの件の話が来たら、このIssueに寄せてもらえると助かります🙏"
+        }
+       ]
+      }
+     ]
+    },
+    "comment": {
+     "comments": [
+      {
+       "created": "2026-09-25T00:00:00.000+0900",
+       "body": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+         {
+          "type": "paragraph",
+          "content": [
+           {
+            "type": "text",
+            "text": "（高橋 健）ロードマップに載せました！監査ログのエクスポート対応です。担当は自分で持ちます〜 🙂"
+           }
+          ]
+         }
+        ]
+       }
+      }
+     ]
+    },
+    "status": {
+     "name": "To Do"
+    }
+   }
+  }
+ ]
+}

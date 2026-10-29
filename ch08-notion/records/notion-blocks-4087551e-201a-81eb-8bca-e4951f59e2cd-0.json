@@ -1,0 +1,193 @@
+{
+ "has_more": false,
+ "next_cursor": null,
+ "results": [
+  {
+   "id": "4087551e-201a-8153-aae0-fafbfdb18f21",
+   "type": "paragraph",
+   "paragraph": {
+    "rich_text": [
+     {
+      "plain_text": "作成日: 2026-08-20 ／ 作成者: 佐藤 美咲"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-8149-84fe-f2b7756db57f",
+   "type": "heading_2",
+   "heading_2": {
+    "rich_text": [
+     {
+      "plain_text": "概要"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-8192-aae9-e1f39f47a0f4",
+   "type": "paragraph",
+   "paragraph": {
+    "rich_text": [
+     {
+      "plain_text": "2026-08-20、カナ予で予約確定メールの送信遅延を確認した。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-8169-9ca5-c5136e1c5ecd",
+   "type": "paragraph",
+   "paragraph": {
+    "rich_text": [
+     {
+      "plain_text": "原因は決済GWの応答待ちが詰まったこと。影響は約40件。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-8134-825e-e0857f8c7760",
+   "type": "heading_2",
+   "heading_2": {
+    "rich_text": [
+     {
+      "plain_text": "時系列"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-8159-aa0f-e7af6cb0f8e3",
+   "type": "bulleted_list_item",
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "予約確定メールの遅延を確認。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-8125-8b34-c8098e8c4e58",
+   "type": "bulleted_list_item",
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "決済GWの応答待ちが詰まっていることを確認。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81cb-a40f-d19917eab6d7",
+   "type": "bulleted_list_item",
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "影響件数を確認。約40件。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81bf-9d4f-d39679ae27a7",
+   "type": "bulleted_list_item",
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "再発防止として、決済GWの応答時間を監視する課題を起票。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81da-9cae-f414f4d7fada",
+   "type": "heading_2",
+   "heading_2": {
+    "rich_text": [
+     {
+      "plain_text": "原因"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-8187-bf3d-e4bb694274ee",
+   "type": "paragraph",
+   "paragraph": {
+    "rich_text": [
+     {
+      "plain_text": "決済GW応答待ちの詰まりにより、予約確定後のメール送信処理が遅延した。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81d2-b80b-e592e53686bc",
+   "type": "heading_2",
+   "heading_2": {
+    "rich_text": [
+     {
+      "plain_text": "影響"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-8138-9533-cb8711836f0f",
+   "type": "bulleted_list_item",
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "対象：カナ予の予約確定メール"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81bc-8fdf-f63c1ce61bdf",
+   "type": "bulleted_list_item",
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "件数：約40件"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81f7-a4ec-c5162cf2f3ff",
+   "type": "heading_2",
+   "heading_2": {
+    "rich_text": [
+     {
+      "plain_text": "再発防止"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81a9-ab42-f092a61a0dc8",
+   "type": "bulleted_list_item",
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "課題番号：PG-8/20"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-813a-9769-f2109f124bb7",
+   "type": "bulleted_list_item",
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "内容：決済GWの応答時間の監視を追加する。"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,116 @@
+{
+ "has_more": false,
+ "next_cursor": null,
+ "results": [
+  {
+   "id": "4087551e-201a-8140-913f-dc87f5bfd2a3",
+   "type": "paragraph",
+   "paragraph": {
+    "rich_text": [
+     {
+      "plain_text": "作成日: 2026-10-09 ／ 作成者: 吉田 明美"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81c2-b305-fc3f9bfc7080",
+   "type": "heading_2",
+   "heading_2": {
+    "rich_text": [
+     {
+      "plain_text": "概要"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81b8-8343-fab69ec5c02f",
+   "type": "paragraph",
+   "paragraph": {
+    "rich_text": [
+     {
+      "plain_text": "対象者は田中 誠さん。2026-10-10 退職予定。理由は家庭の事情で地元に戻るため。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-8131-852f-ff1ca48c4398",
+   "type": "paragraph",
+   "paragraph": {
+    "rich_text": [
+     {
+      "plain_text": "共有範囲は人事のみ。営業・開発には共有しない。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81fe-b1dc-eddba8508d57",
+   "type": "heading_2",
+   "heading_2": {
+    "rich_text": [
+     {
+      "plain_text": "引継ぎ"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-8159-b688-d4909805ffa6",
+   "type": "bulleted_list_item",
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "カナ予の決済まわりは小林 亮さんが引き継ぐ。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81db-b4f8-d8d63a3fe256",
+   "type": "bulleted_list_item",
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "決済GWまわりの確認先は小林さんに一本化する。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81ff-93fa-ccdf10f328e1",
+   "type": "heading_2",
+   "heading_2": {
+    "rich_text": [
+     {
+      "plain_text": "人事メモ"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81de-8be9-d439f816005d",
+   "type": "bulleted_list_item",
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "退職理由は個人事情として扱う。"
+     }
+    ]
+   }
+  },
+  {
+   "id": "4087551e-201a-81ce-8a97-ced5339d153b",
+   "type": "bulleted_list_item",
+   "bulleted_list_item": {
+    "rich_text": [
+     {
+      "plain_text": "社内説明では、必要範囲に限定して退職予定のみ扱う。"
+     }
+    ]
+   }
+  }
+ ]
+}
