@@ -1,0 +1,20 @@
+[1] notion:4087551e-201a-8118-9614-c61a35870640  カナ予 機能一覧（セキュリティ編）
+[2] confluence:589846  セキュリティ方針
+[3] slack:C0CD805EPM4:1785892320.000000  #dev 2026-08-05 10:12 のスレッド
+[4] notion:4087551e-201a-81eb-8bca-e4951f59e2cd  8/20 予約確定メール遅延の振り返り
+[5] github:kanade-admin:README  kanade-admin README
+[6] slack:C0CD4KQ8J5B:1788220800.000000  #announce 2026-09-01 09:00 のスレッド
+
+稼働率（SLA）の保証値については、提示いただいた資料の中に記載がありません。要確認です。[1][2][3][4][5][6]  
+問い合わせ先は、機能・ロードマップ担当の小林 亮さんです。  
+
+確認したい点は1つです。  
+- カナ予のSLAの稼働率保証値は、別資料または別途定義されていますか？要確認。[1][2][3][4][5][6]
+
+出典  
+- [1] カナ予 機能一覧（セキュリティ編） https://www.notion.so/4087551e201a81189614c61a35870640  
+- [2] セキュリティ方針 https://kanadeloop.atlassian.net/wiki/spaces/KANADE/pages/589846  
+- [3] #dev 2026-08-05 10:12 のスレッド https://kanadeloop.slack.com/archives/C0CD805EPM4/p1785892320000000  
+- [4] 8/20 予約確定メール遅延の振り返り https://www.notion.so/4087551e201a81eb8bcae4951f59e2cd  
+- [5] kanade-admin README https://github.com/kanadeloop/kanade-admin/blob/main/README.md  
+- [6] #announce 2026-09-01 09:00 のスレッド https://kanadeloop.slack.com/archives/C0CD4KQ8J5B/p1788220800000000
