@@ -30,6 +30,11 @@ export async function saveDoc(db: Queryable, d: Doc): Promise<number> {
     "SELECT body_hash FROM documents WHERE id = $1",
     [d.id],
   );
+  // 正本の印は本文と別に持つので、本文が同じでも毎回書く
+  await db.query("UPDATE documents SET canonical = $2 WHERE id = $1", [
+    d.id,
+    d.canonical ?? false,
+  ]);
   if (old.rows[0]?.body_hash === hash) return 0;
   // #endregion
   // #region save-doc-insert
@@ -38,11 +43,14 @@ export async function saveDoc(db: Queryable, d: Doc): Promise<number> {
   const vectors = await embed(pieces);
   await db.query(
     `INSERT INTO documents
-       (id, source, url, title, body, event_date, body_hash)
-     VALUES ($1, $2, $3, $4, $5, $6, $7)
+       (id, source, url, title, body, event_date, body_hash, canonical)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
      ON CONFLICT (id) DO UPDATE SET url = $3, title = $4, body = $5,
-       event_date = $6, body_hash = $7`,
-    [d.id, d.source, d.url, d.title, d.body, d.eventDate ?? null, hash],
+       event_date = $6, body_hash = $7, canonical = $8`,
+    [
+      ...[d.id, d.source, d.url, d.title, d.body],
+      ...[d.eventDate ?? null, hash, d.canonical ?? false],
+    ],
   );
   await db.query("DELETE FROM chunks WHERE doc_id = $1", [d.id]);
   for (const [i, content] of pieces.entries()) {

@@ -1,18 +1,22 @@
-import { answer, INSTRUCTIONS, INSTRUCTIONS_CH05 } from "./agent.js";
+import { answer, INSTRUCTIONS, INSTRUCTIONS_CH06 } from "./agent.js";
 import { pool } from "./db.js";
 import { embed } from "./embed.js";
-import { vectorSearch } from "./search.js";
+import { docSearch, vectorSearch } from "./search.js";
 
 // #region main
-// npm run ask -- "デプロイ手順は？"（--ch05 で第5章の指示）
+// npm run ask -- "質問" [--by-doc] [--ch06]
 const args = process.argv.slice(2);
 const question =
   args.find((a) => !a.startsWith("--")) ?? "デプロイ手順は？";
-const instructions = args.includes("--ch05")
-  ? INSTRUCTIONS_CH05
+// --ch06 で第6章の指示（日付の新しい資料を優先）
+const instructions = args.includes("--ch06")
+  ? INSTRUCTIONS_CH06
   : INSTRUCTIONS;
 const [vector] = await embed([question]);
-const hits = await vectorSearch(pool, vector);
+// --by-doc で、資料ごとにまとめた上位 6 件を材料にする（第7章）
+const hits = args.includes("--by-doc")
+  ? await docSearch(pool, vector)
+  : await vectorSearch(pool, vector);
 hits.forEach((h, i) =>
   console.log(`[${i + 1}] ${h.score.toFixed(3)} ${h.title}`),
 );

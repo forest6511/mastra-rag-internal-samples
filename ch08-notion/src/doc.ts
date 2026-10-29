@@ -8,6 +8,7 @@ export interface Doc {
   title: string;
   body: string; // 本文（HTML などを取り除いた文字）
   eventDate?: string; // 資料の日付（YYYY-MM-DD）。新旧を比べるのに使う
+  canonical?: boolean; // 正本（その話題で正とする資料）か
 }
 // #endregion
 

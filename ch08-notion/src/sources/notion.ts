@@ -24,7 +24,8 @@ async function blocks(id: string): Promise<Block[]> {
     const q = cursor ? `&start_cursor=${cursor}` : "";
     const res: BlockList = await getJson(
       `notion-blocks-${id}-${n}`,
-      `https://api.notion.com/v1/blocks/${id}/children?page_size=100${q}`,
+      "https://api.notion.com/v1/blocks/" +
+        `${id}/children?page_size=100${q}`,
       offline() ? {} : { headers: notionHeaders() },
       keepBlocks,
     );

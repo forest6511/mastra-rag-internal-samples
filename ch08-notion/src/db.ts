@@ -27,7 +27,8 @@ CREATE TABLE IF NOT EXISTS documents (
   title  text NOT NULL,
   body   text NOT NULL,
   event_date date,          -- 資料の日付（本文の「作成日」）
-  body_hash  text NOT NULL  -- 題名と本文のハッシュ（変わったかを見る）
+  body_hash  text NOT NULL, -- 題名と本文のハッシュ（変わったかを見る）
+  canonical  boolean NOT NULL DEFAULT false -- 正本か（canonical.yml）
 );
 CREATE TABLE IF NOT EXISTS chunks (
   id        bigserial PRIMARY KEY,
