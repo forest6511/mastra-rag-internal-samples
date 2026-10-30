@@ -58,7 +58,8 @@ export function askBack(
       `- ${c.date ? c.date + " " : ""}${c.label}（資料: ${c.title}）`,
   );
   return [
-    `確認させてください。質問に当てはまるものが${candidates.length}つあります。`,
+    "確認させてください。質問に当てはまるものが" +
+      `${candidates.length}つあります。`,
     ...lines,
     "どれのことか、日付か名前を添えて、もう一度聞いてください。",
   ].join("\n");
@@ -96,7 +97,8 @@ const Target = z.object({
 // #region clarify-call
 export async function clarify(question: string, hits: Hit[], rep = 1) {
   const found = eventsOf(hits);
-  if (found.length < 2) return null; // 候補が1つ以下なら決めつけようがない
+  // 候補が1つ以下なら、決めつけようがない
+  if (found.length < 2) return null;
   const list = found
     .map(
       (e) =>

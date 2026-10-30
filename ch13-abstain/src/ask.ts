@@ -21,6 +21,8 @@ if (!question || !args.includes("--as")) {
   console.log('使い方: npm run ask -- "質問" --as <利用者>');
   process.exit(1);
 }
+// #endregion
+// #region main-answer
 const groups = groupsOf(user);
 const rerank = args.includes("--rerank");
 const [vector] = await embed([question]);
@@ -35,9 +37,8 @@ console.log(`利用者: ${user}（${groups.join(", ")}）`);
 hits.forEach((h, i) =>
   console.log(`[${i + 1}] ${h.score.toFixed(3)} ${h.title}`),
 );
-const text = await answer(
-  ...([question, hits, INSTRUCTIONS_CH13, 1, eventNames()] as const),
-);
+const events = eventNames();
+const text = await answer(question, hits, INSTRUCTIONS_CH13, 1, events);
 console.log("\n" + text);
 await pool.end();
 // #endregion
