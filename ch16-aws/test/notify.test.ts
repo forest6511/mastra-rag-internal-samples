@@ -59,7 +59,7 @@ describe("通知先のチャンネル", () => {
 
 // #region bot-thread-test
 describe("ボットへの質問のスレッド", () => {
-  it("ボットへのメンションで始まるスレッドは資料にしない", () => {
+  it("ボットへのメンションがあるスレッドは資料にしない", () => {
     const q = "<@U0BOT> 監査ログをCSVで出せますか？";
     expect(isBotThread(q, "U0BOT")).toBe(true);
     expect(

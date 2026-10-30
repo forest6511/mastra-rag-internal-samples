@@ -113,7 +113,7 @@ const permalink = (workspace: string, ch: string, ts: string) => {
 // #endregion
 
 // #region bot-thread
-// 第16章: ボットへのメンションで始まるスレッドは、ボットの答えを
+// 第16章: 親の投稿にボットへのメンションがあるスレッドは、答えを
 // 含むので資料にしない（答えが次の答えの出典になるのを防ぐ）
 export const isBotThread = (text: string, botId: string) =>
   botId !== "" && text.includes(`<@${botId}>`);
