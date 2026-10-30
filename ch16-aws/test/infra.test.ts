@@ -52,12 +52,16 @@ describe("費用と安全", () => {
     t.hasResourceProperties("AWS::ECS::Service", { DesiredCount: 1 });
   });
 
-  it("タスクは ARM64 で動かす（Mac で作ったイメージと合わせる）", () => {
+  it("タスクは ARM64 で動かす（Mac のイメージに合わせる）", () => {
     t.hasResourceProperties("AWS::ECS::TaskDefinition", {
       RuntimePlatform: { CpuArchitecture: "ARM64" },
     });
   });
+});
+// #endregion
 
+// #region safety-test
+describe("安全", () => {
   it("キーはテンプレートに書かず、Secrets Manager から渡す", () => {
     const defs = t.findResources("AWS::ECS::TaskDefinition");
     const json = JSON.stringify(defs);

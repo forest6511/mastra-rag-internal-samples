@@ -62,13 +62,13 @@ export class RagStack extends cdk.Stack {
     // #endregion
 
     // #region secrets
-    // API のキーとトークンは Secrets Manager に置く。作るときはキーの名前
-    // だけの JSON（値は空）にし、デプロイの後に値を入れる（CDK のコードに
-    // もテンプレートにも、キーの値は書かない）
+    // キーとトークンは Secrets Manager に置く。作るときは
+    // キーの名前だけの JSON（値は空）にし、デプロイの後に
+    // 値を入れる（コードにもテンプレートにも値を書かない）
     const keys = [
       ...["OPENAI_API_KEY", "SLACK_TOKEN", "SLACK_APP_TOKEN"],
       ...["ATL_TOKEN", "GH_RAG_TOKEN", "NOTION_TOKEN"],
-      "SLACK_AUTH_HEADER", // "Bearer " + SLACK_TOKEN（失敗の通知に使う）
+      "SLACK_AUTH_HEADER", // "Bearer " + SLACK_TOKEN（通知用）
     ];
     const appSecret = new sm.Secret(this, "AppSecret", {
       description: "OpenAI・Slack・各サービスのキーとトークン",
@@ -76,6 +76,8 @@ export class RagStack extends cdk.Stack {
         JSON.stringify(Object.fromEntries(keys.map((k) => [k, ""]))),
       ),
     });
+    // #endregion
+    // #region secrets-env
     const fromApp = (key: string) =>
       ecs.Secret.fromSecretsManager(appSecret, key);
     const secrets = {
@@ -105,6 +107,8 @@ export class RagStack extends cdk.Stack {
       retention: logs.RetentionDays.ONE_MONTH,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
+    // #endregion
+    // #region task-def
     const taskDef = (id: string, command: string[]) => {
       const t = new ecs.FargateTaskDefinition(this, id, {
         cpu: 256,
@@ -124,9 +128,9 @@ export class RagStack extends cdk.Stack {
     // #endregion
 
     // #region bot
-    // Slack ボット: Socket Mode なので、外から届く URL もロード
-    // バランサーも要らない。キーを入れるまでは 0 台（起動できないため）、
-    // 入れたら -c botCount=1 でデプロイし直して1台にする
+    // Slack ボット: Socket Mode なので、外から届く URL も
+    // ロードバランサーも要らない。キーを入れるまでは 0 台
+    // （起動できないため）。入れたら -c botCount=1 で1台にする
     const bot = new ecs.FargateService(this, "Bot", {
       cluster,
       taskDefinition: taskDef("BotTask", [
@@ -168,8 +172,8 @@ export class RagStack extends cdk.Stack {
     // #endregion
 
     // #region ingest-alert
-    // 取り込みのタスクが終了コード 0 以外で止まったら、Slack の
-    // chat.postMessage を EventBridge から呼んで知らせる（第9章の約束）
+    // 取り込みのタスクが終了コード 0 以外で止まったら、
+    // EventBridge から Slack の chat.postMessage を呼んで知らせる
     const slackApi = new events.ApiDestination(this, "SlackApi", {
       endpoint: "https://slack.com/api/chat.postMessage",
       httpMethod: events.HttpMethod.POST,
@@ -182,6 +186,8 @@ export class RagStack extends cdk.Stack {
         ),
       }),
     });
+    // #endregion
+    // #region ingest-alert-rule
     new events.Rule(this, "IngestFailed", {
       eventPattern: {
         source: ["aws.ecs"],
@@ -196,7 +202,9 @@ export class RagStack extends cdk.Stack {
         new targets.ApiDestination(slackApi, {
           event: events.RuleTargetInput.fromObject({
             channel: props.alertChannel,
-            text: "取り込みが失敗しました（終了コード 0 以外）。CloudWatch Logs を確かめてください",
+            text:
+              "取り込みが失敗しました（終了コード 0 以外）。" +
+              "CloudWatch Logs を確かめてください",
           }),
         }),
       ],
@@ -227,7 +235,7 @@ export class RagStack extends cdk.Stack {
     // #endregion
 
     // #region outputs
-    // デプロイの後の手順（キーを入れる・取り込みを手で起動する）に使う値
+    // デプロイの後の手順（キーを入れる・取り込みを起動する）に使う
     const out = (id: string, value: string) =>
       new cdk.CfnOutput(this, id, { value });
     out("AppSecretName", appSecret.secretName);
