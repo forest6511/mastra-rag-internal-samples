@@ -51,6 +51,9 @@ export const searchTool = (db?: Db) =>
           addCanonical(c, query, await hybridSearch(c, query, v)),
         db,
       );
+      // 渡ってきた質問の文と返した資料の ID を、ログに1行で出す
+      const ids = hits.map((h) => h.docId);
+      console.log(JSON.stringify({ tool: "search", user, query, ids }));
       const results = hits.map((h) => ({
         ...{ id: h.docId, title: h.title, url: h.url },
         text: h.content.slice(0, 300),
