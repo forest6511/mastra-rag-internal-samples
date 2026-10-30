@@ -26,7 +26,8 @@ export interface Deps {
 
 // #region user-of
 // Slack のユーザー ID を、users.yml の利用者の名前に置き換える。
-// 載っていない人は "" を返し、全社員向け（all）だけを見せる
+// 載っていない人は "" を返す。"" はどのグループにも属さないので、
+// 何も見えない（第10章の groupsOf）
 export function userOf(slackId: string, file = "slack-users.yml") {
   const t = YAML.parse(fs.readFileSync(file, "utf8"));
   return (t.users?.[slackId] as string | undefined) ?? "";

@@ -69,7 +69,7 @@ describe("メンションの処理", () => {
     expect(f.logs).toHaveLength(0);
   });
 
-  it("対応表に無い人は、利用者の名前を空にする", () => {
+  it("対応表に無い人は、名前を空にする（何も見えない）", () => {
     expect(userOf("U0CDYS9H280")).toBe("kobayashi");
     expect(userOf("UNKNOWN")).toBe("");
   });
