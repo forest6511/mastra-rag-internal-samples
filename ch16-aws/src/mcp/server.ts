@@ -42,11 +42,6 @@ export function listen(port: number, db?: Db) {
         return;
       }
       // #endregion
-      const extraHosts = () =>
-        (process.env.MCP_ALLOWED_HOSTS ?? "")
-          .split(",")
-          .filter(Boolean);
-
       // #region http-auth
       const user = userOfToken(
         tokenOf(url.pathname, req.headers.authorization),
