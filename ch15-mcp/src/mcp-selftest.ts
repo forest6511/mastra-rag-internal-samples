@@ -7,8 +7,9 @@ import { MCPClient } from "@mastra/mcp";
 const base = `http://localhost:${process.env.MCP_PORT ?? 8787}/mcp`;
 const q = process.argv[2] ?? "障害の連絡はいつまでにする決まり？";
 const hr = "notion:4087551e-201a-8177-8334-d19a55d2d195"; // 人事のメモ
-const body = (r: unknown) =>
-  JSON.parse((r as { content: { text: string }[] }).content[0].text);
+// 出力の形を宣言したツールは、structuredContent がそのまま返る
+type Doc = { title: string };
+const body = <T>(r: unknown) => r as T;
 
 for (const [user, legacy] of [
   ["KOBAYASHI", false],
@@ -30,10 +31,10 @@ for (const [user, legacy] of [
     },
   });
   const t = await c.listTools();
-  const s = body(
+  const s = body<{ results: Doc[] }>(
     await t.kanade_search.execute!({ query: q }, {} as never),
   );
-  const f = body(
+  const f = body<Doc>(
     await t.kanade_fetch.execute!({ id: hr }, {} as never),
   );
   const v = c.getServerProtocolVersions().kanade;

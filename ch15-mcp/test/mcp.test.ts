@@ -56,9 +56,9 @@ const client = (id: string, legacy = false) =>
       },
     },
   });
-// ツールの結果は MCP の形（content[0].text に JSON の文字列）で返る
-const body = (r: unknown) =>
-  JSON.parse((r as { content: { text: string }[] }).content[0].text);
+// 出力の形（outputSchema）を宣言したツールの結果は、Mastra の
+// クライアントが structuredContent を取り出して返す
+const body = (r: unknown) => r as Record<string, never>;
 // #endregion
 
 // #region protocol-test
@@ -105,5 +105,30 @@ describe("権限", () => {
       await c.disconnect();
     }
   }, 30_000);
+});
+// #endregion
+
+// #region wire-test
+// HTTP で直接呼び、サーバーが structuredContent と、同じ値の JSON の
+// 文字列（content）の両方を返すことを確かめる（古い方法で1回だけ呼ぶ）
+it("structuredContent と content の両方を返す", async () => {
+  const res = await fetch(base, {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer token-for-nakamura",
+      "Content-Type": "application/json",
+      Accept: "application/json, text/event-stream",
+      "MCP-Protocol-Version": "2025-11-25",
+    },
+    body: JSON.stringify({
+      ...{ jsonrpc: "2.0", id: 1, method: "tools/call" },
+      params: { name: "fetch", arguments: { id: "jira:KAN-10" } },
+    }),
+  });
+  const text = await res.text();
+  const json = JSON.parse(text.replace(/^[\s\S]*?data: /, "").trim());
+  const r = json.result;
+  expect(r.structuredContent.title).toContain("KAN-10");
+  expect(JSON.parse(r.content[0].text)).toEqual(r.structuredContent);
 });
 // #endregion

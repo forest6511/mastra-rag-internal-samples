@@ -23,7 +23,8 @@ const callerOf = (ctx: Ctx) => {
 
 // #region search
 // search: 質問に近い資料を返す。答えは書かない（書くのは呼んだ側の
-// Claude・ChatGPT のモデル）。結果の形は ChatGPT の search に合わせる
+// Claude・ChatGPT のモデル）。結果の形は ChatGPT の search に合わせ、
+// outputSchema で形を宣言する（structuredContent でも返る）
 export const searchTool = (db?: Db) =>
   createTool({
     id: "search",
@@ -31,6 +32,14 @@ export const searchTool = (db?: Db) =>
       "株式会社カナデループの社内資料（Confluence・Jira・Notion・" +
       "Slack・GitHub）を検索する。日本語の質問をそのまま渡す。",
     inputSchema: z.object({ query: z.string() }),
+    outputSchema: z.object({
+      results: z.array(
+        z.object({
+          ...{ id: z.string(), title: z.string(), url: z.string() },
+          text: z.string(),
+        }),
+      ),
+    }),
     execute: async ({ query }, ctx) => {
       const user = callerOf(ctx as Ctx);
       const [v] = await embed([query]);
@@ -57,6 +66,10 @@ export const fetchTool = (db?: Db) =>
     id: "fetch",
     description: "search が返した id の資料の本文を取得する。",
     inputSchema: z.object({ id: z.string() }),
+    outputSchema: z.object({
+      ...{ id: z.string(), title: z.string() },
+      ...{ text: z.string(), url: z.string() },
+    }),
     execute: async ({ id }, ctx) => {
       const user = callerOf(ctx as Ctx);
       const d = await asUser(
