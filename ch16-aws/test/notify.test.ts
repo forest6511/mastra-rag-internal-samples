@@ -39,3 +39,19 @@ describe("取り込みの失敗の通知", () => {
   });
 });
 // #endregion
+
+// #region skip-test
+// 通知先のチャンネルは、取り込みの資料にしない（記録した応答で確かめる）
+describe("通知先のチャンネル", () => {
+  it("取り込みから外す", async () => {
+    vi.stubEnv("OFFLINE", "1");
+    const { FETCHERS } = await import("../src/fetch-all.js");
+    const all = await FETCHERS.slack();
+    const dev = "slack:C0CD805EPM4:";
+    expect(all.some((d) => d.id.startsWith(dev))).toBe(true);
+    vi.stubEnv("ALERT_CHANNEL", "C0CD805EPM4"); // #dev を通知先にする
+    const skipped = await FETCHERS.slack();
+    expect(skipped.some((d) => d.id.startsWith(dev))).toBe(false);
+  });
+});
+// #endregion

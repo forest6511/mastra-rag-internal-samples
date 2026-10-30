@@ -123,7 +123,9 @@ async function threads(): Promise<{ ch: Channel; msgs: Message[] }[]> {
     (j) => j.channels,
   );
   const out: { ch: Channel; msgs: Message[] }[] = [];
-  for (const ch of channels.filter((c) => c.is_member)) {
+  // 第16章: 取り込みの失敗を知らせるチャンネルは、資料にしない
+  const skip = (c: Channel) => c.id === process.env.ALERT_CHANNEL;
+  for (const ch of channels.filter((c) => c.is_member && !skip(c))) {
     const history = await slackAll(
       `slack-history-${ch.id}`,
       "conversations.history",
