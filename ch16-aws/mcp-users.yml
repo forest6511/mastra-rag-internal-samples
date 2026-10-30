@@ -1,0 +1,7 @@
+# MCP の利用者（第15章）。利用者の名前 → トークンを入れた .env の変数名。
+# トークンの値は .env にだけ書く（git に入れない）。1人に1つ発行する
+# #region mcp-users
+tokens:
+  kobayashi: MCP_TOKEN_KOBAYASHI
+  nakamura: MCP_TOKEN_NAKAMURA
+# #endregion

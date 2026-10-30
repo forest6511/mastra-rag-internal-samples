@@ -1,0 +1,50 @@
+{
+  "name": "kanade-rag-ch16-aws",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "sync": "tsx --env-file=.env src/sync-cli.ts",
+    "verify": "tsx --env-file=.env src/verify-sync.ts",
+    "ask": "tsx --env-file-if-exists=.env src/ask.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "test": "vitest run",
+    "fetch": "tsx --env-file=.env src/fetch-doc.ts",
+    "eval": "tsx --env-file=.env src/eval/run.ts",
+    "summary": "tsx src/eval/summary.ts",
+    "behavior": "tsx src/eval/behavior.ts",
+    "bot": "tsx --env-file=.env src/slack-bot.ts",
+    "mcp": "tsx --env-file=.env src/mcp-server.ts",
+    "mcp-selftest": "tsx --env-file=.env src/mcp-selftest.ts",
+    "synth": "cdk synth --no-lookups"
+  },
+  "dependencies": {
+    "@mastra/core": "1.80.0",
+    "@mastra/mcp": "2.6.0",
+    "@slack/bolt": "5.1.0",
+    "openai": "7.45.1",
+    "pg": "8.23.1",
+    "yaml": "2.9.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.10",
+    "@electric-sql/pglite-pgvector": "0.0.11",
+    "@eslint/js": "10.0.1",
+    "@types/node": "22.18.0",
+    "@types/pg": "8.15.5",
+    "aws-cdk": "2.1146.1",
+    "aws-cdk-lib": "2.275.0",
+    "constructs": "10.8.1",
+    "eslint": "10.13.0",
+    "prettier": "3.9.10",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.2",
+    "vitest": "5.0.5"
+  }
+}
