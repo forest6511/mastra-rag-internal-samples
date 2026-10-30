@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { notifySlack } from "../src/notify.js";
+import { isBotThread } from "../src/sources/slack.js";
 
 // #region notify-test
 // fetch を差し替えて、Slack に送る中身だけを確かめる
@@ -52,6 +53,19 @@ describe("通知先のチャンネル", () => {
     vi.stubEnv("ALERT_CHANNEL", "C0CD805EPM4"); // #dev を通知先にする
     const skipped = await FETCHERS.slack();
     expect(skipped.some((d) => d.id.startsWith(dev))).toBe(false);
+  });
+});
+// #endregion
+
+// #region bot-thread-test
+describe("ボットへの質問のスレッド", () => {
+  it("ボットへのメンションで始まるスレッドは資料にしない", () => {
+    const q = "<@U0BOT> 監査ログをCSVで出せますか？";
+    expect(isBotThread(q, "U0BOT")).toBe(true);
+    expect(
+      isBotThread("監査ログの件、KAN-10 にまとめました", "U0BOT"),
+    ).toBe(false);
+    expect(isBotThread(q, "")).toBe(false); // 記録で動かすとき
   });
 });
 // #endregion

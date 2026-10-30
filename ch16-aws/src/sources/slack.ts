@@ -112,6 +112,26 @@ const permalink = (workspace: string, ch: string, ts: string) => {
 };
 // #endregion
 
+// #region bot-thread
+// 第16章: ボットへのメンションで始まるスレッドは、ボットの答えを
+// 含むので資料にしない（答えが次の答えの出典になるのを防ぐ）
+export const isBotThread = (text: string, botId: string) =>
+  botId !== "" && text.includes(`<@${botId}>`);
+
+// 自分（ボット）のユーザー ID。記録で動かすときは空（記録にボットの
+// スレッドは無い）
+async function botUserId(): Promise<string> {
+  if (offline()) return "";
+  const j = await slackGet<{ user_id?: string }>(
+    "slack-auth",
+    "auth.test",
+    {},
+    (r) => ({ user_id: r.user_id }),
+  );
+  return j.user_id ?? "";
+}
+// #endregion
+
 // #region threads
 // アプリが参加しているチャンネルの、親の投稿と返信を取る。
 // 親1件ごとに、親と返信の配列を返す
@@ -123,6 +143,7 @@ async function threads(): Promise<{ ch: Channel; msgs: Message[] }[]> {
     (j) => j.channels,
   );
   const out: { ch: Channel; msgs: Message[] }[] = [];
+  const botId = await botUserId();
   // 第16章: 取り込みの失敗を知らせるチャンネルは、資料にしない
   const skip = (c: Channel) => c.id === process.env.ALERT_CHANNEL;
   for (const ch of channels.filter((c) => c.is_member && !skip(c))) {
@@ -137,6 +158,7 @@ async function threads(): Promise<{ ch: Channel; msgs: Message[] }[]> {
     for (const m of history) {
       // 参加の通知などは飛ばす（取り込んだ投稿は bot_message になる）
       if (m.subtype && m.subtype !== "bot_message") continue;
+      if (isBotThread(m.text, botId)) continue;
       const msgs = m.reply_count
         ? await slackAll(
             `slack-replies-${ch.id}-${m.ts}`,
