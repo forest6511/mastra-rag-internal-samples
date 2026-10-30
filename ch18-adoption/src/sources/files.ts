@@ -4,10 +4,10 @@ import YAML from "yaml";
 import type { Doc } from "../doc.js";
 
 // #region files
-// 第18章: 自社の資料に置き換える例。フォルダの中の Markdown を
+// 第18章: 自社の資料に置き換える例。ディレクトリの中の Markdown を
 // 資料にする（社内 wiki を書き出したものなど）。
-// - 置き場所（container）は「files:いちばん上のフォルダ」。acl.yml で
-//   フォルダごとに見てよいグループを決める
+// - 置き場所（container）は「files:いちばん上のディレクトリ」。acl.yml で
+//   ディレクトリごとに見てよいグループを決める
 // - 資料の日付は、頭の date を優先し、無ければファイルの更新日
 // - 出典の URL は、頭の url（元のページ）。無ければファイルの場所
 export function filesDocs(dir: string): Doc[] {

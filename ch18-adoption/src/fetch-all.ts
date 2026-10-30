@@ -24,7 +24,7 @@ export const FETCHERS: Record<string, () => Promise<Doc[]>> = {
   jira: () => jiraDocs("KAN"),
   slack: () => slackThreadDocs(workspace()),
   notion: () => notionDocs(root()),
-  // 第18章: FILES_DIR を付けると、フォルダの Markdown も取り込む
+  // 第18章: FILES_DIR を付けると、ディレクトリの Markdown も取り込む
   ...(process.env.FILES_DIR
     ? { files: async () => filesDocs(process.env.FILES_DIR!) }
     : {}),
