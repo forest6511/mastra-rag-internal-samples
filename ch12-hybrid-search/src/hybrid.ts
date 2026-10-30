@@ -23,9 +23,10 @@ export function queryTerms(q: string): string[] {
 // #endregion
 
 // #region keyword-search
-// 語が多く当たったチャンクほど上にする。同じ点数のときは、資料の ID と
-// 資料の中の順番で並べる（チャンクの ID は DB ごとに違うので使わない）。LIKE '%語%' は、pg_bigm の
-// GIN の索引があると、2文字ずつの組（bigram）で候補を絞って速くなる
+// 語が多く当たったチャンクほど上にする。同じ点数のときは、資料の ID
+// と資料の中の順番で並べる（チャンクの ID は DB ごとに違うので
+// 使わない）。LIKE '%語%' は、pg_bigm の GIN の索引があると、
+// 2文字ずつの組（bigram）で候補を絞って速くなる
 const like = (t: string) =>
   `%${t.replace(/[\\%_]/g, (m) => `\\${m}`)}%`;
 export async function keywordSearch(
@@ -111,6 +112,9 @@ const reranker = new Agent({
   model: MODEL,
 });
 const Order = z.object({ order: z.array(z.number().int()) });
+// #endregion
+
+// #region rerank-call
 
 export async function rerank(q: string, hits: Hit[], top = 6) {
   if (hits.length <= top) return hits;

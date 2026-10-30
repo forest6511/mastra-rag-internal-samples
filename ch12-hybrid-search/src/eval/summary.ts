@@ -75,9 +75,10 @@ export function summarize(
 // #endregion
 
 // #region main
-// npm run summary -- <ラベル> [<ラベル> ...]   答えるべき10問と、答えては
-// いけない8問に分けて、段（mode）ごとに1行ずつ出す。ラベルを並べると、
-// 続けて出す（第12章: 改善の前後を並べて比べる）
+// npm run summary -- <ラベル> [<ラベル> ...]
+// 答えるべき10問と、答えてはいけない8問に分けて、段（mode）ごとに
+// 1行ずつ出す。ラベルを並べると、続けて出す（第12章: 改善の前後を
+// 並べて比べる）
 if (process.argv[1]?.endsWith("summary.ts")) {
   const labels = process.argv.slice(2);
   for (const label of labels.length ? labels : ["run"]) {

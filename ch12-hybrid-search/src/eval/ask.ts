@@ -12,6 +12,9 @@ import type { Question } from "./questions.js";
 // rerank（さらに生成 AI で並べ替える。第12章の改善後）
 export type Mode = "ch10" | "hybrid" | "rerank";
 type Db = Parameters<typeof asUser>[2];
+// #endregion
+
+// #region ask-mode
 
 export async function ask(
   db: Db,
