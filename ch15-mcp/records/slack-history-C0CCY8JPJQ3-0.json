@@ -1,0 +1,16 @@
+{
+ "ok": true,
+ "response_metadata": {},
+ "messages": [
+  {
+   "ts": "1793264907.745769",
+   "text": "<@U0CD2H7GUVC>さんがチャンネルに参加しました",
+   "subtype": "channel_join"
+  },
+  {
+   "ts": "1793258630.721519",
+   "text": "<@U0CDYS9H280>さんがチャンネルに参加しました",
+   "subtype": "channel_join"
+  }
+ ]
+}

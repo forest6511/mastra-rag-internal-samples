@@ -1,0 +1,9 @@
+# 利用者と、属するグループ。入口（Slack・MCP）で決まった利用者を、
+# ここでグループに置き換える（第14・15章）
+users:
+  kobayashi: [all, dev]
+  nakamura: [all, sales]
+  yamamoto: [all, sales]
+  yoshida: [all, mgmt, hr]
+  # 第14章: カスタマーサクセスの伊藤さん（全社員向けだけ）
+  ito: [all]
