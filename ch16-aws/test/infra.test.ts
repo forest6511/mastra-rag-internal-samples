@@ -12,6 +12,8 @@ beforeAll(() => {
     budgetEmail: "you@example.com",
     monthlyBudgetUsd: 30,
     settings: { ATL_SITE: "https://example.atlassian.net" },
+    botCount: 1,
+    alertChannel: "C0000000000",
   });
   t = Template.fromStack(stack);
 }, 120_000);
@@ -46,8 +48,14 @@ describe("費用と安全", () => {
     t.resourceCountIs("AWS::EC2::NatGateway", 0);
   });
 
-  it("ボットは1つだけ動かす", () => {
+  it("ボットは1つだけ動かす（-c botCount=1 のとき）", () => {
     t.hasResourceProperties("AWS::ECS::Service", { DesiredCount: 1 });
+  });
+
+  it("タスクは ARM64 で動かす（Mac で作ったイメージと合わせる）", () => {
+    t.hasResourceProperties("AWS::ECS::TaskDefinition", {
+      RuntimePlatform: { CpuArchitecture: "ARM64" },
+    });
   });
 
   it("キーはテンプレートに書かず、Secrets Manager から渡す", () => {
@@ -64,6 +72,24 @@ describe("費用と安全", () => {
           Notification: Match.objectLike({ Threshold: 80 }),
         }),
       ],
+    });
+  });
+});
+// #endregion
+
+// #region alert-test
+describe("取り込みの失敗の通知", () => {
+  it("取り込みのタスクが 0 以外で止まったら Slack に知らせる", () => {
+    t.hasResourceProperties("AWS::Events::Rule", {
+      EventPattern: Match.objectLike({
+        "detail-type": ["ECS Task State Change"],
+        detail: Match.objectLike({
+          containers: { exitCode: [{ "anything-but": 0 }] },
+        }),
+      }),
+    });
+    t.hasResourceProperties("AWS::Events::ApiDestination", {
+      InvocationEndpoint: "https://slack.com/api/chat.postMessage",
     });
   });
 });

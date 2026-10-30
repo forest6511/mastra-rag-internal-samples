@@ -20,7 +20,7 @@
     "bot": "tsx --env-file=.env src/slack-bot.ts",
     "mcp": "tsx --env-file=.env src/mcp-server.ts",
     "mcp-selftest": "tsx --env-file=.env src/mcp-selftest.ts",
-    "synth": "cdk synth --no-lookups"
+    "synth": "cdk synth --no-lookups -c budgetEmail=you@example.com -c budgetUsd=30 -c alertChannel=C0000000000"
   },
   "dependencies": {
     "@mastra/core": "1.80.0",
