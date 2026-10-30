@@ -45,9 +45,12 @@ function fake(shared: boolean) {
   return { deps, posts, logs };
 }
 const m = { user: "U0CDYS9H280", channel: "C1", ts: "1.0" };
+// #endregion
+
+// #region handle-cases
 
 describe("メンションの処理", () => {
-  it("先に「調べています」と返し、答えを同じスレッドに書く", async () => {
+  it("先に「調べています」と返し、答えを書く", async () => {
     const f = fake(false);
     await handleMention({ ...m, text: "<@UBOT> ログは何年？" }, f.deps);
     expect(f.posts).toEqual([
@@ -66,7 +69,7 @@ describe("メンションの処理", () => {
     expect(f.logs).toHaveLength(0);
   });
 
-  it("対応表に無い人は、利用者の名前を空にする（全社員向けだけ）", () => {
+  it("対応表に無い人は、利用者の名前を空にする", () => {
     expect(userOf("U0CDYS9H280")).toBe("kobayashi");
     expect(userOf("UNKNOWN")).toBe("");
   });
@@ -123,7 +126,8 @@ describe("answerAs", () => {
       );
     }
     const q =
-      "障害があったとき、お客様へのご連絡っていつまでにする決まりでしたっけ？";
+      "障害があったとき、お客様へのご連絡って" +
+      "いつまでにする決まりでしたっけ？";
     const r = await answerAs("nakamura", q, db);
     expect(r.text.startsWith("確度: 資料で確かめられた")).toBe(true);
     expect(r.hits).toHaveLength(6);

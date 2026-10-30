@@ -16,8 +16,9 @@ const app = new bolt.App({
 // #endregion
 
 // #region on-mention
-// @kanade-rag へのメンション（app_mention）を受ける。Bolt は受け取った
-// ことを Slack にすぐ返す（ack）ので、答えに時間がかかっても再送されない
+// @kanade-rag へのメンション（app_mention）を受ける。Bolt は
+// 受け取ったことを Slack にすぐ返す（ack）ので、答えに時間が
+// かかっても再送されない
 app.event("app_mention", async ({ event, client }) => {
   await handleMention(
     { ...event, user: event.user ?? "" },
