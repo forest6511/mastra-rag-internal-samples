@@ -25,7 +25,7 @@ export function queryTerms(q: string): string[] {
 // #region keyword-search
 // 語が多く当たったチャンクほど上にする。同じ点数のときは、資料の ID
 // と資料の中の順番で並べる（チャンクの ID は DB ごとに違うので
-// 使わない）。LIKE '%語%' は、pg_bigm の GIN の索引があると、
+// 使わない）。LIKE '%語%' は、pg_bigm の GIN のインデックスがあると、
 // 2文字ずつの組（bigram）で候補を絞って速くなる
 const like = (t: string) =>
   `%${t.replace(/[\\%_]/g, (m) => `\\${m}`)}%`;
