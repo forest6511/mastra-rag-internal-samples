@@ -34,6 +34,8 @@ export function listen(port: number, db?: Db) {
         res.writeHead(404).end();
         return;
       }
+      // #endregion
+      // #region http-auth
       const user = userOfToken(
         tokenOf(url.pathname, req.headers.authorization),
       );

@@ -42,6 +42,9 @@ beforeAll(async () => {
 }, 60_000);
 afterAll(() => http.close());
 
+// #endregion
+
+// #region setup-client
 // MCP のクライアントで、中村さんのトークンを付けてつなぐ
 const client = (id: string, legacy = false) =>
   new MCPClient({
@@ -65,7 +68,8 @@ const body = (r: unknown) => r as Record<string, never>;
 // 新しい接続方法（2026-07-28）と古い方法（legacy）の両方でつながり、
 // 同じ search の結果が返る
 const Q =
-  "障害があったとき、お客様へのご連絡っていつまでにする決まりでしたっけ？";
+  "障害があったとき、お客様へのご連絡って" +
+  "いつまでにする決まりでしたっけ？";
 describe.each([
   ["新しい方法", false, "2026-07-28"],
   ["古い方法", true, "2025-11-25"],
@@ -92,7 +96,7 @@ describe("権限", () => {
     expect(res.status).toBe(401);
   });
 
-  it("営業の中村さんが人事のメモを fetch しても「見つかりません」", async () => {
+  it("中村さんの人事のメモの fetch は「見つかりません」", async () => {
     const c = client("test-fetch");
     try {
       const tools = await c.listTools();

@@ -40,6 +40,8 @@ export const searchTool = (db?: Db) =>
         }),
       ),
     }),
+    // #endregion
+    // #region search-run
     execute: async ({ query }, ctx) => {
       const user = callerOf(ctx as Ctx);
       const [v] = await embed([query]);

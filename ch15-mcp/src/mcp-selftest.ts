@@ -30,6 +30,8 @@ for (const [user, legacy] of [
       },
     },
   });
+  // #endregion
+  // #region main-call
   const t = await c.listTools();
   const s = body<{ results: Doc[] }>(
     await t.kanade_search.execute!({ query: q }, {} as never),
