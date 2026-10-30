@@ -37,7 +37,7 @@ function fake(shared: boolean) {
     isShared: async () => shared,
     post: async (_c, _t, text) => void posts.push(text),
     answer: async (user, q) => ({
-      text: `**${user || "（対応表に無い人）"}** として「${q}」に答える`,
+      text: `**${user || "（無し）"}** として「${q}」に答える`,
       hits: [{ docId: "confluence:622593" }],
     }),
     log: (e) => void logs.push(e),
