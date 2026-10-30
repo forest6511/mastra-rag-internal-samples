@@ -52,6 +52,15 @@ describe("費用と安全", () => {
     t.hasResourceProperties("AWS::ECS::Service", { DesiredCount: 1 });
   });
 
+  it("取り込みの失敗を知らせる先をコンテナに渡す", () => {
+    const json = JSON.stringify(
+      t.findResources("AWS::ECS::TaskDefinition"),
+    );
+    expect(json).toContain(
+      '"Name":"ALERT_CHANNEL","Value":"C0000000000"',
+    );
+  });
+
   it("タスクは ARM64 で動かす（Mac のイメージに合わせる）", () => {
     t.hasResourceProperties("AWS::ECS::TaskDefinition", {
       RuntimePlatform: { CpuArchitecture: "ARM64" },
@@ -76,24 +85,6 @@ describe("安全", () => {
           Notification: Match.objectLike({ Threshold: 80 }),
         }),
       ],
-    });
-  });
-});
-// #endregion
-
-// #region alert-test
-describe("取り込みの失敗の通知", () => {
-  it("取り込みのタスクが 0 以外で止まったら Slack に知らせる", () => {
-    t.hasResourceProperties("AWS::Events::Rule", {
-      EventPattern: Match.objectLike({
-        "detail-type": ["ECS Task State Change"],
-        detail: Match.objectLike({
-          containers: { exitCode: [{ "anything-but": 0 }] },
-        }),
-      }),
-    });
-    t.hasResourceProperties("AWS::Events::ApiDestination", {
-      InvocationEndpoint: "https://slack.com/api/chat.postMessage",
     });
   });
 });

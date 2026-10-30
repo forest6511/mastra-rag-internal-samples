@@ -64,11 +64,11 @@ export class RagStack extends cdk.Stack {
     // #region secrets
     // キーとトークンは Secrets Manager に置く。作るときは
     // キーの名前だけの JSON（値は空）にし、デプロイの後に
-    // 値を入れる（コードにもテンプレートにも値を書かない）
+    // 値を入れる（コードにもテンプレートにも値を書かない）。
+    // keys を変えて再デプロイすると、入れた値が空に戻る
     const keys = [
       ...["OPENAI_API_KEY", "SLACK_TOKEN", "SLACK_APP_TOKEN"],
       ...["ATL_TOKEN", "GH_RAG_TOKEN", "NOTION_TOKEN"],
-      "SLACK_AUTH_HEADER", // "Bearer " + SLACK_TOKEN（通知用）
     ];
     const appSecret = new sm.Secret(this, "AppSecret", {
       description: "OpenAI・Slack・各サービスのキーとトークン",
@@ -100,6 +100,7 @@ export class RagStack extends cdk.Stack {
     });
     const environment = {
       ...props.settings,
+      ALERT_CHANNEL: props.alertChannel, // 取り込みの失敗を知らせる先
       PGHOST: db.clusterEndpoint.hostname,
       ...{ PGUSER: "rag", PGDATABASE: "rag" },
     };
@@ -166,46 +167,6 @@ export class RagStack extends cdk.Stack {
           assignPublicIp: true,
           subnetSelection: { subnetType: ec2.SubnetType.PUBLIC },
           securityGroups: [appSg],
-        }),
-      ],
-    });
-    // #endregion
-
-    // #region ingest-alert
-    // 取り込みのタスクが終了コード 0 以外で止まったら、
-    // EventBridge から Slack の chat.postMessage を呼んで知らせる
-    const slackApi = new events.ApiDestination(this, "SlackApi", {
-      endpoint: "https://slack.com/api/chat.postMessage",
-      httpMethod: events.HttpMethod.POST,
-      connection: new events.Connection(this, "SlackConn", {
-        authorization: events.Authorization.apiKey(
-          "Authorization",
-          cdk.SecretValue.secretsManager(appSecret.secretArn, {
-            jsonField: "SLACK_AUTH_HEADER",
-          }),
-        ),
-      }),
-    });
-    // #endregion
-    // #region ingest-alert-rule
-    new events.Rule(this, "IngestFailed", {
-      eventPattern: {
-        source: ["aws.ecs"],
-        detailType: ["ECS Task State Change"],
-        detail: {
-          lastStatus: ["STOPPED"],
-          taskDefinitionArn: [ingestTask.taskDefinitionArn],
-          containers: { exitCode: [{ "anything-but": 0 }] },
-        },
-      },
-      targets: [
-        new targets.ApiDestination(slackApi, {
-          event: events.RuleTargetInput.fromObject({
-            channel: props.alertChannel,
-            text:
-              "取り込みが失敗しました（終了コード 0 以外）。" +
-              "CloudWatch Logs を確かめてください",
-          }),
         }),
       ],
     });

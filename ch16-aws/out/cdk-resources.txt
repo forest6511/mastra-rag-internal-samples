@@ -12,11 +12,9 @@
 1 AWS::ECS::Cluster
 1 AWS::ECS::Service
 2 AWS::ECS::TaskDefinition
-1 AWS::Events::ApiDestination
-1 AWS::Events::Connection
-2 AWS::Events::Rule
-4 AWS::IAM::Policy
-6 AWS::IAM::Role
+1 AWS::Events::Rule
+3 AWS::IAM::Policy
+5 AWS::IAM::Role
 1 AWS::Logs::LogGroup
 1 AWS::RDS::DBCluster
 1 AWS::RDS::DBInstance

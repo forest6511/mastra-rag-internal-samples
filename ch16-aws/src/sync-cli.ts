@@ -3,6 +3,7 @@ import { markCanonical } from "./canonical.js";
 import { pool } from "./db.js";
 import { FETCHERS } from "./fetch-all.js";
 import { migrate } from "./ingest.js";
+import { notifySlack } from "./notify.js";
 import { recordFailure, syncSource, type SyncStats } from "./sync.js";
 
 // #region main
@@ -34,4 +35,13 @@ for (const r of rows.filter((r) => r.kept)) {
 await pool.end();
 const kept = rows.filter((r) => r.kept).length;
 process.exitCode = failed + kept > 0 ? 1 : 0;
+// #endregion
+// #region notify-failure
+// 第16章: 終了コードが 1 のときは、Slack に知らせる（第9章の約束）
+if (process.exitCode === 1) {
+  await notifySlack(
+    `取り込みで、失敗 ${failed} 件・消さなかった ${kept} 件。` +
+      "ログを確かめてください",
+  );
+}
 // #endregion
