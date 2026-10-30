@@ -1,0 +1,8 @@
+# Slack のユーザー ID → users.yml の利用者の名前（第14章）。
+# Slack で聞いた人を、権限のグループに置き換えるために使う。
+# 自分のワークスペースでは、プロフィールの「メンバー ID をコピー」で
+# 取った ID に書き換える。載っていない人は全社員向け（all）だけ
+# #region slack-users
+users:
+  U0CDYS9H280: kobayashi
+# #endregion

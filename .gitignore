@@ -47,3 +47,6 @@ records/raw/
 results/*.jsonl
 .book-src/
 **/seed/out/
+
+# 第14章の Slack ボットの質問ログ（社員の質問を含む）
+logs/
