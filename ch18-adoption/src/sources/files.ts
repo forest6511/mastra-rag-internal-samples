@@ -15,25 +15,29 @@ export function filesDocs(dir: string): Doc[] {
     .readdirSync(dir, { recursive: true, encoding: "utf8" })
     .filter((f) => f.endsWith(".md"))
     .sort();
-  return files.map((rel) => {
-    const full = path.join(dir, rel);
-    const text = fs.readFileSync(full, "utf8");
-    const m = text.match(/^---\n([\s\S]*?)\n---\n/);
-    const head = (m ? YAML.parse(m[1]) : {}) as {
-      date?: string | Date;
-      url?: string;
-    };
-    const body = m ? text.slice(m[0].length) : text;
-    const date = head.date ?? fs.statSync(full).mtime;
-    return {
-      id: `files:${rel}`,
-      source: "files" as const,
-      url: head.url ?? `file://${path.resolve(full)}`,
-      title: body.match(/^# (.+)$/m)?.[1] ?? path.basename(rel, ".md"),
-      body: body.trim(),
-      eventDate: new Date(date).toISOString().slice(0, 10),
-      container: `files:${rel.split(path.sep)[0]}`,
-    };
-  });
+  return files.map((rel) => fileDoc(dir, rel));
+}
+// #endregion
+
+// #region file-doc
+function fileDoc(dir: string, rel: string): Doc {
+  const full = path.join(dir, rel);
+  const text = fs.readFileSync(full, "utf8");
+  const m = text.match(/^---\n([\s\S]*?)\n---\n/);
+  const head = (m ? YAML.parse(m[1]) : {}) as {
+    date?: string | Date;
+    url?: string;
+  };
+  const body = m ? text.slice(m[0].length) : text;
+  const date = head.date ?? fs.statSync(full).mtime;
+  return {
+    id: `files:${rel}`,
+    source: "files" as const,
+    url: head.url ?? `file://${path.resolve(full)}`,
+    title: body.match(/^# (.+)$/m)?.[1] ?? path.basename(rel, ".md"),
+    body: body.trim(),
+    eventDate: new Date(date).toISOString().slice(0, 10),
+    container: `files:${rel.split(path.sep)[0]}`,
+  };
 }
 // #endregion
