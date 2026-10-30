@@ -1,0 +1,8 @@
+                       QUERY PLAN                        
+---------------------------------------------------------
+ Bitmap Heap Scan on chunks
+   Recheck Cond: (content ~~ '%タイムアウト%'::text)
+   ->  Bitmap Index Scan on chunks_bigm
+         Index Cond: (content ~~ '%タイムアウト%'::text)
+(4 rows)
+

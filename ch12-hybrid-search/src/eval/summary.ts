@@ -32,12 +32,12 @@ const f2 = (x: number) => (Number.isNaN(x) ? "-" : x.toFixed(2));
 
 // #region coverage
 // 必須要点の充足: 答え1つで、入った要点の割合
-const coverage = (r: Row) => {
+export const coverage = (r: Row) => {
   const h = r.judge.must_hit;
   return h.length ? h.filter(Boolean).length / h.length : NaN;
 };
 // 検索の指標: 正解の資料のうち、材料（上位6件）に入った割合
-const recall = (r: Row) => {
+export const recall = (r: Row) => {
   const want = expectedDocs()[r.qid] ?? [];
   const got = new Set(r.hits.map((h) => h.id));
   return want.length
@@ -75,24 +75,27 @@ export function summarize(
 // #endregion
 
 // #region main
-// npm run summary -- <ラベル>   答えるべき10問と、答えてはいけない8問に
-// 分けて、段（mode）ごとに1行ずつ出す
+// npm run summary -- <ラベル> [<ラベル> ...]   答えるべき10問と、答えては
+// いけない8問に分けて、段（mode）ごとに1行ずつ出す。ラベルを並べると、
+// 続けて出す（第12章: 改善の前後を並べて比べる）
 if (process.argv[1]?.endsWith("summary.ts")) {
-  const label = process.argv[2] ?? "run";
-  const rows = readRows(`eval/runs/${label}.jsonl`);
-  const withRecall = label !== "final-v4";
-  for (const mode of [...new Set(rows.map((r) => r.mode))]) {
-    for (const ans of [true, false]) {
-      const pick = (r: Row) =>
-        r.mode === mode && (r.expected === "answer") === ans;
-      const s = summarize(rows, pick, withRecall);
-      console.log(
-        `${mode} ${ans ? "答えるべき10問" : "答えてはいけない8問"}` +
-          ` (n=${s.n})\n  必須要点 ${s.coverage}（±${s.spread}）` +
-          ` / 誤った記述 ${s.wrong} / 振る舞い ${s.behavior}\n` +
-          `  そのまま使える ${s.usable} / 正解の資料 ${s.recall}` +
-          ` / ${s.seconds} 秒`,
-      );
+  const labels = process.argv.slice(2);
+  for (const label of labels.length ? labels : ["run"]) {
+    const rows = readRows(`eval/runs/${label}.jsonl`);
+    const withRecall = label !== "final-v4";
+    for (const mode of [...new Set(rows.map((r) => r.mode))]) {
+      for (const ans of [true, false]) {
+        const pick = (r: Row) =>
+          r.mode === mode && (r.expected === "answer") === ans;
+        const s = summarize(rows, pick, withRecall);
+        console.log(
+          `${mode} ${ans ? "答えるべき10問" : "答えてはいけない8問"}` +
+            ` (n=${s.n})\n  必須要点 ${s.coverage}（±${s.spread}）` +
+            ` / 誤った記述 ${s.wrong} / 振る舞い ${s.behavior}\n` +
+            `  そのまま使える ${s.usable} / 正解の資料 ${s.recall}` +
+            ` / ${s.seconds} 秒`,
+        );
+      }
     }
   }
 }

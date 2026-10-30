@@ -16,7 +16,8 @@
     "fetch": "tsx --env-file=.env src/fetch-doc.ts",
     "eval": "tsx --env-file=.env src/eval/run.ts",
     "summary": "tsx src/eval/summary.ts",
-    "terms": "tsx --env-file=.env src/terms-cli.ts"
+    "terms": "tsx --env-file=.env src/terms-cli.ts",
+    "by-question": "tsx src/eval/by-question.ts"
   },
   "dependencies": {
     "@mastra/core": "1.80.0",

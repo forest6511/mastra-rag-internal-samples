@@ -46,6 +46,7 @@ ALTER TABLE documents
   ADD COLUMN IF NOT EXISTS acl text[] NOT NULL DEFAULT '{}';
 ALTER TABLE chunks
   ADD COLUMN IF NOT EXISTS acl text[] NOT NULL DEFAULT '{}';
+-- #region schema-bigm
 -- 第12章: 日本語の全文検索の索引（pg_bigm がある DB でだけ作る。
 -- テストで使う PGlite には無いが、LIKE の結果は同じ）
 DO $$ BEGIN
@@ -56,6 +57,7 @@ DO $$ BEGIN
              ON chunks USING gin (content gin_bigm_ops)';
   END IF;
 END $$;
+-- #endregion
 -- #endregion
 -- #region schema-sync
 -- 第9章: サービスごとの同期の状態
