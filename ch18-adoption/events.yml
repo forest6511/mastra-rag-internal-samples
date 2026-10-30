@@ -1,0 +1,36 @@
+# 資料がどの出来事（または対象）の話かを書く対応表。
+# 第13章: あいまいな質問に、当てはまる出来事が2つ以上あるかを数える
+# ために使う。資料の ID（documents.id）ごとに出来事の id を書く。
+# 書いていない資料は、どの出来事にも属さない
+# #region events
+events:
+  E0: { date: 2025-04-01, label: セキュリティ方針 v1 の制定 }
+  E1: { date: 2026-08-05, label: 決済GW をクレペイに切り替える決定 }
+  E2: { date: 2026-08-20, label: 予約確定メールの遅延 }
+  E3: { date: 2026-09-01, label: 方針 v2 の施行とクレペイへの切替 }
+  E4: { date: 2026-09-15, label: 決済エラーの障害 }
+  E5: { date: 2026-09-25, label: 監査ログのエクスポートの予定 }
+  E6: { date: 2026-10-02, label: 営業向けのセキュリティ説明資料 }
+  E7: { date: 2026-10-10, label: 田中さんの退職と決済まわりの引き継ぎ }
+  API-PUBLIC: { label: 予約 API（顧客向けの公開 API） }
+  API-ADMIN: { label: 予約 API（社内の管理画面用 API） }
+# #endregion
+docs:
+  confluence:589846: E0
+  jira:KAN-11: E1
+  slack:C0CD805EPM4:1785892320.000000: E1
+  notion:4087551e-201a-81eb-8bca-e4951f59e2cd: E2
+  jira:KAN-14: E2
+  confluence:622593: E3
+  slack:C0CD4KQ8J5B:1788220800.000000: E3
+  jira:KAN-13: E4
+  jira:KAN-12: E4
+  slack:C0CE4A0NJ80:1789434120.000000: E4
+  github:kanade-yoyaku:14: E4
+  jira:KAN-10: E5
+  slack:C0CD3MUJ6G3:1790294400.000000: E5
+  notion:4087551e-201a-8118-9614-c61a35870640: E6
+  github:kanade-yoyaku:15: E7
+  slack:C0CD805EPM4:1791421200.000000: E7
+  confluence:589892: API-PUBLIC
+  github:kanade-admin:README: API-ADMIN

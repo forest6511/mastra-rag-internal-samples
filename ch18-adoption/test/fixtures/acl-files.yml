@@ -1,0 +1,3 @@
+default: [all]
+containers:
+  files:人事: [hr]
