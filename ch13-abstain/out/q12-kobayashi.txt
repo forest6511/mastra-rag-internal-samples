@@ -1,0 +1,25 @@
+利用者: kobayashi（all, dev）
+[1] 0.031 kanade-yoyaku README
+[2] 0.030 KAN-12 決済エラー対応：クレペイ接続 timeout 設定
+[3] 0.029 kanade-yoyaku PR #14 fix(payment): クレペイ接続タイムアウトを 30000ms に戻す
+[4] 0.029 #incident 2026-09-15 10:02 のスレッド
+[5] 0.029 kanade-yoyaku PR #15 決済GW再試行まわりの整理と引き継ぎ用の改善
+[6] 0.000 情報セキュリティ方針（2026年9月改定）
+
+確度: 一部は要確認[2][3][4][6]
+
+決済GWの障害は、2026-09-15 の障害については 10:40 に暫定対応として決済GWを旧GW（ペイリンク）へ戻し、その後 9/18 に timeout を 30000ms に直す PR #14 がマージされ、決済GWをクレペイに戻しています。[2][3][4]  
+再発防止としては、設定値の自動テスト追加と決済GW応答時間の監視を対応する方針が資料にあり、11:40 時点では「進めます」とされていて、完了したとは書かれていません。[2][4]  
+したがって、障害対応は収束していますが、再発防止は「終わっている」とは資料からは確認できず、要確認です。[2][4]
+
+要確認: 再発防止の実装完了状況については、小林 亮（開発リーダー）に確認してください。[問い合わせ先: 機能・ロードマップ: 小林 亮（開発リーダー）]
+
+出典  
+[2] KAN-12 決済エラー対応：クレペイ接続 timeout 設定  
+https://kanadeloop.atlassian.net/browse/KAN-12  
+[3] kanade-yoyaku PR #14 fix(payment): クレペイ接続タイムアウトを 30000ms に戻す  
+https://github.com/kanadeloop/kanade-yoyaku/pull/14  
+[4] #incident 2026-09-15 10:02 のスレッド  
+https://kanadeloop.slack.com/archives/C0CE4A0NJ80/p1789434120000000  
+[6] 【正本】情報セキュリティ方針（2026年9月改定）  
+https://kanadeloop.atlassian.net/wiki/spaces/KANADE/pages/622593/2026+9
