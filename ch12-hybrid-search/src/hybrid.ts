@@ -137,13 +137,13 @@ export async function rerank(q: string, hits: Hit[], top = 6) {
 
 // #region hybrid-search
 // 改善した検索: 意味と言葉の2つの検索を RRF でまとめ、資料ごとに
-// 15件にしてから、生成 AI で並べ替えて上位6件を材料にする。
-// rerank: false で並べ替えを外す（比べるため）
+// 上位6件を材料にする。rerank: true のときは、資料ごとに15件に
+// してから、生成 AI で並べ替えて上位6件にする
 export async function hybridSearch(
   db: Queryable,
   question: string,
   vector: number[],
-  opts = { rerank: true },
+  opts = { rerank: false },
 ): Promise<Hit[]> {
   const [v, kw] = await Promise.all([
     vectorChunks(db, vector),

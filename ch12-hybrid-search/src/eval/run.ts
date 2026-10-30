@@ -5,12 +5,12 @@ import { judge } from "./judge.js";
 import { questions } from "./questions.js";
 
 // #region run
-// npm run eval -- <ラベル> [ch10|hybrid|rerank]
+// npm run eval -- <ラベル> [ch10|hybrid|rerank]（既定は hybrid）
 // 18問 × REPS 回（既定3回）を答えて採点し、
 // eval/runs/<ラベル>.jsonl に1行ずつ書く。途中で止めても、
 // もう一度回せば、書き終えた行は飛ばして続きから回る
 const label = process.argv[2] ?? "run";
-const mode = (process.argv[3] ?? "rerank") as Mode;
+const mode = (process.argv[3] ?? "hybrid") as Mode;
 const reps = Number(process.env.REPS ?? 3);
 const file = `eval/runs/${label}.jsonl`;
 const done = new Set(
