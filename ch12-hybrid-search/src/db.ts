@@ -47,8 +47,8 @@ ALTER TABLE documents
 ALTER TABLE chunks
   ADD COLUMN IF NOT EXISTS acl text[] NOT NULL DEFAULT '{}';
 -- #region schema-bigm
--- 第12章: 日本語の全文検索のインデックス（pg_bigm がある DB でだけ作る。
--- テストで使う PGlite には無いが、LIKE の結果は同じ）
+-- 第12章: 日本語の全文検索のインデックス（pg_bigm がある DB で
+-- だけ作る。テストで使う PGlite には無いが、LIKE の結果は同じ）
 DO $$ BEGIN
   IF EXISTS (SELECT 1 FROM pg_available_extensions
              WHERE name = 'pg_bigm') THEN
