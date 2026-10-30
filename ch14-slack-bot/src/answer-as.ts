@@ -10,8 +10,7 @@ type Db = Parameters<typeof asUser>[2];
 
 // #region answer-as
 // 利用者の名前で質問に答える（第13章の作り: hybrid の検索・正本・
-// 出来事の名前・第13章の指示）。Slack ボット（第14章）と
-// MCP サーバー（第15章）が共通で使う
+// 出来事の名前・第13章の指示）。Slack ボット（第14章）が使う
 export async function answerAs(
   user: string,
   question: string,

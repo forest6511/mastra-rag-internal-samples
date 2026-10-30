@@ -22,6 +22,13 @@ export function mcpServer(db?: Db) {
 }
 // #endregion
 
+// #region allowed-hosts
+// localhost 以外のホスト名（トンネルのホスト名など）を許すときは、
+// MCP_ALLOWED_HOSTS にカンマで区切って書く
+const extraHosts = () =>
+  (process.env.MCP_ALLOWED_HOSTS ?? "").split(",").filter(Boolean);
+// #endregion
+
 // #region http
 // HTTP の入口。トークンから利用者を決め、無ければ 401 で断る。
 // 利用者の名前を req.auth に入れると、ツールの中で読める
@@ -35,6 +42,11 @@ export function listen(port: number, db?: Db) {
         return;
       }
       // #endregion
+      const extraHosts = () =>
+        (process.env.MCP_ALLOWED_HOSTS ?? "")
+          .split(",")
+          .filter(Boolean);
+
       // #region http-auth
       const user = userOfToken(
         tokenOf(url.pathname, req.headers.authorization),
@@ -55,7 +67,7 @@ export function listen(port: number, db?: Db) {
         ...{ url, httpPath: url.pathname, req, res },
         options: {
           enableDnsRebindingProtection: true,
-          allowedHosts: ["localhost", "127.0.0.1"],
+          allowedHosts: ["localhost", "127.0.0.1", ...extraHosts()],
         },
       });
     })
