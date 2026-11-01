@@ -47,7 +47,7 @@ npm run ask -- "$(cat out/question-wifi.txt)" --as nakamura
 `out/hr-id.txt` の ID は、自分の環境では次で調べます。
 
 ```bash
-docker compose -p ch04-setup exec db psql -U rag -d rag -Atc \
+docker compose exec db psql -U rag -d rag -Atc \
   "SELECT id FROM documents WHERE title LIKE '退職者面談メモ%'"
 ```
 

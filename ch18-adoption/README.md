@@ -57,7 +57,7 @@ npm test
 取り込んだ自社の資料は、`FILES_DIR` を外しても索引に残ります。消すときは、`files:` で始まる資料を DB から消します（チャンクも一緒に消えます）。
 
 ```bash
-docker compose -p ch04-setup exec db psql -U rag -d rag \
+docker compose exec db psql -U rag -d rag \
   -c "DELETE FROM documents WHERE id LIKE 'files:%'"
 ```
 

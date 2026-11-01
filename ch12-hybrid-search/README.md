@@ -30,7 +30,7 @@ npm run sync
 
 ```bash
 # 全文検索のインデックスが使われることを確かめる
-docker compose -p ch04-setup exec db psql -U rag -d rag -c "SET enable_seqscan=off" \
+docker compose exec db psql -U rag -d rag -c "SET enable_seqscan=off" \
   -c "EXPLAIN (COSTS OFF) SELECT id FROM chunks
       WHERE content LIKE '%タイムアウト%'"
 

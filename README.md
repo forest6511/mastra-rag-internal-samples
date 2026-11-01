@@ -108,14 +108,17 @@ npm run ask -- "$(cat out/question-Q04.txt)"
 
 ## DB について
 
-第5章以降の DB は、第4章の `ch04-setup` で `docker compose up -d --build` したものを、そのまま使います。各章のディレクトリにも同じ設定の `compose.yaml` がありますが、同じポート（55432）を使うので、同時に2つは起動できません。
+第5章以降の DB は、第4章の `ch04-setup` で `docker compose up -d --build` したものを、そのまま使います。DB は1つだけで、章を進めても作り直しません。
 
-`docker compose exec db …` で DB に SQL を流すときは、DB を起動したディレクトリ（`ch04-setup`）で打つか、`-p ch04-setup` を付けます。`docker compose` は、ディレクトリの名前ごとに別のコンテナとして扱うためです。
+第5章以降のディレクトリの `compose.yaml` には、`name: ch04-setup` を書いています。そのため、どの章のディレクトリで `docker compose exec db …` を打っても、第4章で起動した DB に届きます。書籍のコマンドは、その章のディレクトリでそのまま打てます。
 
 ```bash
-# 第6章のディレクトリから、第4章で起動した DB に SQL を流す
-docker compose -p ch04-setup exec db psql -U rag -d rag -c '\dt'
+# 第6章のディレクトリから、第4章で起動した DB のテーブルを見る
+cd ../ch06-github
+docker compose exec db psql -U rag -d rag -c '\dt'
 ```
+
+DB を止めたいときは `docker compose stop`、消すときは `docker compose down -v` です（どの章のディレクトリで打っても同じ DB が対象です。`-v` を付けると DB のデータも消えます）。
 
 ## 検査
 

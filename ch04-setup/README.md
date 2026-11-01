@@ -33,7 +33,7 @@ docker compose up -d --build
 docker compose exec db psql -U rag -d rag -c '\dx'
 ```
 
-`vector` の 0.8.2 と `pg_bigm` の 1.2 が並べば準備ができています。**この DB は、第5章以降もこのまま使います。** 第5章以降のディレクトリで `docker compose exec db …` を打つときは `-p ch04-setup` を付けます（[ルートの README](../README.md#db-について)）。
+`vector` の 0.8.2 と `pg_bigm` の 1.2 が並べば準備ができています。**この DB は、第5章以降もこのまま使います。** 第5章以降のディレクトリで `docker compose exec db …` を打っても、この DB に届きます（[ルートの README](../README.md#db-について)）。
 
 ### 2. TypeScript のプロジェクトを用意する
 

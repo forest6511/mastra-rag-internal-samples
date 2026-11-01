@@ -27,7 +27,7 @@ cp .env.example .env
 `.env` に、第5章の値に加えて `GH_ORG` と `GH_RAG_TOKEN` を入れます。第5章のテーブルに列を足すので、テーブルを作り直します。
 
 ```bash
-docker compose -p ch04-setup exec db psql -U rag -d rag \
+docker compose exec db psql -U rag -d rag \
   -c 'DROP TABLE IF EXISTS chunks, documents'
 ```
 

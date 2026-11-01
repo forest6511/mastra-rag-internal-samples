@@ -45,7 +45,7 @@ npm run ask -- "$(cat out/question-api.txt)" --by-doc
 ```bash
 NOTION_TOKEN=invalid npm run sync -- notion
 echo $?
-docker compose -p ch04-setup exec db psql -U rag -d rag \
+docker compose exec db psql -U rag -d rag \
   -c 'SELECT source, synced_at, fetched, failed_at, error FROM sync_state'
 ```
 
