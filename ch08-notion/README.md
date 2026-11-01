@@ -29,7 +29,7 @@ cp ../ch07-jira-slack/.env .env
 `.env` に、第7章の値に加えて `NOTION_TOKEN` と `NOTION_ROOT_PAGE` を書き足します（`.env.example` には `SLACK_WORKSPACE` の行が無いので、第7章の `.env` から写します）。テーブルを作り直してから取り込みます。
 
 ```bash
-docker compose -p ch04-setup exec db psql -U rag -d rag \
+docker compose exec db psql -U rag -d rag \
   -c 'DROP TABLE IF EXISTS chunks, documents'
 npm run ingest
 ```
