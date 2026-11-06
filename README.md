@@ -6,6 +6,8 @@
 
 > **本書および本リポジトリは、Mastra・Atlassian・Notion・Slack・GitHub・OpenAI・Anthropic・Amazon Web Services とは無関係の非公式なものです。**
 
+Kindle 版: [社内情報を一元化するRAGの構築と運用 Mastraとpgvectorで実現するConfluence・SlackのAI検索と業務活用](https://www.amazon.co.jp/dp/B0HPZ4MP54)
+
 ## 料金について
 
 > [!CAUTION]
